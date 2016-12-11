@@ -1,5 +1,5 @@
-IncludeOS Documentation
-=====================================
+IncludeOS
+=========
 
 **IncludeOS** is an includeable, minimal library operating system for C++ services running in the cloud. Starting a program with ``#include <os>``, will literally include a whole little operating
 system into your service during link-time. The build system will link your service and only the necessary OS objects into a single binary, attach a boot loader and combine all that into a self-contained bootable disk image, ready to run on a modern hypervisor. In other words, it's a `Unikernel <https://en.wikipedia.org/wiki/Unikernel>`__ written from
