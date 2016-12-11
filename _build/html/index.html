@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Writing your first service" href="creating-your-first-service.html" /> 
+    <link rel="next" title="Roadmap" href="Roadmap.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,7 +36,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="creating-your-first-service.html" title="Writing your first service"
+          <a href="Roadmap.html" title="Roadmap"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
@@ -49,11 +49,21 @@
             
   <div class="section" id="includeos-documentation">
 <h1>IncludeOS Documentation<a class="headerlink" href="#includeos-documentation" title="Permalink to this headline">¶</a></h1>
+<p><strong>IncludeOS</strong> is an includeable, minimal library operating system for C++ services running in the cloud. Starting a program with <code class="docutils literal"><span class="pre">#include</span> <span class="pre">&lt;os&gt;</span></code>, will literally include a whole little operating
+system into your service during link-time. The build system will link your service and only the necessary OS objects into a single binary, attach a boot loader and combine all that into a self-contained bootable disk image, ready to run on a modern hypervisor. In other words, it&#8217;s a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">Unikernel</a> written from
+scratch, employing x86 hardware virtualization, with no dependencies except for the virtual hardware.</p>
+<div class="figure">
+<img alt="Build system overview" src="https://github.com/hioa-cs/IncludeOS/blob/master/doc/figures/IncludeOS_build_system_overview.png" />
+</div>
 <div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="creating-your-first-service.html">Writing your first service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="creating-your-first-service.html#helper-scripts">Helper scripts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="creating-your-first-service.html#debugging-with-bochs">Debugging with Bochs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Roadmap.html">Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#current-goal">Current goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#projects-2016">Projects 2016</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#further-goals">Further goals</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -79,8 +89,8 @@
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="creating-your-first-service.html"
-                        title="next chapter">Writing your first service</a></p>
+  <p class="topless"><a href="Roadmap.html"
+                        title="next chapter">Roadmap</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -109,7 +119,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="creating-your-first-service.html" title="Writing your first service"
+          <a href="Roadmap.html" title="Roadmap"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>

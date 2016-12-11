@@ -1,26 +1,45 @@
 Writing your first service
-==========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Copy the [./seed](./seed) directory to a convenient location like `~/your_service`. Then, just start implementing the `Service::start` function in the `Service` class, located in [your_service/service.cpp](./seed/service.cpp) (Very simple example provided). This function will be called once the OS is up and running.  
-2. Enter the name of your service in the first line of the [seed Makefile](./seed/Makefile). This will be the base for the name of the final disk image.
+1. Copy the `./seed <./seed>`__ directory to a convenient location like
+   ``~/your_service``. Then, just start implementing the
+   ``Service::start`` function in the ``Service`` class, located in
+   `your\_service/service.cpp <./seed/service.cpp>`__ (Very simple
+   example provided). This function will be called once the OS is up and
+   running.
+2. Enter the name of your service in the first line of the `seed
+   Makefile <./seed/Makefile>`__. This will be the base for the name of
+   the final disk image.
 
-Example: ::
+**Example:**
 
-    $ cp -r seed ~/my_service
-    $ cd ~/my_service
-    $ emacs service.cpp
-    ... add your code
-    $ make
-    $ ./run.sh my_service.img
+::
+
+        $ cp -r seed ~/my_service
+        $ cd ~/my_service
+        $ emacs service.cpp
+        ... add your code
+        $ make
+        $ ./run.sh my_service.img
 
 Helper scripts
-==============
+~~~~~~~~~~~~~~
 
-There's a convenience script, [./seed/run.sh](./seed/run.sh), which has the "Make-vmbuild-qemu" sequence laid out, with special options for debugging (It will add debugging symbols to the elf-binary and start qemu in debugging mode, ready for connection with `gdb`. More on this inside the script.). I use this script to run the code, where I'd normally just run the program from a shell. Don't worry, it's fast, even in nested/emulated mode.
-
+There's a convenience script, `./seed/run.sh <./seed/run.sh>`__, which
+has the "Make-vmbuild-qemu" sequence laid out, with special options for
+debugging (It will add debugging symbols to the elf-binary and start
+qemu in debugging mode, ready for connection with ``gdb``. More on this
+inside the script.). I use this script to run the code, where I'd
+normally just run the program from a shell. Don't worry, it's fast, even
+in nested/emulated mode.
 
 Debugging with Bochs
-====================
+~~~~~~~~~~~~~~~~~~~~
 
-* If you want to debug the bootloader, or inspect memory, registers, flags etc. using a GUI, you need to install [Bochs](http://bochs.sourceforge.net/). This is because `gdb` only works for objects with debugging symbols, which we don't have for our bootloader. See `./etc/bochs_installation.sh` for build options, and `./etc/.bochsrc` for an example configuration file (which specifies a <1MB disk).
-
+-  If you want to debug the bootloader, or inspect memory, registers,
+   flags etc. using a GUI, you need to install
+   `Bochs <http://bochs.sourceforge.net/>`__. This is because ``gdb``
+   only works for objects with debugging symbols, which we don't have
+   for our bootloader. See ``./etc/bochs_installation.sh`` for build
+   options, and ``./etc/.bochsrc`` for an example configuration file
+   (which specifies a <1MB disk).
