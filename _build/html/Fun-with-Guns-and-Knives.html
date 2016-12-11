@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fun with Guns and Knives &#8212; IncludeOS 0.9.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Roadmap" href="Roadmap.html" />
+    <link rel="prev" title="Features and Limitations" href="Features.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Roadmap.html" title="Roadmap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Features.html" title="Features and Limitations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fun-with-guns-and-knives">
+<span id="id1"></span><h1>Fun with Guns and Knives<a class="headerlink" href="#fun-with-guns-and-knives" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-s-in-an-address">
+<h2>What&#8217;s in an address<a class="headerlink" href="#what-s-in-an-address" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Try writing to that damn well protected address 0! Just remember that you&#8217;re overwriting a 16-bit heirloom. You have enough powers to dig it up and see that it still works - if you start early enough in the bootloader. (It&#8217;s only 512 <em>bytes</em> - you can read it!)</li>
+</ul>
+</div>
+<div class="section" id="make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">
+<h2>Make sure nobody can call you, then go to sleep until somebody calls...<a class="headerlink" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Try to <code class="docutils literal"><span class="pre">asm(&quot;cli;hlt&quot;)</span></code> in a userspace program - then try it in IncludeOS, directly on KVM/VirtualBox. Explain to the duck exactly what&#8217;s going on - and he&#8217;ll tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget in reward of your mischief.</li>
+<li>Now try it in IncludeOS inside a virtualBox VM. Explain <em>that</em> to the duck!</li>
+</ul>
+</div>
+<div class="section" id="throw-frying-pans">
+<h2>Throw frying pans<a class="headerlink" href="#throw-frying-pans" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Ever wondered what would happen if you <code class="docutils literal"><span class="pre">throw</span> <span class="pre">FryingPan</span></code> inside a (real) interrupt handler - or better yet - a std::Exception inside a CPU Exception handler? (Hey - maybe that way we could <code class="docutils literal"><span class="pre">catch</span></code> division by zero Exception?) You have the means to try!</li>
+</ul>
+</div>
+<div class="section" id="a-new-segment">
+<h2>A new segment<a class="headerlink" href="#a-new-segment" title="Permalink to this headline">¶</a></h2>
+<p>What if we protect the memory segment of the .rodata of the OS?</p>
+</div>
+<div class="section" id="interrupt-please">
+<h2>Interrupt please!<a class="headerlink" href="#interrupt-please" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fun with Guns and Knives</a><ul>
+<li><a class="reference internal" href="#what-s-in-an-address">What&#8217;s in an address</a></li>
+<li><a class="reference internal" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls...</a></li>
+<li><a class="reference internal" href="#throw-frying-pans">Throw frying pans</a></li>
+<li><a class="reference internal" href="#a-new-segment">A new segment</a></li>
+<li><a class="reference internal" href="#interrupt-please">Interrupt please!</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Features.html"
+                        title="previous chapter">Features and Limitations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Roadmap.html"
+                        title="next chapter">Roadmap</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Fun-with-Guns-and-Knives.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Roadmap.html" title="Roadmap"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Features.html" title="Features and Limitations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, IncludeOS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
+  </body>
+</html>

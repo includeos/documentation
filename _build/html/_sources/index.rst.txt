@@ -12,6 +12,9 @@ scratch, employing x86 hardware virtualization, with no dependencies except for 
    :maxdepth: 2
    :caption: Contents:
 
+   The-Build-and-Boot-process
+   Features
+   Fun-with-Guns-and-Knives
    Roadmap
 ..   Acknowledgements
 ..   Contributing-to-IncludeOS
@@ -38,5 +41,4 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
