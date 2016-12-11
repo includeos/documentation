@@ -32,9 +32,3 @@ scratch, employing x86 hardware virtualization, with no dependencies except for 
 ..   Vagrant
 ..   Virtualbox
 ..   About-test-output
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
