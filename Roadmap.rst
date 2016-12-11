@@ -21,14 +21,13 @@ Projects 2016
 -  Complete IP4-stack, including ethernet, ARP, UDP, TCP, ICMP and DHCP
 -  Basic IPv6 support, including NDP
 -  A package manager
--  github-based, much like
-   `bower <http://bower.io/>`__/`npm <https://www.npmjs.com/>`__.
+-  github-based, much like `bower <http://bower.io/>`__/`npm <https://www.npmjs.com/>`__.
 -  A minimal HTTP module (package), just enough http for REST
 -  Simple, flat file system module (package), for serving static
    web-content
 -  Database integration
-	- SQLite
-	- MongoDB
+	+ SQLite
+	+ MongoDB
 -  RESTful API framework
 -  TLS
 -  Open-stack deployment toolkit
