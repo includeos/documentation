@@ -27,10 +27,8 @@ Projects 2016
 -  Simple, flat file system module (package), for serving static
    web-content
 -  Database integration
-
-1. SQLite
-2. MongoDB
-
+	- SQLite
+	- MongoDB
 -  RESTful API framework
 -  TLS
 -  Open-stack deployment toolkit
