@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Ubuntu &#8212; IncludeOS 0.9.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Vagrant" href="Vagrant.html" />
+    <link rel="prev" title="Getting started" href="Getting-started.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Vagrant.html" title="Vagrant"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Getting-started.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ubuntu">
+<span id="id1"></span><h1>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="building-in-ubuntu">
+<h2>Building in Ubuntu<a class="headerlink" href="#building-in-ubuntu" title="Permalink to this headline">¶</a></h2>
+<p>There are two options to installing IncludeOS. The first is to download the binaries used from github, the second is to build everything from source directly. The first option is considerably faster than the second.</p>
+<div class="section" id="prerequisites-for-building-includeos-vm-s-in-ubuntu">
+<h3>Prerequisites for building IncludeOS VM&#8217;s in Ubuntu<a class="headerlink" href="#prerequisites-for-building-includeos-vm-s-in-ubuntu" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Ubuntu 16.04 or 14.04 LTS, x86_64</strong>, either on a physical or virtual machine (A virtualbox VM works fine)<ul>
+<li>For the full source build, you&#8217;ll need at least 1024 MB memory</li>
+<li>In order to support VGA graphics inside a VM, we recommend a lightweight GUI, such as <a class="reference external" href="https://help.ubuntu.com/community/Lubuntu/GetLubuntu">lubuntu</a> which runs great inside a virtual machine.<ul>
+<li><em>NOTE:</em> Graphics is by no means necessary, as all IncludeOS output by default will be routed to the serial port, and in Qemu</li>
+</ul>
+</li>
+<li>The install scripts may very well work on other flavours on Linux, but we haven&#8217;t tried. Please let us know if you do.</li>
+</ul>
+</li>
+<li>You&#8217;ll need <code class="docutils literal"><span class="pre">git</span></code> to clone from GitHub.</li>
+</ul>
+<p>Once you have a system with the prereqs (virtual or not), you can choose a full build from source, or a fast build from binaries.</p>
+</div>
+<div class="section" id="a-install-libraries-from-binary-bundle-fast">
+<h3>A) Install libraries from binary bundle (fast)<a class="headerlink" href="#a-install-libraries-from-binary-bundle-fast" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo apt-get install git
+$ git clone https://github.com/hioa-cs/IncludeOS
+$ cd IncludeOS
+$ ./install.sh
+</pre></div>
+</div>
+<p><strong>Time:</strong> About a minute or two (On a 4-core Virtualbox Ubuntu VM, running on a 2015 MacBook Air)</p>
+</div>
+<div class="section" id="b-completely-build-everything-from-source-slow">
+<span id="building-everything-from-source"></span><h3>B) Completely build everything from source (slow)<a class="headerlink" href="#b-completely-build-everything-from-source-slow" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo apt-get install git
+$ git clone https://github.com/hioa-cs/IncludeOS
+$ cd IncludeOS
+$ ./install.sh --all-source
+</pre></div>
+</div>
+<p><strong>The script will:</strong></p>
+<ul class="simple">
+<li>Install all the tools required for building IncludeOS, and all libraries it depends on:<ul>
+<li><code class="docutils literal"><span class="pre">build-essential</span> <span class="pre">make</span> <span class="pre">nasm</span> <span class="pre">texinfo</span> <span class="pre">clang-3.8</span> <span class="pre">cmake</span> <span class="pre">ninja-build</span> <span class="pre">subversion</span> <span class="pre">zlib1g-dev</span> <span class="pre">libtinfo-dev</span></code></li>
+</ul>
+</li>
+<li>Build a GCC cross compiler along the lines of the <a class="reference external" href="http://wiki.osdev.org/GCC_Cross-Compiler">osdev howto</a> which we really only need to build <code class="docutils literal"><span class="pre">libgcc</span></code> and <code class="docutils literal"><span class="pre">newlib</span></code>.</li>
+<li>Build <a class="reference external" href="https://sourceware.org/newlib/">Redhat&#8217;s newlib</a> using the cross compiler, and install it according to <code class="docutils literal"><span class="pre">./etc/build_newlib.sh</span></code>. The script will also install it to the mentioned location.</li>
+<li>Build a 32-bit version of <a class="reference external" href="http://libcxx.llvm.org/">LLVM&#8217;s libc++</a> tailored for IncludeOS.</li>
+<li>Build and install the IncludeOS library, which your service will be linked with.</li>
+<li>Build and install the <code class="docutils literal"><span class="pre">vmbuild</span></code> tool, which turns your service into a bootable disk image.</li>
+</ul>
+<p><strong>Time:</strong> On a VM with 2 cores and 4 GB RAM, running Ubuntu 14.04, running ./install.sh takes about 33 minutes depending on bandwidth.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Ubuntu</a><ul>
+<li><a class="reference internal" href="#building-in-ubuntu">Building in Ubuntu</a><ul>
+<li><a class="reference internal" href="#prerequisites-for-building-includeos-vm-s-in-ubuntu">Prerequisites for building IncludeOS VM&#8217;s in Ubuntu</a></li>
+<li><a class="reference internal" href="#a-install-libraries-from-binary-bundle-fast">A) Install libraries from binary bundle (fast)</a></li>
+<li><a class="reference internal" href="#b-completely-build-everything-from-source-slow">B) Completely build everything from source (slow)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Getting-started.html"
+                        title="previous chapter">Getting started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Vagrant.html"
+                        title="next chapter">Vagrant</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Ubuntu.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Vagrant.html" title="Vagrant"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Getting-started.html" title="Getting started"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, IncludeOS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
+  </body>
+</html>

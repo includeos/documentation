@@ -6,7 +6,7 @@ Features
 
 A non-exhaustive, possibly outdated feature list
 
--  **Extreme memory footprint**: A minimal bootable image, including bootloader, operating system components and a complete C++ standard library is currently 693K when optimized for size.
+-  **Extreme memory footprint**: A minimal bootable image, including bootloader, operating system components and a complete C++ standard library is currently 707K when optimized for size.
 
 -  **KVM and VirtualBox support** with full virtualization, using `x86 hardware virtualization <https://en.wikipedia.org/wiki/X86_virtualization>`__ whenever available (it is on most modern x86 CPU's). In principle IncludeOS should run on any x86 hardware platform, even on a physical x86 computer, given appropriate drivers. Officially, we develop for- and test on `Linux KVM <http://www.linux-kvm.org/page/Main_Page>`__, which power the `OpenStack IaaS cloud <https://www.openstack.org/>`__, and `VirtualBox <https://www.virtualbox.org>`__, which means that you can run your IncludeOS service on both Linux, Microsoft Windows and Apple OS X.
 

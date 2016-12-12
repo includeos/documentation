@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OS X &#8212; IncludeOS 0.9.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing the example service" href="Testing-the-example-service.html" />
+    <link rel="prev" title="Vagrant" href="Vagrant.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Testing-the-example-service.html" title="Testing the example service"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Vagrant.html" title="Vagrant"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="os-x">
+<span id="id1"></span><h1>OS X<a class="headerlink" href="#os-x" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="building-on-mac-os-x">
+<h2>Building on Mac OS X<a class="headerlink" href="#building-on-mac-os-x" title="Permalink to this headline">¶</a></h2>
+<p>You can build IncludeOS (from bundle only) directly on a Mac by running <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/install_osx.sh">./etc/install_osx.sh</a>. The following dependencies are utilized by the script:</p>
+<ul class="simple">
+<li>homebrew (OS X package manager - <a class="reference external" href="https://brew.sh">https://brew.sh</a>)</li>
+<li>/usr/local directory with write access</li>
+<li>/usr/local/bin added to your PATH</li>
+<li>Xcode CTL (Command Line Tools)</li>
+</ul>
+<p>If you wish to quickly test the installation perform the following steps:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd IncludeOS/examples/demo_service
+$ make
+$ ../../etc/vboxrun.sh Demo_Service.img
+</pre></div>
+</div>
+</div>
+<div class="section" id="developing-on-mac-os-x">
+<h2>Developing on Mac OS X<a class="headerlink" href="#developing-on-mac-os-x" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="building-services">
+<h3>Building services<a class="headerlink" href="#building-services" title="Permalink to this headline">¶</a></h3>
+<p>To build services and run tests, LD_INC need to be set:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export LD_INC=$INCLUDEOS_INSTALL/bin/ld
+</pre></div>
+</div>
+</div>
+<div class="section" id="rebuilding-includeos">
+<h3>Rebuilding IncludeOS<a class="headerlink" href="#rebuilding-includeos" title="Permalink to this headline">¶</a></h3>
+<p>To rebuild IncludeOS, AR_INC and OBJCOPY_INC need to be set (in addtion to LD_INC):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export AR_INC=$INCLUDEOS_INSTALL/bin/ar
+$ export OBJCOPY_INC=$INCLUDEOS_INSTALL/bin/objcopy
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> <code class="docutils literal"><span class="pre">$INCLUDEOS_INSTALL</span></code> is used internally by the install scripts, and defaults to <code class="docutils literal"><span class="pre">~/IncludeOS_install</span></code> unless specified by you prior to the installation. We don&#8217;t set the variable system-wide.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OS X</a><ul>
+<li><a class="reference internal" href="#building-on-mac-os-x">Building on Mac OS X</a></li>
+<li><a class="reference internal" href="#developing-on-mac-os-x">Developing on Mac OS X</a><ul>
+<li><a class="reference internal" href="#building-services">Building services</a></li>
+<li><a class="reference internal" href="#rebuilding-includeos">Rebuilding IncludeOS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Vagrant.html"
+                        title="previous chapter">Vagrant</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Testing-the-example-service.html"
+                        title="next chapter">Testing the example service</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/OS-X.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Testing-the-example-service.html" title="Testing the example service"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Vagrant.html" title="Vagrant"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, IncludeOS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
+  </body>
+</html>
