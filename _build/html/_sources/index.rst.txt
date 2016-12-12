@@ -27,21 +27,22 @@ Or come chat with us on `Gitter <https://gitter.im/hioa-cs/IncludeOS>`__
 
    The-Build-and-Boot-process
    Features
-   Fun-with-Guns-and-Knives
    Roadmap
-   Contributing-to-IncludeOS
-   FAQ
    Getting-started
+   Setting-up-a-development-environment
+   Testing-the-example-service
+   Running-tests
+   Fun-with-Guns-and-Knives
+   Contributing-to-IncludeOS
    Ubuntu
    Vagrant
    OS-X
-   Testing-the-example-service
-   Setting-up-a-development-environment
    Virtualbox
-   Acknowledgements
-   Publications
    Jenkins-CI
-   Running-tests
+   Publications
+   Acknowledgements
+   FAQ
+
 ..   Output-latest-nightly-test
 ..   Output-latest-test
 ..   About-test-output
