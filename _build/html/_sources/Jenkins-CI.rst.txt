@@ -6,7 +6,7 @@ Jenkins CI
 .. Oppdatere
 
 `Jenkins.includeos.org <https://jenkins.includeos.org>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------
 
 Getting your personal build to build on the jenkins server
 ----------------------------------------------------------
@@ -22,7 +22,7 @@ Things to take note off:
 - Does not merge with upstream dev automatically as of this date.
 
 Follow these steps to get it to work:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 1. Go to the settings page for your **personal fork**
 
