@@ -1,5 +1,10 @@
+.. _Running tests:
+
 Running tests
 =============
+
+.. Mer brukerfokus - det brukeren skal gjøre, ikke Jenkins
+.. Flytte det som er relevant angående Jenkins til under Deeper-understanding.rst (står om Jenkins der)
 
 In order to run the tests that are created for IncludeOS there are some dependencies.
 

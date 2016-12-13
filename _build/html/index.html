@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="The Build and Boot Process" href="The-Build-and-Boot-process.html" /> 
+    <link rel="next" title="Install" href="Install.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,7 +36,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="The-Build-and-Boot-process.html" title="The Build and Boot Process"
+          <a href="Install.html" title="Install"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
@@ -50,34 +50,17 @@
   <div class="section" id="includeos">
 <h1>IncludeOS<a class="headerlink" href="#includeos" title="Permalink to this headline">¶</a></h1>
 <p><strong>IncludeOS</strong> is an includeable, minimal library operating system for C++ services running in the cloud. Starting a program with <code class="docutils literal"><span class="pre">#include</span> <span class="pre">&lt;os&gt;</span></code>, will literally include a whole little operating system into your service during link-time.</p>
-<p>The build system will:</p>
-<ul class="simple">
-<li>link your service and only the necessary OS objects into a single binary</li>
-<li>attach a boot loader</li>
-<li>combine everything into a self-contained bootable disk image, ready to run on a modern hypervisor.</li>
-</ul>
-<p>In other words, it&#8217;s a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">Unikernel</a> written from scratch, employing x86 hardware virtualization, with no dependencies except for the virtual hardware.</p>
-<div class="figure">
-<img alt="Build system overview" src="_images/IncludeOS_build_system_overview.png" />
-</div>
 <p>For more information: Visit our <a class="reference external" href="http://www.includeos.org">website</a>, check out the project on <a class="reference external" href="https://github.com/hioa-cs/IncludeOS">GitHub</a> or come chat with us on <a class="reference external" href="https://gitter.im/hioa-cs/IncludeOS">Gitter</a>!</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="The-Build-and-Boot-process.html">The Build and Boot Process</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="The-Build-and-Boot-process.html#the-build-process">The build process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="The-Build-and-Boot-process.html#the-boot-process">The boot process</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Features.html">Features and Limitations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Features.html#features">Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Features.html#limitations">Limitations</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Roadmap.html">Roadmap</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#current-goal">Current goal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#projects-2016">Projects 2016</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#further-goals">Further goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#building-in-ubuntu">Building in Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#building-on-mac-os">Building on Mac OS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#developing-on-mac-os">Developing on Mac OS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#using-virtualbox-for-development">Using VirtualBox for development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#running-includeos-images-in-virtualbox">Running IncludeOS images in VirtualBox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#building-with-vagrant">Building with Vagrant</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Getting-started.html">Getting started</a><ul>
@@ -88,50 +71,34 @@
 <li class="toctree-l2"><a class="reference internal" href="Getting-started.html#debugging-with-bochs">Debugging with Bochs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Setting-up-a-development-environment.html">Setting up a development environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Testing-the-example-service.html">Testing the example service</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Running-tests.html">Running tests</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Running-tests.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Running-tests.html#running-the-tests">Running the tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Running-tests.html#running-only-a-certain-test-category">Running only a certain test category</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Fun-with-Guns-and-Knives.html">Fun with Guns and Knives</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#what-s-in-an-address">What&#8217;s in an address</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls...</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#throw-frying-pans">Throw frying pans</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#a-new-segment">A new segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#interrupt-please">Interrupt please!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Roadmap.html">Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#current-goal">Current goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#projects-2016">Projects 2016</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html#further-goals">Further goals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Examples-and-submodules.html">Examples and submodules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contributing-to-IncludeOS.html">Contributing to IncludeOS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Contributing-to-IncludeOS.html#fork-edit-and-send-us-a-pull-request-on-github">Fork, edit and send us a pull-request on GitHub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Contributing-to-IncludeOS.html#clone-edit-and-send-us-a-pull-request-on-github">Clone, edit and send us a pull-request on GitHub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Contributing-to-IncludeOS.html#consider-making-a-standalone-package">Consider making a standalone package!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Contributing-to-IncludeOS.html#issue-tracker">Issue tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Contributing-to-IncludeOS.html#gitter-chat">Gitter chat</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Ubuntu.html">Ubuntu</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Ubuntu.html#building-in-ubuntu">Building in Ubuntu</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Vagrant.html">Vagrant</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Vagrant.html#building-with-vagrant">Building with Vagrant</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="OS-X.html">OS X</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="OS-X.html#building-on-mac-os-x">Building on Mac OS X</a></li>
-<li class="toctree-l2"><a class="reference internal" href="OS-X.html#developing-on-mac-os-x">Developing on Mac OS X</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Virtualbox.html">VirtualBox</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Virtualbox.html#using-virtualbox-for-development">Using VirtualBox for development</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Virtualbox.html#running-includeos-images-in-virtualbox">Running IncludeOS images in VirtualBox</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Jenkins-CI.html">Jenkins CI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Jenkins-CI.html#jenkins-includeos-org">Jenkins.includeos.org</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Jenkins-CI.html#follow-these-steps-to-get-it-to-work">Follow these steps to get it to work:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Videos-and-links.html">Videos and links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Deeper-understanding.html">Deeper understanding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Deeper-understanding.html#the-build-process">The build process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deeper-understanding.html#the-boot-process">The boot process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deeper-understanding.html#fun-with-guns-and-knives">Fun with Guns and Knives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deeper-understanding.html#jenkins-includeos-org">Jenkins.includeos.org</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deeper-understanding.html#follow-these-steps-to-get-it-to-work">Follow these steps to get it to work:</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Publications.html">Publications</a><ul>
@@ -169,8 +136,8 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Next topic</h4>
-  <p class="topless"><a href="The-Build-and-Boot-process.html"
-                        title="next chapter">The Build and Boot Process</a></p>
+  <p class="topless"><a href="Install.html"
+                        title="next chapter">Install</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -199,7 +166,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="The-Build-and-Boot-process.html" title="The Build and Boot Process"
+          <a href="Install.html" title="Install"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>

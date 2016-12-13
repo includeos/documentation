@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Ubuntu &#8212; IncludeOS 0.9.3 documentation</title>
+    <title>Install &#8212; IncludeOS 0.9.3 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Vagrant" href="Vagrant.html" />
-    <link rel="prev" title="Getting started" href="Getting-started.html" /> 
+    <link rel="next" title="Getting started" href="Getting-started.html" />
+    <link rel="prev" title="IncludeOS" href="index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,10 +37,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Vagrant.html" title="Vagrant"
+          <a href="Getting-started.html" title="Getting started"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Getting-started.html" title="Getting started"
+          <a href="index.html" title="IncludeOS"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
@@ -51,8 +51,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ubuntu">
-<span id="id1"></span><h1>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="install">
+<span id="id1"></span><h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="building-in-ubuntu">
 <h2>Building in Ubuntu<a class="headerlink" href="#building-in-ubuntu" title="Permalink to this headline">¶</a></h2>
 <p>There are two options to installing IncludeOS. The first is to download the binaries used from github, the second is to build everything from source directly. The first option is considerably faster than the second.</p>
@@ -105,6 +105,84 @@ $ ./install.sh --all-source
 <p><strong>Time:</strong> On a VM with 2 cores and 4 GB RAM, running Ubuntu 14.04, running ./install.sh takes about 33 minutes depending on bandwidth.</p>
 </div>
 </div>
+<div class="section" id="building-on-mac-os">
+<h2>Building on Mac OS<a class="headerlink" href="#building-on-mac-os" title="Permalink to this headline">¶</a></h2>
+<p>You can build IncludeOS (from bundle only) directly on a Mac by running <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/install_osx.sh">./etc/install_osx.sh</a>. The following dependencies are utilized by the script:</p>
+<ul class="simple">
+<li>homebrew (Mac OS package manager - <a class="reference external" href="https://brew.sh">https://brew.sh</a>)</li>
+<li>/usr/local directory with write access</li>
+<li>/usr/local/bin added to your PATH</li>
+<li>Xcode CTL (Command Line Tools)</li>
+</ul>
+<p>If you wish to quickly test the installation perform the following steps:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd IncludeOS/examples/demo_service
+$ make
+$ ../../etc/vboxrun.sh Demo_Service.img
+</pre></div>
+</div>
+</div>
+<div class="section" id="developing-on-mac-os">
+<h2>Developing on Mac OS<a class="headerlink" href="#developing-on-mac-os" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="building-services">
+<h3>Building services<a class="headerlink" href="#building-services" title="Permalink to this headline">¶</a></h3>
+<p>To build services and run tests, LD_INC need to be set:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export LD_INC=$INCLUDEOS_INSTALL/bin/ld
+</pre></div>
+</div>
+</div>
+<div class="section" id="rebuilding-includeos">
+<h3>Rebuilding IncludeOS<a class="headerlink" href="#rebuilding-includeos" title="Permalink to this headline">¶</a></h3>
+<p>To rebuild IncludeOS, AR_INC and OBJCOPY_INC need to be set (in addtion to LD_INC):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export AR_INC=$INCLUDEOS_INSTALL/bin/ar
+$ export OBJCOPY_INC=$INCLUDEOS_INSTALL/bin/objcopy
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> <code class="docutils literal"><span class="pre">$INCLUDEOS_INSTALL</span></code> is used internally by the install scripts, and defaults to <code class="docutils literal"><span class="pre">~/IncludeOS_install</span></code> unless specified by you prior to the installation. We don&#8217;t set the variable system-wide.</p>
+</div>
+</div>
+<div class="section" id="using-virtualbox-for-development">
+<h2>Using VirtualBox for development<a class="headerlink" href="#using-virtualbox-for-development" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>VirtualBox does not support nested virtualization (a <a class="reference external" href="https://www.virtualbox.org/ticket/4032">ticket</a> has been open for 5 years). This means you can&#8217;t use the kvm module to run IncludeOS from inside VirtualBox, but you can use Qemu directly, so developing for IncludeOS in a VirtualBox VM works. It will be slower, but a small VM still boots in no time. For this reason, this install script does not require kvm or nested virtualization.</li>
+<li>You might want to install VirtualBox vbox additions, if you want screen scaling. The above provides the prerequisites for this (compiler stuff).</li>
+</ul>
+</div>
+<div class="section" id="running-includeos-images-in-virtualbox">
+<h2>Running IncludeOS images in VirtualBox<a class="headerlink" href="#running-includeos-images-in-virtualbox" title="Permalink to this headline">¶</a></h2>
+<p>There are shell scripts provided for converting images into VirtualBox format and running them, but you can also use the VirtualBox GUI.</p>
+<p>Use the &#8220;New&#8221; button in the main toolbar to create a new virtual machine as usual. But before starting your new virtual machine, you have to make some changes to the machine&#8217;s settings:</p>
+<p>Under <strong>General</strong> &gt; <strong>Basic</strong></p>
+<p>Name: Your_IncludeOS_Service</p>
+<p>Type: Linux</p>
+<p>Version: Other Linux (32-bit)</p>
+<p>Under <strong>System</strong> &gt; <strong>Motherboard</strong></p>
+<p>Extended Features: <em>Enable</em> I/O APIC</p>
+<p>Under <strong>Network</strong> &gt; <strong>Adapter 1</strong> &gt; <strong>Advanced</strong></p>
+<p>Adapter Type: Paravirtualized (virtio-net)</p>
+<p>It is also very helpful to be able to see the serial output. To redirect it to a file and get useful info:</p>
+<p>Under <strong>Serial Ports</strong> &gt; <strong>Port 1</strong></p>
+<p><em>Enable</em> Serial Port</p>
+<p>Port Mode: Raw File</p>
+<p>Path/Address:
+C:\Users\USERNAME\Desktop\Serial.txt</p>
+<p>(This example assumes you are using Windows. Substitute own user name).</p>
+</div>
+<div class="section" id="building-with-vagrant">
+<h2>Building with Vagrant<a class="headerlink" href="#building-with-vagrant" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> is an awesome tool for creating and configuring virtual development environments.</p>
+<p>You can use Vagrant to set up a virtual machine with the correct environment for building IncludeOS. The following commands will build and install IncludeOS into your home directory (<code class="docutils literal"><span class="pre">~/IncludeOS_install/</span></code>). The directory is mapped as a shared folder into the virtual machine vagrant creates.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone https://github.com/hioa-cs/IncludeOS.git
+$ cd IncludeOS
+$ vagrant up
+$ vagrant ssh --command=/IncludeOS/etc/install_from_bundle.sh
+</pre></div>
+</div>
+<p>You can now log in to the vagrant build environment and build and run a test service like so:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ vagrant ssh
+$ ./test.sh
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -115,27 +193,36 @@ $ ./install.sh --all-source
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Ubuntu</a><ul>
+<li><a class="reference internal" href="#">Install</a><ul>
 <li><a class="reference internal" href="#building-in-ubuntu">Building in Ubuntu</a><ul>
 <li><a class="reference internal" href="#prerequisites-for-building-includeos-vm-s-in-ubuntu">Prerequisites for building IncludeOS VM&#8217;s in Ubuntu</a></li>
 <li><a class="reference internal" href="#a-install-libraries-from-binary-bundle-fast">A) Install libraries from binary bundle (fast)</a></li>
 <li><a class="reference internal" href="#b-completely-build-everything-from-source-slow">B) Completely build everything from source (slow)</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#building-on-mac-os">Building on Mac OS</a></li>
+<li><a class="reference internal" href="#developing-on-mac-os">Developing on Mac OS</a><ul>
+<li><a class="reference internal" href="#building-services">Building services</a></li>
+<li><a class="reference internal" href="#rebuilding-includeos">Rebuilding IncludeOS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-virtualbox-for-development">Using VirtualBox for development</a></li>
+<li><a class="reference internal" href="#running-includeos-images-in-virtualbox">Running IncludeOS images in VirtualBox</a></li>
+<li><a class="reference internal" href="#building-with-vagrant">Building with Vagrant</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Getting-started.html"
-                        title="previous chapter">Getting started</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">IncludeOS</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Vagrant.html"
-                        title="next chapter">Vagrant</a></p>
+  <p class="topless"><a href="Getting-started.html"
+                        title="next chapter">Getting started</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Ubuntu.rst.txt"
+      <li><a href="_sources/Install.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -160,10 +247,10 @@ $ ./install.sh --all-source
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Vagrant.html" title="Vagrant"
+          <a href="Getting-started.html" title="Getting started"
              >next</a> |</li>
         <li class="right" >
-          <a href="Getting-started.html" title="Getting started"
+          <a href="index.html" title="IncludeOS"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>

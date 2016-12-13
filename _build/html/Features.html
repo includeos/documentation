@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Features and Limitations &#8212; IncludeOS 0.9.3 documentation</title>
+    <title>Features &#8212; IncludeOS 0.9.3 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Fun with Guns and Knives" href="Fun-with-Guns-and-Knives.html" />
-    <link rel="prev" title="The Build and Boot Process" href="The-Build-and-Boot-process.html" /> 
+    <link rel="next" title="Roadmap" href="Roadmap.html" />
+    <link rel="prev" title="Running tests" href="Running-tests.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,10 +37,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Fun-with-Guns-and-Knives.html" title="Fun with Guns and Knives"
+          <a href="Roadmap.html" title="Roadmap"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="The-Build-and-Boot-process.html" title="The Build and Boot Process"
+          <a href="Running-tests.html" title="Running tests"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
@@ -51,10 +51,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="features-and-limitations">
-<h1>Features and Limitations<a class="headerlink" href="#features-and-limitations" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="features">
+<span id="id1"></span><h1>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
 <p>A non-exhaustive, possibly outdated feature list</p>
 <ul class="simple">
 <li><strong>Extreme memory footprint</strong>: A minimal bootable image, including bootloader, operating system components and a complete C++ standard library is currently 707K when optimized for size.</li>
@@ -83,7 +81,7 @@
 <li><strong>No race conditions</strong>. Delegated IRQ handling makes race conditions in &#8220;userspace&#8221; &#8220;impossible&#8221;. ...unless you implement threads yourself (you have the access) or we do.</li>
 <li><strong>No virtual memory overhead</strong> One service pr. VM means no need for virtual address spaces, and no overead due to address translation. Everything happens in a single, ring 0 address space. This has high positive impact on memory performance on some systems, but less so on newer CPU&#8217;s with good hardware support for <a class="reference external" href="https://en.wikipedia.org/wiki/Second_Level_Address_Translation">nested paging</a>.</li>
 <li><strong>All the guns and all the knives:</strong><ul>
-<li>IncludeOS services run in ring 0, in a single address space without protection. That&#8217;s a lot of power to play with. For example: Try <code class="docutils literal"><span class="pre">asm(&quot;hlt&quot;)</span></code> in a normal userspace program - then try it in IncludeOS. Explain to the duck exactly what&#8217;s going on ... and it will tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget, in reward of your mischief. If you believe in these kinds of lessons, there&#8217;s always more <a class="reference internal" href="Fun-with-Guns-and-Knives.html#fun-with-guns-and-knives"><span class="std std-ref">Fun with Guns and Knives</span></a>.</li>
+<li>IncludeOS services run in ring 0, in a single address space without protection. That&#8217;s a lot of power to play with. For example: Try <code class="docutils literal"><span class="pre">asm(&quot;hlt&quot;)</span></code> in a normal userspace program - then try it in IncludeOS. Explain to the duck exactly what&#8217;s going on ... and it will tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget, in reward of your mischief. If you believe in these kinds of lessons, there&#8217;s always more <a class="reference internal" href="Deeper-understanding.html#fun-with-guns-and-knives"><span class="std std-ref">Fun with Guns and Knives</span></a>.</li>
 <li><em>Hold your forces! I and James Gosling strongly object to guns and knives!</em><ul>
 <li>For good advice on how not to use these powers, look to the <a class="reference external" href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Wisdom of the Jedi Council</a>.</li>
 <li>If you found the gold nugget above, you&#8217;ll know that the physical CPU protects you from others - and others from you. And that&#8217;s a pretty solid protection compared to, say, <a class="reference external" href="https://xkcd.com/1354/">openssl</a>. If you need protection from yourself, that too can be gained by aquiring the 10 000 lines of <a class="reference external" href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Wisdom from the Jedi Council</a>, or also from our friends at <a class="reference external" href="http://mirage.io">Mirage</a> ;-)</li>
@@ -93,11 +91,7 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
 <p>If it&#8217;s not listed under features, chances are that we don&#8217;t have it yet. See the <a class="reference internal" href="Roadmap.html#roadmap"><span class="std std-ref">Roadmap</span></a> for our current plan.</p>
-</div>
 </div>
 
 
@@ -106,21 +100,12 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Features and Limitations</a><ul>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#limitations">Limitations</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="The-Build-and-Boot-process.html"
-                        title="previous chapter">The Build and Boot Process</a></p>
+  <p class="topless"><a href="Running-tests.html"
+                        title="previous chapter">Running tests</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Fun-with-Guns-and-Knives.html"
-                        title="next chapter">Fun with Guns and Knives</a></p>
+  <p class="topless"><a href="Roadmap.html"
+                        title="next chapter">Roadmap</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -149,10 +134,10 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Fun-with-Guns-and-Knives.html" title="Fun with Guns and Knives"
+          <a href="Roadmap.html" title="Roadmap"
              >next</a> |</li>
         <li class="right" >
-          <a href="The-Build-and-Boot-process.html" title="The Build and Boot Process"
+          <a href="Running-tests.html" title="Running tests"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>

@@ -1,8 +1,9 @@
-Features and Limitations
-========================
+.. _Features:
 
 Features
-~~~~~~~~
+========
+
+.. Må oppdateres
 
 A non-exhaustive, possibly outdated feature list
 
@@ -49,7 +50,6 @@ A non-exhaustive, possibly outdated feature list
       -  If you found the gold nugget above, you'll know that the physical CPU protects you from others - and others from you. And that's a pretty solid protection compared to, say, `openssl <https://xkcd.com/1354/>`__. If you need protection from yourself, that too can be gained by aquiring the 10 000 lines of `Wisdom from the Jedi Council <https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md>`__, or also from our friends at `Mirage <http://mirage.io>`__ ;-)
       -  *Are the extra guns and knives really features?* For explorers, yes. For a Joint Strike Fighter autopilot? Noooo. You need `even more wisdom <http://www.stroustrup.com/JSF-AV-rules.pdf>`__ for that.
 
-Limitations
-~~~~~~~~~~~
+.. Limitations:
 
 If it's not listed under features, chances are that we don't have it yet. See the :ref:`Roadmap` for our current plan.

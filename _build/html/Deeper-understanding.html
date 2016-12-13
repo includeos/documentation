@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Build and Boot Process &#8212; IncludeOS 0.9.3 documentation</title>
+    <title>Deeper understanding &#8212; IncludeOS 0.9.3 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Features and Limitations" href="Features.html" />
-    <link rel="prev" title="IncludeOS" href="index.html" /> 
+    <link rel="next" title="Publications" href="Publications.html" />
+    <link rel="prev" title="Videos and links" href="Videos-and-links.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,10 +37,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Features.html" title="Features and Limitations"
+          <a href="Publications.html" title="Publications"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="IncludeOS"
+          <a href="Videos-and-links.html" title="Videos and links"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
@@ -51,10 +51,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-build-and-boot-process">
-<h1>The Build and Boot Process<a class="headerlink" href="#the-build-and-boot-process" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="deeper-understanding">
+<span id="id1"></span><h1>Deeper understanding<a class="headerlink" href="#deeper-understanding" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="the-build-process">
 <h2>The build process<a class="headerlink" href="#the-build-process" title="Permalink to this headline">¶</a></h2>
+<p>The build system will:</p>
+<ul class="simple">
+<li>link your service and only the necessary OS objects into a single binary</li>
+<li>attach a boot loader</li>
+<li>combine everything into a self-contained bootable disk image, ready to run on a modern hypervisor.</li>
+</ul>
+<p>In other words, it&#8217;s a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">Unikernel</a> written from scratch, employing x86 hardware virtualization, with no dependencies except for the virtual hardware.</p>
+<div class="figure">
+<img alt="Build system overview" src="_images/IncludeOS_build_system_overview.png" />
+</div>
 <ol class="arabic simple">
 <li>Installing IncludeOS means building all the OS components, such as <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/irq_manager.hpp">IRQ manager</a>, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/pci_manager.hpp">PCI manager</a>, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/pit.hpp">PIT-Timers</a> and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/nic.hpp">Device Driver(s)</a>, combining them into a static library <code class="docutils literal"><span class="pre">os.a</span></code> using GNU <code class="docutils literal"><span class="pre">ar</span></code>, and putting it in <code class="docutils literal"><span class="pre">$INCLUDEOS_HOME</span></code> along with all the public os-headers (the &#8220;IncludeOS API&#8221;). This is what you&#8217;ll be including parts of, into the service.</li>
 <li>When the service gets built it will turn into object files, which eventually gets statically linked with the os-library and other libraries. Only the objects actually needed by the service will be linked, turning it all into one minimal elf-binary, <code class="docutils literal"><span class="pre">your_service</span></code>, with OS included.</li>
@@ -75,6 +85,67 @@
 <li>Finally the OS class (still <code class="docutils literal"><span class="pre">OS::start</span></code>) calls <code class="docutils literal"><span class="pre">Service::start()</span></code>, inside your service, handing over control to you.</li>
 </ol>
 </div>
+<div class="section" id="fun-with-guns-and-knives">
+<span id="id2"></span><h2>Fun with Guns and Knives<a class="headerlink" href="#fun-with-guns-and-knives" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="what-s-in-an-address">
+<h3>What&#8217;s in an address<a class="headerlink" href="#what-s-in-an-address" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Try writing to that damn well protected address 0! Just remember that you&#8217;re overwriting a 16-bit heirloom. You have enough powers to dig it up and see that it still works - if you start early enough in the bootloader. (It&#8217;s only 512 <em>bytes</em> - you can read it!)</li>
+</ul>
+</div>
+<div class="section" id="make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">
+<h3>Make sure nobody can call you, then go to sleep until somebody calls...<a class="headerlink" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Try to <code class="docutils literal"><span class="pre">asm(&quot;cli;hlt&quot;)</span></code> in a userspace program - then try it in IncludeOS, directly on KVM/VirtualBox. Explain to the duck exactly what&#8217;s going on - and he&#8217;ll tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget in reward of your mischief.</li>
+<li>Now try it in IncludeOS inside a virtualBox VM. Explain <em>that</em> to the duck!</li>
+</ul>
+</div>
+<div class="section" id="throw-frying-pans">
+<h3>Throw frying pans<a class="headerlink" href="#throw-frying-pans" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Ever wondered what would happen if you <code class="docutils literal"><span class="pre">throw</span> <span class="pre">FryingPan</span></code> inside a (real) interrupt handler - or better yet - a std::Exception inside a CPU Exception handler? (Hey - maybe that way we could <code class="docutils literal"><span class="pre">catch</span></code> division by zero Exception?) You have the means to try!</li>
+</ul>
+</div>
+<div class="section" id="a-new-segment">
+<h3>A new segment<a class="headerlink" href="#a-new-segment" title="Permalink to this headline">¶</a></h3>
+<p>What if we protect the memory segment of the .rodata of the OS?</p>
+</div>
+<div class="section" id="interrupt-please">
+<h3>Interrupt please!<a class="headerlink" href="#interrupt-please" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="jenkins-ci">
+<h3>Jenkins CI<a class="headerlink" href="#jenkins-ci" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="jenkins-includeos-org">
+<h2><a class="reference external" href="https://jenkins.includeos.org">Jenkins.includeos.org</a><a class="headerlink" href="#jenkins-includeos-org" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-your-personal-build-to-build-on-the-jenkins-server">
+<h3>Getting your personal build to build on the jenkins server<a class="headerlink" href="#getting-your-personal-build-to-build-on-the-jenkins-server" title="Permalink to this headline">¶</a></h3>
+<p>If you want to get your personal fork of IncludeOS to build with every commit this procedure will show you what steps to go through.</p>
+<p>Things to take note off:</p>
+<ul class="simple">
+<li>Will by default build on your dev branch. This will be easier to change at a later date.</li>
+<li>Will look for the repo: <code class="docutils literal"><span class="pre">https://github.com/&lt;github-username&gt;/IncludeOS</span></code></li>
+<li>Does not merge with upstream dev automatically as of this date.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="follow-these-steps-to-get-it-to-work">
+<h2>Follow these steps to get it to work:<a class="headerlink" href="#follow-these-steps-to-get-it-to-work" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Go to the settings page for your <strong>personal fork</strong></li>
+</ol>
+<p><img alt="Settings menu" src="http://i.imgur.com/wfoYcaD.png" /></p>
+<ol class="arabic simple" start="2">
+<li>Navigate to the <em>Webhooks &amp; Services</em> section and press the <em>Add webhook</em> button. Then enter the following url into the <em>Payload URL</em> section <code class="docutils literal"><span class="pre">https://jenkins.includeos.org/github-webhook/</span></code>. Then press <em>Add webhook</em></li>
+</ol>
+<p><img alt="Payload URL" src="http://i.imgur.com/g0gEcBq.png" /></p>
+<ol class="arabic simple" start="3">
+<li>To make sure this works, go back to the webhooks page and make sure you see the green checkmark next to the url. This might take a few seconds, so refresh the page.</li>
+</ol>
+<p><img alt="Checkmark" src="http://i.imgur.com/yUTIwZ1.png?1" /></p>
+<p>Then when I create the tests results will be available on <a class="reference external" href="https://jenkins.includeos.org">Jenkins.includeos.org</a></p>
+</div>
 </div>
 
 
@@ -85,23 +156,37 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">The Build and Boot Process</a><ul>
+<li><a class="reference internal" href="#">Deeper understanding</a><ul>
 <li><a class="reference internal" href="#the-build-process">The build process</a></li>
 <li><a class="reference internal" href="#the-boot-process">The boot process</a></li>
+<li><a class="reference internal" href="#fun-with-guns-and-knives">Fun with Guns and Knives</a><ul>
+<li><a class="reference internal" href="#what-s-in-an-address">What&#8217;s in an address</a></li>
+<li><a class="reference internal" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls...</a></li>
+<li><a class="reference internal" href="#throw-frying-pans">Throw frying pans</a></li>
+<li><a class="reference internal" href="#a-new-segment">A new segment</a></li>
+<li><a class="reference internal" href="#interrupt-please">Interrupt please!</a></li>
+<li><a class="reference internal" href="#jenkins-ci">Jenkins CI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#jenkins-includeos-org">Jenkins.includeos.org</a><ul>
+<li><a class="reference internal" href="#getting-your-personal-build-to-build-on-the-jenkins-server">Getting your personal build to build on the jenkins server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#follow-these-steps-to-get-it-to-work">Follow these steps to get it to work:</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">IncludeOS</a></p>
+  <p class="topless"><a href="Videos-and-links.html"
+                        title="previous chapter">Videos and links</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Features.html"
-                        title="next chapter">Features and Limitations</a></p>
+  <p class="topless"><a href="Publications.html"
+                        title="next chapter">Publications</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/The-Build-and-Boot-process.rst.txt"
+      <li><a href="_sources/Deeper-understanding.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -126,10 +211,10 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Features.html" title="Features and Limitations"
+          <a href="Publications.html" title="Publications"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="IncludeOS"
+          <a href="Videos-and-links.html" title="Videos and links"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>

@@ -1,12 +1,20 @@
+.. _Contributing to IncludeOS:
+
 Contributing to IncludeOS
 =========================
 
-Fork, edit and send us a pull-request on GitHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Litt mer underoverskrifter (mye tekst nå)
+.. Ganske oppdatert
+.. Clone istedenfor fork
+.. Consider making a standalone package er egentlig punkt 7
+.. Slå sammen punkt 3 og 4
+.. Presenter hvert punkt litt annerledes - så det er lettere å få oversikt - ikke så mye tekst
+.. Vurdere: CMake packages istedenfor standalone packages (package manager ikke helt ennå og litt uklart når blir)
 
-IncludeOS is being developed on GitHub. Create your own fork, send us a pull request and `chat with us on Gitter <https://gitter.im/hioa-cs/IncludeOS>`__.
+Clone, edit and send us a pull-request on GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You're very welcome to `clone, edit and send pull-requests <https://help.github.com/articles/using-pull-requests>`__.
+IncludeOS is being developed on GitHub. Clone the `repository <https://github.com/hioa-cs/IncludeOS>`__, send us a `pull request <https://help.github.com/articles/using-pull-requests>`__ and `chat with us on Gitter <https://gitter.im/hioa-cs/IncludeOS>`__.
 
 Send any and all pull-requests to the `dev-branch <https://github.com/hioa-cs/IncludeOS/tree/dev>`__. It's ok if it comes from your master branch.
 

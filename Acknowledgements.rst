@@ -1,5 +1,13 @@
+.. _Acknowledgements:
+
 Acknowledgements
 ================
+
+.. Ang. Master's students:
+.. Oppdatere: Har de en thesis klar - legge noe under publikasjon?
+
+.. Ang. Others
+.. Kanskje ikke Jedi Council - bestemme oss for en mer seriøs linje/stil og tenke på det når vi skriver dokumentasjonen
 
 SanOS
 ~~~~~

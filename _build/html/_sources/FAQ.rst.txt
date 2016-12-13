@@ -3,6 +3,10 @@
 FAQ
 ===
 
+.. Jedi Council bort
+.. Oppdatere en god del
+.. Vi har main nå
+
 Why don't we have feature X by default?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

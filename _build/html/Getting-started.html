@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Ubuntu" href="Ubuntu.html" />
-    <link rel="prev" title="FAQ" href="FAQ.html" /> 
+    <link rel="next" title="Running tests" href="Running-tests.html" />
+    <link rel="prev" title="Install" href="Install.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,10 +37,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Ubuntu.html" title="Ubuntu"
+          <a href="Running-tests.html" title="Running tests"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="FAQ.html" title="FAQ"
+          <a href="Install.html" title="Install"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
@@ -52,7 +52,7 @@
           <div class="body" role="main">
             
   <div class="section" id="getting-started">
-<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="install-libraries">
 <h2>Install libraries<a class="headerlink" href="#install-libraries" title="Permalink to this headline">¶</a></h2>
 <p><strong>NOTE:</strong> The script will install packages and create a network bridge, and thus will ask for sudo access.</p>
@@ -70,7 +70,8 @@ $ ./install.sh
 <li>Build the vmbuilder, which turns your service into a bootable image.</li>
 <li>Copy <cite>vmbuild</cite> and <cite>qemu-ifup</cite> from the repo, over to <cite>$INCLUDEOS_HOME</cite>.</li>
 </ul>
-<p>Detailed installation instructions for <a class="reference internal" href="Vagrant.html#vagrant"><span class="std std-ref">Vagrant</span></a>, <a class="reference internal" href="OS-X.html#os-x"><span class="std std-ref">OS X</span></a> and <a class="reference internal" href="Ubuntu.html#ubuntu"><span class="std std-ref">Ubuntu</span></a> are available, as well as instructions for building everything from source: <a class="reference internal" href="Ubuntu.html#building-everything-from-source"><span class="std std-ref">B) Completely build everything from source (slow)</span></a>.</p>
+<p>Detailed installation instructions for Vagrant, Mac OS and Ubuntu are available, as well as instructions for building everything from source.
+.. Se under Install.rst (Ubuntu B) Completely build everything from source)</p>
 </div>
 <div class="section" id="testing-the-installation">
 <h2>Testing the installation<a class="headerlink" href="#testing-the-installation" title="Permalink to this headline">¶</a></h2>
@@ -79,7 +80,8 @@ $ ./install.sh
 </pre></div>
 </div>
 <p>will build and run <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/examples/demo_service/service.cpp">this example service</a>.</p>
-<p>More information about testing the example service is available here: <a class="reference internal" href="Testing-the-example-service.html#testing-the-example-service"><span class="std std-ref">Testing the example service</span></a>.</p>
+<p>More information about testing the example service is available here: <a class="reference internal" href="#testing-the-example-service"><span class="std std-ref">Testing the example service</span></a>.
+.. Testing the example service is further down on the page</p>
 </div>
 <div class="section" id="writing-your-first-service">
 <h2>Writing your first service<a class="headerlink" href="#writing-your-first-service" title="Permalink to this headline">¶</a></h2>
@@ -107,6 +109,29 @@ $ ./run.sh my_service.img
 <ul class="simple">
 <li>If you want to debug the bootloader, or inspect memory, registers, flags etc. using a GUI, you need to install <a class="reference external" href="http://bochs.sourceforge.net/">Bochs</a>. This is because <code class="docutils literal"><span class="pre">gdb</span></code> only works for objects with debugging symbols, which we don&#8217;t have for our bootloader. See <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/bochs_installation.sh">./etc/bochs_installation.sh</a> for build options, and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/.bochsrc">./etc/.bochsrc</a> for an example configuration file (which specifies a &lt;1MB disk).</li>
 </ul>
+<div class="section" id="testing-the-example-service">
+<span id="id2"></span><h3>Testing the example service<a class="headerlink" href="#testing-the-example-service" title="Permalink to this headline">¶</a></h3>
+<p><strong>Things to note</strong></p>
+<ul>
+<li><p class="first">The default test script will only work on Linux, and uses Qemu (with KVM if available). To run IncludeOS directly on VirtualBox, see <code class="docutils literal"><span class="pre">etc/vboxrun.sh</span></code></p>
+</li>
+<li><p class="first">There is no shell! IncludeOS is a unikernel, and so it will only run one process. Think of an IncludeOS VM as a local process.</p>
+</li>
+<li><p class="first">There is no default VGA! So, nothing will show up on the &#8220;screen&#8221; if you&#8217;re using a GUI (i.e. if you run IncludeOS directly in virtualbox). To enable VGA you will need to connect <code class="docutils literal"><span class="pre">OS::set_rsprint_secondary</span></code> to a lambda that calls <code class="docutils literal"><span class="pre">ConsoleVGA::write</span></code> (see: <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/vga.hpp">api/kernel/vga.hpp</a> and the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/test/hw/integration/vga/vga.cpp">test service</a> for an example), as well as enable graphical output in the emulator, such as qemu. We&#8217;ll add VGA support in the future, as a package.</p>
+</li>
+<li><p class="first">You should be able to ping the VM. Its IP-address will be stated in the boot-time output from IncludeOS.</p>
+</li>
+<li><p class="first">You should also be able to open a simple webpage on the VM, by entering the IP into a browser, inside the development machine.</p>
+</li>
+<li><p class="first">How to get out? The test script starts <a class="reference external" href="http://wiki.qemu.org/Main_Page">qemu</a> with the <code class="docutils literal"><span class="pre">--nographics</span></code>-option. This will by default reroute stdin and stdout to the terminal. To exit the virtual machine, you can go via the <a class="reference external" href="https://en.wikibooks.org/wiki/QEMU/Monitor#Virtual_machine">Qemu monitor</a>. The command for entering the monitor is <code class="docutils literal"><span class="pre">Ctrl+a</span> <span class="pre">c</span></code>, or to exit directly, <code class="docutils literal"><span class="pre">Ctrl+a</span> <span class="pre">x</span></code>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>NOTE</em>: This keyboard shortcut may not work if you&#8217;re interacting with your development environment is via a VirtualBox GUI, over putty, inside a <code class="docutils literal"><span class="pre">screen</span></code> etc. If you find a good solution for a certain platform (i.e. putty to VirtualBox on Windows), please let us know so we can update our wiki.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -123,17 +148,20 @@ $ ./run.sh my_service.img
 <li><a class="reference internal" href="#testing-the-installation">Testing the installation</a></li>
 <li><a class="reference internal" href="#writing-your-first-service">Writing your first service</a></li>
 <li><a class="reference internal" href="#helper-scripts">Helper scripts</a></li>
-<li><a class="reference internal" href="#debugging-with-bochs">Debugging with Bochs</a></li>
+<li><a class="reference internal" href="#debugging-with-bochs">Debugging with Bochs</a><ul>
+<li><a class="reference internal" href="#testing-the-example-service">Testing the example service</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="FAQ.html"
-                        title="previous chapter">FAQ</a></p>
+  <p class="topless"><a href="Install.html"
+                        title="previous chapter">Install</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Ubuntu.html"
-                        title="next chapter">Ubuntu</a></p>
+  <p class="topless"><a href="Running-tests.html"
+                        title="next chapter">Running tests</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -162,10 +190,10 @@ $ ./run.sh my_service.img
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Ubuntu.html" title="Ubuntu"
+          <a href="Running-tests.html" title="Running tests"
              >next</a> |</li>
         <li class="right" >
-          <a href="FAQ.html" title="FAQ"
+          <a href="Install.html" title="Install"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
       </ul>
