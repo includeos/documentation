@@ -1,7 +1,7 @@
 .. _The boot process:
 
 The boot process
-~~~~~~~~~~~~~~~~
+================
 
 .. Vet ikke om denne er 100 % oppdatert
 .. Tenk brukervennlighet

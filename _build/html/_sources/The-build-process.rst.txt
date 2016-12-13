@@ -1,7 +1,7 @@
 .. _The build process:
 
 The build process
-~~~~~~~~~~~~~~~~~
+=================
 
 .. Mer fokus på hvordan brukere faktisk bruker IncludeOS
 .. Er nå altfor detaljert

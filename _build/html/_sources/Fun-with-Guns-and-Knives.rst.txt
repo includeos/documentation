@@ -1,9 +1,9 @@
 .. _Fun with Guns and Knives:
 
 Fun with Guns and Knives
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
 
-.. Skrive litt mer seriøst
+.. Skrive litt mer seriøst hvis vi skal beholde dette
 
 What's in an address
 --------------------

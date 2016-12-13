@@ -1,7 +1,9 @@
-.. Oppdatere
+.. _Jenkins CI:
 
 Jenkins CI
-----------
+==========
+
+.. Oppdatere
 
 `Jenkins.includeos.org <https://jenkins.includeos.org>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
