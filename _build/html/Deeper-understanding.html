@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Publications" href="Publications.html" />
+    <link rel="next" title="The build process" href="The-build-process.html" />
     <link rel="prev" title="FAQ" href="FAQ.html" /> 
   </head>
   <body role="document">
@@ -37,7 +37,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Publications.html" title="Publications"
+          <a href="The-build-process.html" title="The build process"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="FAQ.html" title="FAQ"
@@ -53,98 +53,28 @@
             
   <div class="section" id="deeper-understanding">
 <span id="id1"></span><h1>Deeper understanding<a class="headerlink" href="#deeper-understanding" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="the-build-process">
-<h2>The build process<a class="headerlink" href="#the-build-process" title="Permalink to this headline">¶</a></h2>
-<p>The build system will:</p>
-<ul class="simple">
-<li>link your service and only the necessary OS objects into a single binary</li>
-<li>attach a boot loader</li>
-<li>combine everything into a self-contained bootable disk image, ready to run on a modern hypervisor.</li>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="The-build-process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="The-boot-process.html">The boot process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fun-with-Guns-and-Knives.html">Fun with Guns and Knives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#what-s-in-an-address">What&#8217;s in an address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls...</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#throw-frying-pans">Throw frying pans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#a-new-segment">A new segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fun-with-Guns-and-Knives.html#interrupt-please">Interrupt please!</a></li>
 </ul>
-<p>In other words, it&#8217;s a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">Unikernel</a> written from scratch, employing x86 hardware virtualization, with no dependencies except for the virtual hardware.</p>
-<div class="figure">
-<img alt="Build system overview" src="_images/IncludeOS_build_system_overview.png" />
-</div>
-<ol class="arabic simple">
-<li>Installing IncludeOS means building all the OS components, such as <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/irq_manager.hpp">IRQ manager</a>, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/pci_manager.hpp">PCI manager</a>, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/pit.hpp">PIT-Timers</a> and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/nic.hpp">Device Driver(s)</a>, combining them into a static library <code class="docutils literal"><span class="pre">os.a</span></code> using GNU <code class="docutils literal"><span class="pre">ar</span></code>, and putting it in <code class="docutils literal"><span class="pre">$INCLUDEOS_HOME</span></code> along with all the public os-headers (the &#8220;IncludeOS API&#8221;). This is what you&#8217;ll be including parts of, into the service.</li>
-<li>When the service gets built it will turn into object files, which eventually gets statically linked with the os-library and other libraries. Only the objects actually needed by the service will be linked, turning it all into one minimal elf-binary, <code class="docutils literal"><span class="pre">your_service</span></code>, with OS included.</li>
-<li>The utility <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/vmbuild">vmbuild</a> combines the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm">bootloader</a> and <code class="docutils literal"><span class="pre">your_service</span></code> binary into a disk image called <code class="docutils literal"><span class="pre">your_service.img</span></code>. At this point the bootloader gets the size and location of the service hardcoded into it.</li>
-<li>Now Qemu can start directly, with that image as hard disk, either directly from the command-line, using our convenience-script, or via libvirt/virsh.</li>
-<li>To run with virtualbox, the image has to be converted into a supported format, such as <code class="docutils literal"><span class="pre">vdi</span></code>. This is easily done in one command with the <code class="docutils literal"><span class="pre">qemu-img</span></code>-tool, that comes with Qemu. We have a <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/convert_image.sh">script for that too</a>.</li>
-</ol>
-<p>Inspect the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/Makefile">Makefile</a> and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/linker.ld">linker script, linker.ld</a> for more information about how the build happens, and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/vmbuild/vmbuild.cpp">vmbuild/vmbuild.cpp</a> for how the image gets constructed.</p>
-</div>
-<div class="section" id="the-boot-process">
-<h2>The boot process<a class="headerlink" href="#the-boot-process" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li>BIOS loads <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm">bootloader.asm</a>, starting at <code class="docutils literal"><span class="pre">_start</span></code>.</li>
-<li>The bootloader sets up segments, switches to 32-bit protected mode, loads the service (an elf-binary <code class="docutils literal"><span class="pre">your_service</span></code> consisting of the OS classes, libraries and your service) from disk.</li>
-<li>The bootloader hands over control to the OS, by jumping to the <code class="docutils literal"><span class="pre">_start</span></code> symbol inside <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/kernel_start.cpp">kernel_start.cpp</a>.</li>
-<li>The OS initializes <code class="docutils literal"><span class="pre">.bss</span></code>, calls global constructors (<code class="docutils literal"><span class="pre">_init</span></code>), and then calls <code class="docutils literal"><span class="pre">OS::start</span></code> in <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/os.cpp">the OS class</a>.</li>
-<li>The OS class sets up interrupts, initializes devices, etc. etc.</li>
-<li>Finally the OS class (still <code class="docutils literal"><span class="pre">OS::start</span></code>) calls <code class="docutils literal"><span class="pre">Service::start()</span></code>, inside your service, handing over control to you.</li>
-</ol>
-</div>
-<div class="section" id="fun-with-guns-and-knives">
-<span id="id2"></span><h2>Fun with Guns and Knives<a class="headerlink" href="#fun-with-guns-and-knives" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="what-s-in-an-address">
-<h3>What&#8217;s in an address<a class="headerlink" href="#what-s-in-an-address" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Try writing to that damn well protected address 0! Just remember that you&#8217;re overwriting a 16-bit heirloom. You have enough powers to dig it up and see that it still works - if you start early enough in the bootloader. (It&#8217;s only 512 <em>bytes</em> - you can read it!)</li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Jenkins-CI.html">Jenkins CI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Jenkins-CI.html#jenkins-includeos-org">Jenkins.includeos.org</a></li>
 </ul>
-</div>
-<div class="section" id="make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">
-<h3>Make sure nobody can call you, then go to sleep until somebody calls...<a class="headerlink" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Try to <code class="docutils literal"><span class="pre">asm(&quot;cli;hlt&quot;)</span></code> in a userspace program - then try it in IncludeOS, directly on KVM/VirtualBox. Explain to the duck exactly what&#8217;s going on - and he&#8217;ll tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget in reward of your mischief.</li>
-<li>Now try it in IncludeOS inside a virtualBox VM. Explain <em>that</em> to the duck!</li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Jenkins-CI.html#getting-your-personal-build-to-build-on-the-jenkins-server">Getting your personal build to build on the jenkins server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Jenkins-CI.html#follow-these-steps-to-get-it-to-work">Follow these steps to get it to work:</a></li>
 </ul>
-</div>
-<div class="section" id="throw-frying-pans">
-<h3>Throw frying pans<a class="headerlink" href="#throw-frying-pans" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Ever wondered what would happen if you <code class="docutils literal"><span class="pre">throw</span> <span class="pre">FryingPan</span></code> inside a (real) interrupt handler - or better yet - a std::Exception inside a CPU Exception handler? (Hey - maybe that way we could <code class="docutils literal"><span class="pre">catch</span></code> division by zero Exception?) You have the means to try!</li>
+</li>
 </ul>
-</div>
-<div class="section" id="a-new-segment">
-<h3>A new segment<a class="headerlink" href="#a-new-segment" title="Permalink to this headline">¶</a></h3>
-<p>What if we protect the memory segment of the .rodata of the OS?</p>
-</div>
-<div class="section" id="interrupt-please">
-<h3>Interrupt please!<a class="headerlink" href="#interrupt-please" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="jenkins-ci">
-<h3>Jenkins CI<a class="headerlink" href="#jenkins-ci" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="jenkins-includeos-org">
-<h2><a class="reference external" href="https://jenkins.includeos.org">Jenkins.includeos.org</a><a class="headerlink" href="#jenkins-includeos-org" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="getting-your-personal-build-to-build-on-the-jenkins-server">
-<h3>Getting your personal build to build on the jenkins server<a class="headerlink" href="#getting-your-personal-build-to-build-on-the-jenkins-server" title="Permalink to this headline">¶</a></h3>
-<p>If you want to get your personal fork of IncludeOS to build with every commit this procedure will show you what steps to go through.</p>
-<p>Things to take note off:</p>
-<ul class="simple">
-<li>Will by default build on your dev branch. This will be easier to change at a later date.</li>
-<li>Will look for the repo: <code class="docutils literal"><span class="pre">https://github.com/&lt;github-username&gt;/IncludeOS</span></code></li>
-<li>Does not merge with upstream dev automatically as of this date.</li>
-</ul>
-</div>
-</div>
-<div class="section" id="follow-these-steps-to-get-it-to-work">
-<h2>Follow these steps to get it to work:<a class="headerlink" href="#follow-these-steps-to-get-it-to-work" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li>Go to the settings page for your <strong>personal fork</strong></li>
-</ol>
-<p><img alt="Settings menu" src="http://i.imgur.com/wfoYcaD.png" /></p>
-<ol class="arabic simple" start="2">
-<li>Navigate to the <em>Webhooks &amp; Services</em> section and press the <em>Add webhook</em> button. Then enter the following url into the <em>Payload URL</em> section <code class="docutils literal"><span class="pre">https://jenkins.includeos.org/github-webhook/</span></code>. Then press <em>Add webhook</em></li>
-</ol>
-<p><img alt="Payload URL" src="http://i.imgur.com/g0gEcBq.png" /></p>
-<ol class="arabic simple" start="3">
-<li>To make sure this works, go back to the webhooks page and make sure you see the green checkmark next to the url. This might take a few seconds, so refresh the page.</li>
-</ol>
-<p><img alt="Checkmark" src="http://i.imgur.com/yUTIwZ1.png?1" /></p>
-<p>Then when I create the tests results will be available on <a class="reference external" href="https://jenkins.includeos.org">Jenkins.includeos.org</a></p>
 </div>
 </div>
 
@@ -154,35 +84,12 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Deeper understanding</a><ul>
-<li><a class="reference internal" href="#the-build-process">The build process</a></li>
-<li><a class="reference internal" href="#the-boot-process">The boot process</a></li>
-<li><a class="reference internal" href="#fun-with-guns-and-knives">Fun with Guns and Knives</a><ul>
-<li><a class="reference internal" href="#what-s-in-an-address">What&#8217;s in an address</a></li>
-<li><a class="reference internal" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls...</a></li>
-<li><a class="reference internal" href="#throw-frying-pans">Throw frying pans</a></li>
-<li><a class="reference internal" href="#a-new-segment">A new segment</a></li>
-<li><a class="reference internal" href="#interrupt-please">Interrupt please!</a></li>
-<li><a class="reference internal" href="#jenkins-ci">Jenkins CI</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#jenkins-includeos-org">Jenkins.includeos.org</a><ul>
-<li><a class="reference internal" href="#getting-your-personal-build-to-build-on-the-jenkins-server">Getting your personal build to build on the jenkins server</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#follow-these-steps-to-get-it-to-work">Follow these steps to get it to work:</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="FAQ.html"
                         title="previous chapter">FAQ</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Publications.html"
-                        title="next chapter">Publications</a></p>
+  <p class="topless"><a href="The-build-process.html"
+                        title="next chapter">The build process</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -211,7 +118,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Publications.html" title="Publications"
+          <a href="The-build-process.html" title="The build process"
              >next</a> |</li>
         <li class="right" >
           <a href="FAQ.html" title="FAQ"

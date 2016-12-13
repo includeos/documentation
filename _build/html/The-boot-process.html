@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Publications &#8212; IncludeOS 0.9.3 documentation</title>
+    <title>The boot process &#8212; IncludeOS 0.9.3 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acknowledgements" href="Acknowledgements.html" />
-    <link rel="prev" title="Jenkins CI" href="Jenkins-CI.html" /> 
+    <link rel="next" title="Fun with Guns and Knives" href="Fun-with-Guns-and-Knives.html" />
+    <link rel="prev" title="The build process" href="The-build-process.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,12 +37,13 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Acknowledgements.html" title="Acknowledgements"
+          <a href="Fun-with-Guns-and-Knives.html" title="Fun with Guns and Knives"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Jenkins-CI.html" title="Jenkins CI"
+          <a href="The-build-process.html" title="The build process"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="Deeper-understanding.html" accesskey="U">Deeper understanding</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -51,19 +52,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="publications">
-<span id="id1"></span><h1>Publications<a class="headerlink" href="#publications" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="papers-related-to-includeos">
-<h2>Papers related to IncludeOS<a class="headerlink" href="#papers-related-to-includeos" title="Permalink to this headline">¶</a></h2>
-<p><strong>Initial IncludeOS paper, 2015</strong></p>
-<ul class="simple">
-<li>Bratterud, A.; Walla, A.; Haugerud, H.; Engelstad; P.E., Begnum, K., &#8220;<a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/doc/papers/IncludeOS_IEEE_CloudCom2015_PREPRINT.pdf">IncludeOS: a resource efficient unikernel for cloud services</a>&#8221; in <em>Cloud Computing Technology and Science (CloudCom), 2015 IEEE 7th International Conference on</em></li>
-</ul>
-<p><strong>Motivating paper, 2013</strong></p>
-<ul class="simple">
-<li>Bratterud, A.; Haugerud, H., &#8220;Maximizing Hypervisor Scalability using Minimal Virtual Machines&#8221;: See <a class="reference external" href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6753801">IEEE Explore for abstract and citation details</a></li>
-</ul>
-</div>
+  <div class="section" id="the-boot-process">
+<span id="id1"></span><h1>The boot process<a class="headerlink" href="#the-boot-process" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>BIOS loads <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm">bootloader.asm</a>, starting at <code class="docutils literal"><span class="pre">_start</span></code>.</li>
+<li>The bootloader sets up segments, switches to 32-bit protected mode, loads the service (an elf-binary <code class="docutils literal"><span class="pre">your_service</span></code> consisting of the OS classes, libraries and your service) from disk.</li>
+<li>The bootloader hands over control to the OS, by jumping to the <code class="docutils literal"><span class="pre">_start</span></code> symbol inside <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/kernel_start.cpp">kernel_start.cpp</a>.</li>
+<li>The OS initializes <code class="docutils literal"><span class="pre">.bss</span></code>, calls global constructors (<code class="docutils literal"><span class="pre">_init</span></code>), and then calls <code class="docutils literal"><span class="pre">OS::start</span></code> in <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/os.cpp">the OS class</a>.</li>
+<li>The OS class sets up interrupts, initializes devices, etc. etc.</li>
+<li>Finally the OS class (still <code class="docutils literal"><span class="pre">OS::start</span></code>) calls <code class="docutils literal"><span class="pre">Service::start()</span></code>, inside your service, handing over control to you.</li>
+</ol>
 </div>
 
 
@@ -72,24 +70,16 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Publications</a><ul>
-<li><a class="reference internal" href="#papers-related-to-includeos">Papers related to IncludeOS</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Jenkins-CI.html"
-                        title="previous chapter">Jenkins CI</a></p>
+  <p class="topless"><a href="The-build-process.html"
+                        title="previous chapter">The build process</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Acknowledgements.html"
-                        title="next chapter">Acknowledgements</a></p>
+  <p class="topless"><a href="Fun-with-Guns-and-Knives.html"
+                        title="next chapter">Fun with Guns and Knives</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Publications.rst.txt"
+      <li><a href="_sources/The-boot-process.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -114,12 +104,13 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Acknowledgements.html" title="Acknowledgements"
+          <a href="Fun-with-Guns-and-Knives.html" title="Fun with Guns and Knives"
              >next</a> |</li>
         <li class="right" >
-          <a href="Jenkins-CI.html" title="Jenkins CI"
+          <a href="The-build-process.html" title="The build process"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="Deeper-understanding.html" >Deeper understanding</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

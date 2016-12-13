@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The build process &#8212; IncludeOS 0.9.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The boot process" href="The-boot-process.html" />
+    <link rel="prev" title="Deeper understanding" href="Deeper-understanding.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="The-boot-process.html" title="The boot process"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Deeper-understanding.html" title="Deeper understanding"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="Deeper-understanding.html" accesskey="U">Deeper understanding</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-build-process">
+<span id="id1"></span><h1>The build process<a class="headerlink" href="#the-build-process" title="Permalink to this headline">¶</a></h1>
+<p>The build system will:</p>
+<ul class="simple">
+<li>link your service and only the necessary OS objects into a single binary</li>
+<li>attach a boot loader</li>
+<li>combine everything into a self-contained bootable disk image, ready to run on a modern hypervisor.</li>
+</ul>
+<p>In other words, it&#8217;s a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">Unikernel</a> written from scratch, employing x86 hardware virtualization, with no dependencies except for the virtual hardware.</p>
+<div class="figure">
+<img alt="Build system overview" src="_images/IncludeOS_build_system_overview.png" />
+</div>
+<ol class="arabic simple">
+<li>Installing IncludeOS means building all the OS components, such as <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/irq_manager.hpp">IRQ manager</a>, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/pci_manager.hpp">PCI manager</a>, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/pit.hpp">PIT-Timers</a> and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/nic.hpp">Device Driver(s)</a>, combining them into a static library <code class="docutils literal"><span class="pre">os.a</span></code> using GNU <code class="docutils literal"><span class="pre">ar</span></code>, and putting it in <code class="docutils literal"><span class="pre">$INCLUDEOS_HOME</span></code> along with all the public os-headers (the &#8220;IncludeOS API&#8221;). This is what you&#8217;ll be including parts of, into the service.</li>
+<li>When the service gets built it will turn into object files, which eventually gets statically linked with the os-library and other libraries. Only the objects actually needed by the service will be linked, turning it all into one minimal elf-binary, <code class="docutils literal"><span class="pre">your_service</span></code>, with OS included.</li>
+<li>The utility <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/vmbuild">vmbuild</a> combines the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm">bootloader</a> and <code class="docutils literal"><span class="pre">your_service</span></code> binary into a disk image called <code class="docutils literal"><span class="pre">your_service.img</span></code>. At this point the bootloader gets the size and location of the service hardcoded into it.</li>
+<li>Now Qemu can start directly, with that image as hard disk, either directly from the command-line, using our convenience-script, or via libvirt/virsh.</li>
+<li>To run with virtualbox, the image has to be converted into a supported format, such as <code class="docutils literal"><span class="pre">vdi</span></code>. This is easily done in one command with the <code class="docutils literal"><span class="pre">qemu-img</span></code>-tool, that comes with Qemu. We have a <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/convert_image.sh">script for that too</a>.</li>
+</ol>
+<p>Inspect the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/Makefile">Makefile</a> and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/linker.ld">linker script, linker.ld</a> for more information about how the build happens, and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/vmbuild/vmbuild.cpp">vmbuild/vmbuild.cpp</a> for how the image gets constructed.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Deeper-understanding.html"
+                        title="previous chapter">Deeper understanding</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="The-boot-process.html"
+                        title="next chapter">The boot process</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/The-build-process.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="The-boot-process.html" title="The boot process"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Deeper-understanding.html" title="Deeper understanding"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="Deeper-understanding.html" >Deeper understanding</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, IncludeOS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
+  </body>
+</html>
