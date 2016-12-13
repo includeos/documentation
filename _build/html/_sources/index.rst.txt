@@ -13,13 +13,13 @@ For more information: Visit our `website <http://www.includeos.org>`__, check ou
 
    Install
    Getting-started
-   Running-tests
+   Contributing-to-IncludeOS
    Features
    Roadmap
    Examples-and-submodules
-   Contributing-to-IncludeOS
-   Videos-and-links
+   Running-tests
+   More-information
+   FAQ
    Deeper-understanding
    Publications
    Acknowledgements
-   FAQ

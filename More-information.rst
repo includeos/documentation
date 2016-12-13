@@ -1,7 +1,9 @@
-.. _Videos and links:
+.. _More information:
 
-Videos and links
+More information
 ================
+
+.. Videos and links
 
 IncludeOS on CppCast ... 2016
 
