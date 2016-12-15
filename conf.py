@@ -89,6 +89,10 @@ html_theme = "default"
     #"relbarbgcolor": "blue"
 #}
 
+# Add custom css file
+def setup(app):
+  app.add_stylesheet( "css/custom_style.css" )
+
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
