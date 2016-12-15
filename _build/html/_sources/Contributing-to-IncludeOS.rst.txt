@@ -3,11 +3,7 @@
 Contributing to IncludeOS
 =========================
 
-.. Litt mer underoverskrifter (mye tekst nå)
-.. Ganske oppdatert
-.. Presenter hvert punkt litt annerledes - så det er lettere å få oversikt - ikke så mye tekst
-
-.. Vurdere: CMake packages istedenfor standalone packages (package manager ikke helt ennå og litt uklart når blir)
+.. Evaluate: CMake packages instead of standalone packages (not sure when a package manager will be up and running)
 
 Clone, edit and send us a pull request on GitHub
 ------------------------------------------------
@@ -19,15 +15,15 @@ Send any and all pull requests to the `dev-branch <https://github.com/hioa-cs/In
 Guidelines
 ~~~~~~~~~~
 
-1. **Do "one thing" pr. pull request**
+**1. Do "one thing" per pull request**
 
 This makes it possible to quickly see and understand what you've done.
 
-2. **License**
+**2. License**
 
 Everything you commit will be under the same license as this repository and the copyright holders of said repository will retain the right to publish your commits under a different license.
 
-3. **State what you have done in the commit message**
+**3. State what you have done in the commit message**
 
 Avoid general terms like "minor changes". Commit messages should also be short so pt. 1 is important. Commit messages should also indicate which major component the commit makes changes to. Good commit messages have a subject line that starts with the name of the major component that is modified by the commit:
 
@@ -35,15 +31,15 @@ Avoid general terms like "minor changes". Commit messages should also be short s
    -  test: Update bufferstore test
    -  crt: Manually realign heap to at least 16 byte boundary
 
-4. **Avoid lots of reformatting along with program changes in the same commit**
+**4. Avoid lots of reformatting along with program changes in the same commit**
 
-If you're making drastic changes to a file, but mostly adding comments, reformatting, cleaning up etc., please do this in a separate commit and mark it as *reformatting*/*documentation*. Otherwise GitHub will light up the whole file and people that mostly / only care about the actual program changes will have a hard time finding them.
+If you're making drastic changes to a file, but mostly adding comments, reformatting, cleaning up etc., please do this in a separate commit and mark it as *reformatting* or *documentation*. Otherwise GitHub will light up the whole file and people that mostly/only care about the actual program changes will have a hard time finding them.
 
-5. **Please don't redo the folder-structure**
+**5. Please don't redo the folder-structure**
 
 If you have suggestions for this, just post an `issue <https://github.com/hioa-cs/IncludeOS/issues>`__ explaining the benefits of your suggested structure.
 
-6. **Consider making a standalone package**
+**6. Consider making a standalone package**
 
 We're working on a GitHub-based package manager, much like `npm <https://www.npmjs.com/>`__. Most new functionality from us, such as `mana <https://github.com/includeos/mana>`__ (REST framework) and `json <https://github.com/includeos/json>`__, have come out like separate packages - each with their own repository. This will help keep the IncludeOS core small, and easier to maintain. Clearly, we also want to gather everything in one place, and our upcoming package manager will be doing that. Meanwhile: If you do want make a package - just make it a separate GitHub-repo, and let us know about it. We'll link to it from here, until the package manager is ready.
 
