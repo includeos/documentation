@@ -56,26 +56,43 @@
   <div class="section" id="contributing-to-includeos">
 <span id="id1"></span><h1>Contributing to IncludeOS<a class="headerlink" href="#contributing-to-includeos" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="clone-edit-and-send-us-a-pull-request-on-github">
-<h2>Clone, edit and send us a pull-request on GitHub<a class="headerlink" href="#clone-edit-and-send-us-a-pull-request-on-github" title="Permalink to this headline">¶</a></h2>
+<h2>Clone, edit and send us a pull request on GitHub<a class="headerlink" href="#clone-edit-and-send-us-a-pull-request-on-github" title="Permalink to this headline">¶</a></h2>
 <p>IncludeOS is being developed on GitHub. Clone the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS">repository</a>, send us a <a class="reference external" href="https://help.github.com/articles/using-pull-requests">pull request</a> and <a class="reference external" href="https://gitter.im/hioa-cs/IncludeOS">chat with us on Gitter</a>.</p>
-<p>Send any and all pull-requests to the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/dev">dev-branch</a>. It&#8217;s ok if it comes from your master branch.</p>
+<p>Send any and all pull requests to the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/dev">dev-branch</a>. It&#8217;s ok if it comes from your master branch.</p>
+<div class="section" id="guidelines">
+<h3>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Do &#8220;one thing&#8221; pr. pull-request. This makes it possible to quickly see and understand what you&#8217;ve done.</li>
-<li>Everything you commit will be under the same license as this repository and the copyright holders of said repository will retain the right to publish your commits under a different license.</li>
-<li>State what you have done in the commit message. Avoid general terms like &#8220;minor changes&#8221;. Commit messages should also be short so pt. 1 is important.</li>
-<li>Commit messages should indicate which major component the commit makes changes to. Good commit messages have a subject line that starts with the name of the major component that is modified by the commit:<ul>
+<li><strong>Do &#8220;one thing&#8221; pr. pull request</strong></li>
+</ol>
+<p>This makes it possible to quickly see and understand what you&#8217;ve done.</p>
+<ol class="arabic simple" start="2">
+<li><strong>License</strong></li>
+</ol>
+<p>Everything you commit will be under the same license as this repository and the copyright holders of said repository will retain the right to publish your commits under a different license.</p>
+<ol class="arabic simple" start="3">
+<li><strong>State what you have done in the commit message</strong></li>
+</ol>
+<p>Avoid general terms like &#8220;minor changes&#8221;. Commit messages should also be short so pt. 1 is important. Commit messages should also indicate which major component the commit makes changes to. Good commit messages have a subject line that starts with the name of the major component that is modified by the commit:</p>
+<blockquote>
+<div><ul class="simple">
 <li>virtionet: Increased buffers for packets</li>
 <li>test: Update bufferstore test</li>
 <li>crt: Manually realign heap to at least 16 byte boundary</li>
 </ul>
-</li>
-<li>Avoid lots of reformatting and program changes in the same commit. If you&#8217;re making drastic changes to a file, but mostly adding comments, reformatting, cleaning up etc., please do this in a separate commit and mark it as <em>reformatting</em>/<em>documentation</em>. Otherwise GitHub will light up the whole file and people that mostly / only care about the actual program changes will have a hard time finding them.</li>
-<li>Please don&#8217;t redo the folder-structure - if you have suggestions for this, just post an issue explaining the benefits of your suggested structure.</li>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><strong>Avoid lots of reformatting along with program changes in the same commit</strong></li>
 </ol>
+<p>If you&#8217;re making drastic changes to a file, but mostly adding comments, reformatting, cleaning up etc., please do this in a separate commit and mark it as <em>reformatting</em>/<em>documentation</em>. Otherwise GitHub will light up the whole file and people that mostly / only care about the actual program changes will have a hard time finding them.</p>
+<ol class="arabic simple" start="5">
+<li><strong>Please don&#8217;t redo the folder-structure</strong></li>
+</ol>
+<p>If you have suggestions for this, just post an <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/issues">issue</a> explaining the benefits of your suggested structure.</p>
+<ol class="arabic simple" start="6">
+<li><strong>Consider making a standalone package</strong></li>
+</ol>
+<p>We&#8217;re working on a GitHub-based package manager, much like <a class="reference external" href="https://www.npmjs.com/">npm</a>. Most new functionality from us, such as <a class="reference external" href="https://github.com/includeos/mana">mana</a> (REST framework) and <a class="reference external" href="https://github.com/includeos/json">json</a>, have come out like separate packages - each with their own repository. This will help keep the IncludeOS core small, and easier to maintain. Clearly, we also want to gather everything in one place, and our upcoming package manager will be doing that. Meanwhile: If you do want make a package - just make it a separate GitHub-repo, and let us know about it. We&#8217;ll link to it from here, until the package manager is ready.</p>
 </div>
-<div class="section" id="consider-making-a-standalone-package">
-<h2>Consider making a standalone package!<a class="headerlink" href="#consider-making-a-standalone-package" title="Permalink to this headline">¶</a></h2>
-<p>We&#8217;re working on a GitHub-based package manager, much like <a class="reference external" href="https://www.npmjs.com/">npm</a>. Most new functionality from us, such as HTTP and a REST-framework, will come out like separate packages - each with their own repository. This will help keep the IncludeOS core small, and easier to maintain. Clearly, we also want to gather everything in one place, and our upcoming package manager will be doing that. Meanwhile: If you do want make a package - just make it a separate GitHub-repo, and let us know about it. We&#8217;ll link to it from here, until the package manager is ready.</p>
 </div>
 <div class="section" id="issue-tracker">
 <h2>Issue tracker<a class="headerlink" href="#issue-tracker" title="Permalink to this headline">¶</a></h2>
@@ -96,8 +113,10 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Contributing to IncludeOS</a><ul>
-<li><a class="reference internal" href="#clone-edit-and-send-us-a-pull-request-on-github">Clone, edit and send us a pull-request on GitHub</a></li>
-<li><a class="reference internal" href="#consider-making-a-standalone-package">Consider making a standalone package!</a></li>
+<li><a class="reference internal" href="#clone-edit-and-send-us-a-pull-request-on-github">Clone, edit and send us a pull request on GitHub</a><ul>
+<li><a class="reference internal" href="#guidelines">Guidelines</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#issue-tracker">Issue tracker</a></li>
 <li><a class="reference internal" href="#gitter-chat">Gitter chat</a></li>
 </ul>
