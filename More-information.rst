@@ -3,27 +3,40 @@
 More information
 ================
 
-.. Videos and links
+C++ Weekly October 3, 2016
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-IncludeOS on CppCast ... 2016
+Episode 31: IncludeOS
+---------------------
 
-.. Dato i header
-.. Avspiller?
-.. Link til showet
 .. Litt kort intro
 
-IncludeOS at CppCon 2016
+.. raw:: html
 
-.. Datoer
-.. Video
+    <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/HB__A7-tu2U" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+CppCon September 19, 2016
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#include <os>: From bootloader to REST API with the new C++
+-----------------------------------------------------------
+
 .. Litt kort intro
 .. Link til info om CppCon
 
-C++ Weekly Episode 31
+.. raw:: html
 
-.. Dato
-.. Video
-.. Link til youtube-kanalen
+    <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/t4etEwG2_LY" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+CppCast July 14, 2016
+~~~~~~~~~~~~~~~~~~~~~
+
+.. Avspiller hvis mulig
 .. Litt kort intro
 
-.. Andre?
+`IncludeOS with Alfred Bratterud <http://cppcast.com/2016/07/alfred-bratterud/>`__
+----------------------------------------------------------------------------------
