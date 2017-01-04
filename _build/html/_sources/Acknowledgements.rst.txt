@@ -40,7 +40,6 @@ Master's students
 ~~~~~~~~~~~~~~~~~
 
 There has also been a lot of master students at the NETSYS masters program working on projects related to IncludeOS. We'll try to make a list here, as their thesis take shape.
-.. TODO
 
 Others
 ~~~~~~

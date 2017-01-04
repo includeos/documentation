@@ -13,7 +13,7 @@ Episode 31: IncludeOS
 
 .. raw:: html
 
-    <div>
+    <div style="padding-bottom: 2em">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/HB__A7-tu2U" frameborder="0" allowfullscreen></iframe>
     </div>
 
@@ -28,7 +28,7 @@ CppCon September 19, 2016
 
 .. raw:: html
 
-    <div>
+    <div style="padding-bottom: 2em">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/t4etEwG2_LY" frameborder="0" allowfullscreen></iframe>
     </div>
 
