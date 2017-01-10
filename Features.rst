@@ -3,7 +3,7 @@
 Features
 ========
 
-.. Må oppdateres
+.. Needs an update
 
 A non-exhaustive, possibly outdated feature list
 

@@ -3,8 +3,8 @@
 Acknowledgements
 ================
 
-.. Ang. Master's students:
-.. Oppdatere: Har de en thesis klar - legge noe under publikasjon?
+.. Master's students:
+.. Update thesis - publications
 
 SanOS
 ~~~~~

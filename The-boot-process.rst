@@ -3,9 +3,9 @@
 The boot process
 ================
 
-.. Vet ikke om denne er 100 % oppdatert
-.. Tenk brukervennlighet
-.. Liten intro?
+.. Update
+.. Usability important: user perspective
+.. Short intro
 
 1. BIOS loads `bootloader.asm <https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm>`__, starting at ``_start``.
 2. The bootloader sets up segments, switches to 32-bit protected mode, loads the service (an elf-binary ``your_service`` consisting of the OS classes, libraries and your service) from disk.

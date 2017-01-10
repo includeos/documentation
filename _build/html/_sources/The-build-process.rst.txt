@@ -3,10 +3,10 @@
 The build process
 =================
 
-.. Mer fokus på hvordan brukere faktisk bruker IncludeOS
-.. Er nå altfor detaljert
-.. Ta inn det som er aktuelt om CMake
-.. Hvordan kan brukeren komme i gang
+.. More user perspective: how the users actually use IncludeOS
+.. Too detailed as it is now
+.. Include CMake info
+.. How can the user get started
 
 The build system will:
 

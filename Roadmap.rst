@@ -3,7 +3,8 @@
 Roadmap
 =======
 
-.. Må oppdateres - Prosjekter gjennomført i 2016? og Prosjekter 2017?
+.. Needs an update - now 2017
+.. Could also contain projects completed in 2016
 
 Current goal
 ~~~~~~~~~~~~~

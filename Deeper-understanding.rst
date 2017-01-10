@@ -3,7 +3,7 @@
 Deeper understanding
 ====================
 
-.. Egen innholdsfortegnelse for denne seksjonen
+.. Own content for this section
 
 .. toctree::
    :maxdepth: 2

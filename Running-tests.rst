@@ -3,8 +3,8 @@
 Running tests
 =============
 
-.. Mer brukerfokus - det brukeren skal gjøre, ikke Jenkins
-.. Flytte det som er relevant angående Jenkins til under Deeper-understanding.rst (står om Jenkins der)
+.. More user perspective - what the user should do, not Jenkins
+.. Move what's relevant for Jenkins under Deeper-understanding.rst (text about Jenkins there)
 
 In order to run the tests that are created for IncludeOS there are some dependencies.
 

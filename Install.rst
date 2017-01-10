@@ -3,11 +3,10 @@
 Install
 =======
 
-.. CMake
-.. Husk brukerperspektiv
-.. Hvis trengs å spesifiseres noe eget for Ubuntu eller Mac OS e.l. så gjør det, men det meste er likt
-
-.. Ta med hvis noe er relevant av dette innholdet:
+.. Not included in index.rst -> Getting started summarizes the most important information (now CMake)
+.. Update CMake
+.. Remember user perspective
+.. The most of this could be removed
 
 .. ---------------------------------- Ubuntu -----------------------------------------
 
@@ -74,7 +73,7 @@ B) Completely build everything from source (slow)
 
 **Time:** On a VM with 2 cores and 4 GB RAM, running Ubuntu 14.04, running ./install.sh takes about 33 minutes depending on bandwidth.
 
-.. ------------------------------------ Mac OS (Tidligere OS X) ----------------------------------------
+.. ------------------------------------ Mac OS (Previously OS X) ----------------------------------------
 
 Building on Mac OS
 ------------------

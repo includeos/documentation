@@ -3,7 +3,7 @@
 Fun with Guns and Knives
 ========================
 
-.. Skrive litt mer seriøst hvis vi skal beholde dette
+.. Update
 
 What's in an address
 --------------------

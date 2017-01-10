@@ -3,9 +3,7 @@
 FAQ
 ===
 
-.. Jedi Council bort
-.. Oppdatere en god del
-.. Vi har main nå
+.. Update, incl.: We have main now
 
 Why don't we have feature X by default?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,7 +40,7 @@ We could, but the function signature wouldn't make any sense; we have only one p
 Will IncludeOS become POSIX-compliant?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We have parts of the `POSIX-interface <http://pubs.opengroup.org/onlinepubs/9699919799/>`__ for free with standard C and C++ interfaces, but especially with regards to I/O - (sockets / file systems) and threads, we'll be working under quite different assumptions. Also, we think C++ offers many advantages over just C, which we want to make use of. We might end up putting a POSIX-layer on top of IncludeOS (e.g. posix sockets on top of our ``TCP::Socket``-class), but that will probably be an optional module. The native API will remain C++, with classes etc. One of our main long term goals is to create a good, high-quality C++ OS interface, eventually employing all the `Wisdom of the Jedi Council <https://github.com/isocpp/CppCoreGuidelines>`__.
+We have parts of the `POSIX-interface <http://pubs.opengroup.org/onlinepubs/9699919799/>`__ for free with standard C and C++ interfaces, but especially with regards to I/O - (sockets / file systems) and threads, we'll be working under quite different assumptions. Also, we think C++ offers many advantages over just C, which we want to make use of. We might end up putting a POSIX-layer on top of IncludeOS (e.g. posix sockets on top of our ``TCP::Socket``-class), but that will probably be an optional module. The native API will remain C++, with classes etc. One of our main long term goals is to create a good, high-quality C++ OS interface, eventually employing all the `Wisdom of the C++ Core Guidelines <https://github.com/isocpp/CppCoreGuidelines>`__.
 
 Can we port in high-level languages?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

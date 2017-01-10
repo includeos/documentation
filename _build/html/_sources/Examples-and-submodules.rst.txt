@@ -3,11 +3,6 @@
 Examples and submodules
 =======================
 
-.. Projects?
-.. Example services in the examples folder
-
-.. In new release: Acorn, Scoped Profiler, Syslog
-
 256 Color VGA
 -------------
 
@@ -36,7 +31,7 @@ Dualnic
 Scoped Profiler
 ---------------
 
-`Scoped Profiler <https://github.com/hioa-cs/IncludeOS/tree/master/examples/smp>`__
+`Scoped Profiler <https://github.com/hioa-cs/IncludeOS/tree/master/examples/scoped_profiler>`__
 
 SMP
 ---

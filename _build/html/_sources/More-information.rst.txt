@@ -9,7 +9,7 @@ C++ Weekly October 3, 2016
 Episode 31: IncludeOS
 ---------------------
 
-.. Litt kort intro
+.. Short intro
 
 .. raw:: html
 
@@ -23,8 +23,8 @@ CppCon September 19, 2016
 #include <os>: From bootloader to REST API with the new C++
 -----------------------------------------------------------
 
-.. Litt kort intro
-.. Link til info om CppCon
+.. Short intro
+.. Link to CppCon site
 
 .. raw:: html
 
@@ -35,8 +35,8 @@ CppCon September 19, 2016
 CppCast July 14, 2016
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. Avspiller hvis mulig
-.. Litt kort intro
+.. Short intro
+.. Player if possible
 
 `IncludeOS with Alfred Bratterud <http://cppcast.com/2016/07/alfred-bratterud/>`__
 ----------------------------------------------------------------------------------
