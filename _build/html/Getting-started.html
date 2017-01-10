@@ -66,7 +66,7 @@ export INCLUDEOS_PREFIX=&lt;HOME FOLDER&gt;/includeos
 export PATH=$PATH:$INCLUDEOS_PREFIX/bin
 </pre></div>
 </div>
-<p>This will also crucially make the boot program visible globally, so that you can simply run &#8220;boot &lt;myservice&gt;&#8221; inside any service folder.</p>
+<p>This will also crucially make the boot program visible globally, so that you can simply run <code class="code docutils literal"><span class="pre">boot</span> <span class="pre">&lt;myservice&gt;</span></code> inside any service folder.</p>
 </div>
 <div class="section" id="install-libraries">
 <h2>Install libraries<a class="headerlink" href="#install-libraries" title="Permalink to this headline">¶</a></h2>
@@ -78,21 +78,21 @@ $ ./install.sh
 </div>
 <p><strong>The script will:</strong></p>
 <ul class="simple">
-<li>Install the required dependencies: <cite>curl make clang-3.8 nasm bridge-utils qemu</cite>.</li>
-<li>Create a network bridge called <cite>bridge43</cite>, for tap-networking.</li>
+<li>Install the required dependencies: <code class="code docutils literal"><span class="pre">curl</span> <span class="pre">make</span> <span class="pre">clang-3.8</span> <span class="pre">nasm</span> <span class="pre">bridge-utils</span> <span class="pre">qemu</span></code>.</li>
+<li>Create a network bridge called <code class="code docutils literal"><span class="pre">bridge43</span></code>, for tap-networking.</li>
 <li><dl class="first docutils">
 <dt>Build IncludeOS with CMake:</dt>
 <dd><ul class="first last">
 <li>Download the latest binary release bundle from github together with the required git submodules.</li>
 <li>Unzip the bundle to the current build directory.</li>
 <li>Build several tools used with IncludeOS, including vmbuilder, which turns your service into a bootable image.</li>
-<li>Install everything in <cite>$INCLUDEOS_PREFIX/includeos</cite> (defaults to <cite>/usr/local</cite>).</li>
+<li>Install everything in <code class="code docutils literal"><span class="pre">$INCLUDEOS_PREFIX/includeos</span></code> (defaults to <code class="code docutils literal"><span class="pre">/usr/local</span></code>).</li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<p>Configuration of your IncludeOS installation can be done inside <cite>build/</cite> with <cite>ccmake ..</cite>.</p>
+<p>Configuration of your IncludeOS installation can be done inside <code class="code docutils literal"><span class="pre">build/</span></code> with <code class="code docutils literal"><span class="pre">ccmake</span> <span class="pre">..</span></code>.</p>
 </div>
 <div class="section" id="testing-the-installation">
 <h2>Testing the installation<a class="headerlink" href="#testing-the-installation" title="Permalink to this headline">¶</a></h2>
@@ -107,7 +107,7 @@ $ ./install.sh
 <div class="section" id="writing-your-first-service">
 <h2>Writing your first service<a class="headerlink" href="#writing-your-first-service" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Copy the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/seed">./seed</a> directory to a convenient location like <cite>~/your_service</cite>. Then, just start implementing the <cite>Service::start</cite> function in the <cite>Service</cite> class, located in <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp">your_service/service.cpp</a> (very simple example provided). This function will be called once the OS is up and running.</li>
+<li>Copy the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/seed">./seed</a> directory to a convenient location like <code class="code docutils literal"><span class="pre">~/your_service</span></code>. Then, just start implementing the <code class="code docutils literal"><span class="pre">Service::start</span></code> function in the <code class="code docutils literal"><span class="pre">Service</span></code> class, located in <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp">your_service/service.cpp</a> (very simple example provided). This function will be called once the OS is up and running.</li>
 <li>Update the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/CMakeLists.txt">CMakeLists.txt</a> to specify the name of your project, enable any needed drivers or plugins, etc.</li>
 </ol>
 <p><strong>Example:</strong></p>

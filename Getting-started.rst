@@ -19,7 +19,7 @@ To do this we can edit ~/.bashrc (in the home folder), adding these lines at the
     export INCLUDEOS_PREFIX=<HOME FOLDER>/includeos
     export PATH=$PATH:$INCLUDEOS_PREFIX/bin
 
-This will also crucially make the boot program visible globally, so that you can simply run "boot <myservice>" inside any service folder.
+This will also crucially make the boot program visible globally, so that you can simply run :code:`boot <myservice>` inside any service folder.
 
 Install libraries
 ~~~~~~~~~~~~~~~~~
@@ -34,15 +34,15 @@ Install libraries
 
 **The script will:**
 
-- Install the required dependencies: `curl make clang-3.8 nasm bridge-utils qemu`.
-- Create a network bridge called `bridge43`, for tap-networking.
+- Install the required dependencies: :code:`curl make clang-3.8 nasm bridge-utils qemu`.
+- Create a network bridge called :code:`bridge43`, for tap-networking.
 - Build IncludeOS with CMake:
     + Download the latest binary release bundle from github together with the required git submodules.
     + Unzip the bundle to the current build directory.
     + Build several tools used with IncludeOS, including vmbuilder, which turns your service into a bootable image.
-    + Install everything in `$INCLUDEOS_PREFIX/includeos` (defaults to `/usr/local`).
+    + Install everything in :code:`$INCLUDEOS_PREFIX/includeos` (defaults to :code:`/usr/local`).
 
-Configuration of your IncludeOS installation can be done inside `build/` with `ccmake ..`.
+Configuration of your IncludeOS installation can be done inside :code:`build/` with :code:`ccmake ..`.
 
 Testing the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,7 +61,7 @@ More information about testing the example service is available here: :ref:`Test
 Writing your first service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Copy the `./seed <https://github.com/hioa-cs/IncludeOS/tree/master/seed>`__ directory to a convenient location like `~/your_service`. Then, just start implementing the `Service::start` function in the `Service` class, located in `your_service/service.cpp <https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp>`__ (very simple example provided). This function will be called once the OS is up and running.
+1. Copy the `./seed <https://github.com/hioa-cs/IncludeOS/tree/master/seed>`__ directory to a convenient location like :code:`~/your_service`. Then, just start implementing the :code:`Service::start` function in the :code:`Service` class, located in `your_service/service.cpp <https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp>`__ (very simple example provided). This function will be called once the OS is up and running.
 2. Update the `CMakeLists.txt <https://github.com/hioa-cs/IncludeOS/blob/master/seed/CMakeLists.txt>`__ to specify the name of your project, enable any needed drivers or plugins, etc.
 
 **Example:**
