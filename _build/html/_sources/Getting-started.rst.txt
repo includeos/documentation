@@ -3,13 +3,10 @@
 Getting started
 ===============
 
-.. Punktet etter Install i oversikten (install.rst)
-.. Fjerne Bochs? Må oppdateres hvis ikke
-
 Install libraries
 ~~~~~~~~~~~~~~~~~
 
-**NOTE:** The script will install packages and create a network bridge, and thus will ask for sudo access.
+**NOTE:** The script will install packages and create a network bridge.
 
 ::
 
@@ -20,14 +17,14 @@ Install libraries
 **The script will:**
 
 - Install the required dependencies: `curl make clang-3.8 nasm bridge-utils qemu`.
-- Download the latest binary release bundle from github.
-- Unzip the bundle to `$INCLUDEOS_INSTALL_LOC` (defaults to `$HOME`).
-- Create a network bridge called `include0`, for tap-networking.
-- Build the vmbuilder, which turns your service into a bootable image.
-- Copy `vmbuild` and `qemu-ifup` from the repo, over to `$INCLUDEOS_HOME`.
+- Create a network bridge called `bridge43`, for tap-networking.
+- Build IncludeOS with CMake:
+    + Download the latest binary release bundle from github together with the required git submodules.
+    + Unzip the bundle to the current build directory.
+    + Build several tools used with IncludeOS, including vmbuilder, which turns your service into a bootable image.
+    + Install everything in `$INCLUDEOS_PREFIX/includeos` (defaults to `/usr/local`).
 
-Detailed installation instructions for Vagrant, Mac OS and Ubuntu are available, as well as instructions for building everything from source.
-.. Se under Install.rst (Ubuntu B) Completely build everything from source)
+Configuration of your IncludeOS installation can be done inside `build/` with `ccmake ..`.
 
 Testing the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,7 +44,7 @@ Writing your first service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Copy the `./seed <https://github.com/hioa-cs/IncludeOS/tree/master/seed>`__ directory to a convenient location like `~/your_service`. Then, just start implementing the `Service::start` function in the `Service` class, located in `your_service/service.cpp <https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp>`__ (very simple example provided). This function will be called once the OS is up and running.
-2. Enter the name of your service in the first line of the `seed Makefile <https://github.com/hioa-cs/IncludeOS/blob/master/seed/Makefile>`__. This will be the base for the name of the final disk image.
+2. Update the `CMakeLists.txt <https://github.com/hioa-cs/IncludeOS/blob/master/seed/CMakeLists.txt>`__ to specify the name of your project, enable any needed drivers or plugins, etc.
 
 **Example:**
 
@@ -57,28 +54,20 @@ Writing your first service
     $ cd ~/my_service
     $ emacs service.cpp
     ... add your code
+    $ mkdir build && cd build
+    $ cmake ..
     $ make
-    $ ./run.sh my_service.img
+    $ ../run.sh my_service
 
 Take a look at the `examples <https://github.com/hioa-cs/IncludeOS/tree/master/examples>`__ and the `tests <https://github.com/hioa-cs/IncludeOS/tree/master/test>`__ on GitHub. These all started out as copies of the same seed.
-
-Helper scripts
-~~~~~~~~~~~~~~
-
-There's a convenience script, `./seed/run.sh <https://github.com/hioa-cs/IncludeOS/blob/master/seed/run.sh>`__, which has the "Make-vmbuild-qemu" sequence laid out, with special options for debugging (It will add debugging symbols to the elf-binary and start qemu in debugging mode, ready for connection with ``gdb``. More on this inside the script.). I use this script to run the code, where I'd normally just run the program from a shell. Don't worry, it's fast, even in nested/emulated mode.
-
-Debugging with Bochs
-~~~~~~~~~~~~~~~~~~~~
-
-- If you want to debug the bootloader, or inspect memory, registers, flags etc. using a GUI, you need to install `Bochs <http://bochs.sourceforge.net/>`__. This is because ``gdb`` only works for objects with debugging symbols, which we don't have for our bootloader. See `./etc/bochs_installation.sh <https://github.com/hioa-cs/IncludeOS/blob/master/etc/bochs_installation.sh>`__ for build options, and `./etc/.bochsrc <https://github.com/hioa-cs/IncludeOS/blob/master/etc/.bochsrc>`__ for an example configuration file (which specifies a <1MB disk).
 
 .. _Testing the example service:
 
 Testing the example service
 ---------------------------
 
-.. Bør konverteres til en oppskrift man kan følge (brukerperspektiv)
-.. Oppdatere innholdet (VGA support: Jason?)
+.. Should be converted to a recipe (user perspective)
+.. Update the content (VGA support: Jason Turner)
 
 **Things to note**
 

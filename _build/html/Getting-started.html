@@ -57,7 +57,7 @@
 <span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="install-libraries">
 <h2>Install libraries<a class="headerlink" href="#install-libraries" title="Permalink to this headline">¶</a></h2>
-<p><strong>NOTE:</strong> The script will install packages and create a network bridge, and thus will ask for sudo access.</p>
+<p><strong>NOTE:</strong> The script will install packages and create a network bridge.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone https://github.com/hioa-cs/IncludeOS
 $ cd IncludeOS
 $ ./install.sh
@@ -66,14 +66,20 @@ $ ./install.sh
 <p><strong>The script will:</strong></p>
 <ul class="simple">
 <li>Install the required dependencies: <cite>curl make clang-3.8 nasm bridge-utils qemu</cite>.</li>
-<li>Download the latest binary release bundle from github.</li>
-<li>Unzip the bundle to <cite>$INCLUDEOS_INSTALL_LOC</cite> (defaults to <cite>$HOME</cite>).</li>
-<li>Create a network bridge called <cite>include0</cite>, for tap-networking.</li>
-<li>Build the vmbuilder, which turns your service into a bootable image.</li>
-<li>Copy <cite>vmbuild</cite> and <cite>qemu-ifup</cite> from the repo, over to <cite>$INCLUDEOS_HOME</cite>.</li>
+<li>Create a network bridge called <cite>bridge43</cite>, for tap-networking.</li>
+<li><dl class="first docutils">
+<dt>Build IncludeOS with CMake:</dt>
+<dd><ul class="first last">
+<li>Download the latest binary release bundle from github together with the required git submodules.</li>
+<li>Unzip the bundle to the current build directory.</li>
+<li>Build several tools used with IncludeOS, including vmbuilder, which turns your service into a bootable image.</li>
+<li>Install everything in <cite>$INCLUDEOS_PREFIX/includeos</cite> (defaults to <cite>/usr/local</cite>).</li>
 </ul>
-<p>Detailed installation instructions for Vagrant, Mac OS and Ubuntu are available, as well as instructions for building everything from source.
-.. Se under Install.rst (Ubuntu B) Completely build everything from source)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Configuration of your IncludeOS installation can be done inside <cite>build/</cite> with <cite>ccmake ..</cite>.</p>
 </div>
 <div class="section" id="testing-the-installation">
 <h2>Testing the installation<a class="headerlink" href="#testing-the-installation" title="Permalink to this headline">¶</a></h2>
@@ -89,28 +95,20 @@ $ ./install.sh
 <h2>Writing your first service<a class="headerlink" href="#writing-your-first-service" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Copy the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/seed">./seed</a> directory to a convenient location like <cite>~/your_service</cite>. Then, just start implementing the <cite>Service::start</cite> function in the <cite>Service</cite> class, located in <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp">your_service/service.cpp</a> (very simple example provided). This function will be called once the OS is up and running.</li>
-<li>Enter the name of your service in the first line of the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/Makefile">seed Makefile</a>. This will be the base for the name of the final disk image.</li>
+<li>Update the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/CMakeLists.txt">CMakeLists.txt</a> to specify the name of your project, enable any needed drivers or plugins, etc.</li>
 </ol>
 <p><strong>Example:</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ cp -r seed ~/my_service
 $ cd ~/my_service
 $ emacs service.cpp
 ... add your code
+$ mkdir build &amp;&amp; cd build
+$ cmake ..
 $ make
-$ ./run.sh my_service.img
+$ ../run.sh my_service
 </pre></div>
 </div>
 <p>Take a look at the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/examples">examples</a> and the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/test">tests</a> on GitHub. These all started out as copies of the same seed.</p>
-</div>
-<div class="section" id="helper-scripts">
-<h2>Helper scripts<a class="headerlink" href="#helper-scripts" title="Permalink to this headline">¶</a></h2>
-<p>There&#8217;s a convenience script, <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/seed/run.sh">./seed/run.sh</a>, which has the &#8220;Make-vmbuild-qemu&#8221; sequence laid out, with special options for debugging (It will add debugging symbols to the elf-binary and start qemu in debugging mode, ready for connection with <code class="docutils literal"><span class="pre">gdb</span></code>. More on this inside the script.). I use this script to run the code, where I&#8217;d normally just run the program from a shell. Don&#8217;t worry, it&#8217;s fast, even in nested/emulated mode.</p>
-</div>
-<div class="section" id="debugging-with-bochs">
-<h2>Debugging with Bochs<a class="headerlink" href="#debugging-with-bochs" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>If you want to debug the bootloader, or inspect memory, registers, flags etc. using a GUI, you need to install <a class="reference external" href="http://bochs.sourceforge.net/">Bochs</a>. This is because <code class="docutils literal"><span class="pre">gdb</span></code> only works for objects with debugging symbols, which we don&#8217;t have for our bootloader. See <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/bochs_installation.sh">./etc/bochs_installation.sh</a> for build options, and <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/.bochsrc">./etc/.bochsrc</a> for an example configuration file (which specifies a &lt;1MB disk).</li>
-</ul>
 <div class="section" id="testing-the-example-service">
 <span id="id2"></span><h3>Testing the example service<a class="headerlink" href="#testing-the-example-service" title="Permalink to this headline">¶</a></h3>
 <p><strong>Things to note</strong></p>
@@ -148,9 +146,7 @@ $ ./run.sh my_service.img
 <li><a class="reference internal" href="#">Getting started</a><ul>
 <li><a class="reference internal" href="#install-libraries">Install libraries</a></li>
 <li><a class="reference internal" href="#testing-the-installation">Testing the installation</a></li>
-<li><a class="reference internal" href="#writing-your-first-service">Writing your first service</a></li>
-<li><a class="reference internal" href="#helper-scripts">Helper scripts</a></li>
-<li><a class="reference internal" href="#debugging-with-bochs">Debugging with Bochs</a><ul>
+<li><a class="reference internal" href="#writing-your-first-service">Writing your first service</a><ul>
 <li><a class="reference internal" href="#testing-the-example-service">Testing the example service</a></li>
 </ul>
 </li>
@@ -202,7 +198,7 @@ $ ./run.sh my_service.img
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, IncludeOS.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
   </body>
 </html>
