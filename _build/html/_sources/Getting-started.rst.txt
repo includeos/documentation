@@ -9,11 +9,15 @@ Set custom location and compiler
 By default the project is installed to /usr/local/includeos.
 
 However, it is recommended to choose a custom location as well as select the compiler we want clang to find.
+
 To do this we can edit ~/.bashrc (in the home folder), adding these lines at the end of the file:
-export CC=/usr/bin/clang-3.8
-export CXX=/usr/bin/clang++-3.8
-export INCLUDEOS_PREFIX=<HOME FOLDER>/includeos
-export PATH=$PATH:$INCLUDEOS_PREFIX/bin
+
+::
+
+    export CC=/usr/bin/clang-3.8
+    export CXX=/usr/bin/clang++-3.8
+    export INCLUDEOS_PREFIX=<HOME FOLDER>/includeos
+    export PATH=$PATH:$INCLUDEOS_PREFIX/bin
 
 This will also crucially make the boot program visible globally, so that you can simply run "boot <myservice>" inside any service folder.
 
@@ -71,6 +75,8 @@ Writing your first service
     $ mkdir build && cd build
     $ cmake ..
     $ make
+    $ boot my_service
+    or
     $ ../run.sh my_service
 
 Take a look at the `examples <https://github.com/hioa-cs/IncludeOS/tree/master/examples>`__ and the `tests <https://github.com/hioa-cs/IncludeOS/tree/master/test>`__ on GitHub. These all started out as copies of the same seed.
