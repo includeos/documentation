@@ -56,6 +56,7 @@ A successful setup enables you to build and run a virtual machine. Running:
 will build and run `this example service <https://github.com/hioa-cs/IncludeOS/blob/master/examples/demo_service/service.cpp>`__.
 
 More information about testing the example service is available here: :ref:`Testing the example service`.
+
 .. Testing the example service is further down on the page
 
 Writing your first service
@@ -84,7 +85,7 @@ Take a look at the `examples <https://github.com/hioa-cs/IncludeOS/tree/master/e
 .. _Testing the example service:
 
 Testing the example service
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. Should be converted to a recipe (user perspective)
 .. Update the content (VGA support: Jason Turner)
@@ -98,4 +99,4 @@ Testing the example service
 - You should also be able to open a simple webpage on the VM, by entering the IP into a browser, inside the development machine.
 - How to get out? The test script starts `qemu <http://wiki.qemu.org/Main_Page>`__ with the ``--nographics``-option. This will by default reroute stdin and stdout to the terminal. To exit the virtual machine, you can go via the `Qemu monitor <https://en.wikibooks.org/wiki/QEMU/Monitor#Virtual_machine>`__. The command for entering the monitor is ``Ctrl+a c``, or to exit directly, ``Ctrl+a x``.
 
-    + *NOTE*: This keyboard shortcut may not work if you're interacting with your development environment is via a VirtualBox GUI, over putty, inside a ``screen`` etc. If you find a good solution for a certain platform (i.e. putty to VirtualBox on Windows), please let us know so we can update our wiki.
+    + *NOTE*: This keyboard shortcut may not work if you're interacting with your development environment via a VirtualBox GUI, over putty, inside a ``screen`` etc. If you find a good solution for a certain platform (i.e. putty to VirtualBox on Windows), please let us know so we can update the documentation.
