@@ -41,7 +41,7 @@ If you have suggestions for this, just post an `issue <https://github.com/hioa-c
 
 **6. Consider making a standalone package**
 
-We're working on a GitHub-based package manager, much like `npm <https://www.npmjs.com/>`__. Most new functionality from us, such as `mana <https://github.com/includeos/mana>`__ (REST framework) and `json <https://github.com/includeos/json>`__, have come out like separate packages - each with their own repository. This will help keep the IncludeOS core small, and easier to maintain. Clearly, we also want to gather everything in one place, and our upcoming package manager will be doing that. Meanwhile: If you do want make a package - just make it a separate GitHub-repo, and let us know about it. We'll link to it from here, until the package manager is ready.
+It would be great if you could make your project into a package - just make it a separate GitHub repo and let us know about it. We'll link to it in the `IncludeOS README <https://github.com/hioa-cs/IncludeOS/blob/master/README.md>`__
 
 Issue tracker
 -------------
