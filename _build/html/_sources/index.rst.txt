@@ -5,6 +5,8 @@ IncludeOS
 
 .. TODO Update url: includeos.io
 .. Include Install when/if updated
+.. Include Roadmap when new created
+.. Include Running-tests when updated
 
 For more information: Visit our `website <http://www.includeos.org>`__, check out the project on `GitHub <https://github.com/hioa-cs/IncludeOS>`__ or come chat with us on `Gitter <https://gitter.im/hioa-cs/IncludeOS>`__!
 
@@ -15,9 +17,7 @@ For more information: Visit our `website <http://www.includeos.org>`__, check ou
    Getting-started
    Contributing-to-IncludeOS
    Features
-   Roadmap
    Examples-and-submodules
-   Running-tests
    More-information
    FAQ
    Deeper-understanding
