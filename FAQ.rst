@@ -3,14 +3,10 @@
 FAQ
 ===
 
-.. Update, incl.: We have main now
-
 Why don't we have feature X by default?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-IncludeOS is a `unikernel <https://en.wikipedia.org/wiki/Unikernel>`__ and intended to be the "elastic" part of an elastic cloud service. That means we might want a whole lot of IncludeOS VM's going up and down, and adding any feature X to a vm, that's supposed to scale up to N
-instances, will add N times the resource cost of X to our service. The idea behind unikernels is that you don't want to pay for lots of such
-X's by default - but rather that you only pay for the ones you know your service needs.
+IncludeOS is a `unikernel <https://en.wikipedia.org/wiki/Unikernel>`__ and intended to be the "elastic" part of an elastic cloud service. That means we might want a whole lot of IncludeOS VM's going up and down, and adding any feature X to a vm, that's supposed to scale up to N instances, will add N times the resource cost of X to our service. The idea behind unikernels is that you don't want to pay for lots of such X's by default - but rather that you only pay for the ones you know your service needs.
 
 Also - IncludeOS is new - feature X might very well become available sooner or later.
 
@@ -31,11 +27,6 @@ Why no threads?
 Classical threads add overhead to the virtual machine: they need context switching, scheduling and periodic timer interrupts. Particularly with virtual machines there are efficiency-problems stemming from having context switches and synchronization both on the host and inside the guest (see e.g. `[1] <http://ieeexplore.ieee.org/document/7396161/>`__,\ `[2] <https://www.computer.org/csdl/proceedings/cloudcom/2015/9560/00/9560a242.pdf>`__). Concurrency in turn requires everything to be reentrant and thread safe. We know how to do this, and we'll probably add full-blown threading support later, as an optional feature. However, we like how efficient `node.js <https://nodejs.org/en/>`__ / javascript is, with one thread and asynchronous / callback-based I/O, and we want to take this programming model to a mature level first. There are also a lot of interesting alternatives to classical threads that we're currently looking into. In particular we like the upcoming C++ coroutines, and `how you can build Go-like channels on top of them <https://github.com/CppCon/CppCon2016/blob/master/Presentations/Channels%20-%20An%20Alternative%20to%20Callbacks%20and%20Futures/Channels%20-%20An%20Alternative%20to%20Callbacks%20and%20Futures%20-%20John%20Bandela%20-%20CppCon%202016.pdf>`__.
 
 Also note that we do have basic multi-core support. This is a work in progress, but an `example can be found here <https://github.com/hioa-cs/IncludeOS/tree/master/examples/smp>`__.
-
-Why not use ``int main(...)``?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-We could, but the function signature wouldn't make any sense; we have only one process and no shell, so there's no place to return to, or to pass in arguments from.
 
 Will IncludeOS become POSIX-compliant?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

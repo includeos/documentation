@@ -57,9 +57,7 @@
 <span id="id1"></span><h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="why-don-t-we-have-feature-x-by-default">
 <h2>Why don&#8217;t we have feature X by default?<a class="headerlink" href="#why-don-t-we-have-feature-x-by-default" title="Permalink to this headline">¶</a></h2>
-<p>IncludeOS is a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">unikernel</a> and intended to be the &#8220;elastic&#8221; part of an elastic cloud service. That means we might want a whole lot of IncludeOS VM&#8217;s going up and down, and adding any feature X to a vm, that&#8217;s supposed to scale up to N
-instances, will add N times the resource cost of X to our service. The idea behind unikernels is that you don&#8217;t want to pay for lots of such
-X&#8217;s by default - but rather that you only pay for the ones you know your service needs.</p>
+<p>IncludeOS is a <a class="reference external" href="https://en.wikipedia.org/wiki/Unikernel">unikernel</a> and intended to be the &#8220;elastic&#8221; part of an elastic cloud service. That means we might want a whole lot of IncludeOS VM&#8217;s going up and down, and adding any feature X to a vm, that&#8217;s supposed to scale up to N instances, will add N times the resource cost of X to our service. The idea behind unikernels is that you don&#8217;t want to pay for lots of such X&#8217;s by default - but rather that you only pay for the ones you know your service needs.</p>
 <p>Also - IncludeOS is new - feature X might very well become available sooner or later.</p>
 </div>
 <div class="section" id="why-did-includeos-change-from-gcc-to-clang">
@@ -77,10 +75,6 @@ X&#8217;s by default - but rather that you only pay for the ones you know your s
 <h2>Why no threads?<a class="headerlink" href="#why-no-threads" title="Permalink to this headline">¶</a></h2>
 <p>Classical threads add overhead to the virtual machine: they need context switching, scheduling and periodic timer interrupts. Particularly with virtual machines there are efficiency-problems stemming from having context switches and synchronization both on the host and inside the guest (see e.g. <a class="reference external" href="http://ieeexplore.ieee.org/document/7396161/">[1]</a>,<a class="reference external" href="https://www.computer.org/csdl/proceedings/cloudcom/2015/9560/00/9560a242.pdf">[2]</a>). Concurrency in turn requires everything to be reentrant and thread safe. We know how to do this, and we&#8217;ll probably add full-blown threading support later, as an optional feature. However, we like how efficient <a class="reference external" href="https://nodejs.org/en/">node.js</a> / javascript is, with one thread and asynchronous / callback-based I/O, and we want to take this programming model to a mature level first. There are also a lot of interesting alternatives to classical threads that we&#8217;re currently looking into. In particular we like the upcoming C++ coroutines, and <a class="reference external" href="https://github.com/CppCon/CppCon2016/blob/master/Presentations/Channels%20-%20An%20Alternative%20to%20Callbacks%20and%20Futures/Channels%20-%20An%20Alternative%20to%20Callbacks%20and%20Futures%20-%20John%20Bandela%20-%20CppCon%202016.pdf">how you can build Go-like channels on top of them</a>.</p>
 <p>Also note that we do have basic multi-core support. This is a work in progress, but an <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/tree/master/examples/smp">example can be found here</a>.</p>
-</div>
-<div class="section" id="why-not-use-int-main">
-<h2>Why not use <code class="docutils literal"><span class="pre">int</span> <span class="pre">main(...)</span></code>?<a class="headerlink" href="#why-not-use-int-main" title="Permalink to this headline">¶</a></h2>
-<p>We could, but the function signature wouldn&#8217;t make any sense; we have only one process and no shell, so there&#8217;s no place to return to, or to pass in arguments from.</p>
 </div>
 <div class="section" id="will-includeos-become-posix-compliant">
 <h2>Will IncludeOS become POSIX-compliant?<a class="headerlink" href="#will-includeos-become-posix-compliant" title="Permalink to this headline">¶</a></h2>
@@ -113,7 +107,6 @@ X&#8217;s by default - but rather that you only pay for the ones you know your s
 <li><a class="reference internal" href="#why-did-includeos-change-from-gcc-to-clang">Why did IncludeOS change from gcc to clang?</a></li>
 <li><a class="reference internal" href="#why-can-t-we-have-more-than-one-process">Why can&#8217;t we have more than one process?</a></li>
 <li><a class="reference internal" href="#why-no-threads">Why no threads?</a></li>
-<li><a class="reference internal" href="#why-not-use-int-main">Why not use <code class="docutils literal"><span class="pre">int</span> <span class="pre">main(...)</span></code>?</a></li>
 <li><a class="reference internal" href="#will-includeos-become-posix-compliant">Will IncludeOS become POSIX-compliant?</a></li>
 <li><a class="reference internal" href="#can-we-port-in-high-level-languages">Can we port in high-level languages?</a></li>
 <li><a class="reference internal" href="#will-includeos-boot-on-bare-metal">Will IncludeOS boot on bare metal?</a></li>

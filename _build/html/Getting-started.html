@@ -94,6 +94,50 @@ $ ./install.sh
 </ul>
 <p>Configuration of your IncludeOS installation can be done inside <code class="code docutils literal"><span class="pre">build/</span></code> with <code class="code docutils literal"><span class="pre">ccmake</span> <span class="pre">..</span></code>.</p>
 </div>
+<div class="section" id="building-on-mac-os-x">
+<h2>Building on Mac OS X<a class="headerlink" href="#building-on-mac-os-x" title="Permalink to this headline">¶</a></h2>
+<p>You can build IncludeOS (from bundle only) directly on a Mac by either running <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/install_osx.sh">./etc/install_osx.sh</a> or simply <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/install.sh">./install.sh</a>. The following dependencies are utilized by the script:</p>
+<ul class="simple">
+<li>homebrew (Mac OS package manager - <a class="reference external" href="https://brew.sh">https://brew.sh</a>)</li>
+<li>/usr/local directory with write access</li>
+<li>/usr/local/bin added to your $PATH</li>
+<li>Xcode CTL (Command Line Tools) - <code class="code docutils literal"><span class="pre">xcode-select</span> <span class="pre">--install</span></code></li>
+</ul>
+<p>The dependency installation will use homebrew to install the needed dependencies for IncludeOS, except for <a class="reference external" href="https://www.gnu.org/software/binutils/">GNU binutils</a> where the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/etc/install_binutils.sh">./etc/install_binutils.sh</a> will be used.</p>
+<p>CMake is then used to finish the installation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir build
+$ cd build
+$ cmake ..
+$ make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-with-vagrant">
+<h2>Building with Vagrant<a class="headerlink" href="#building-with-vagrant" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> is an awesome tool for creating and configuring virtual development environments.</p>
+<p>You can use Vagrant to set up a virtual machine with the correct environment for building IncludeOS. The following commands will build and install IncludeOS into your home directory (<code class="docutils literal"><span class="pre">~/IncludeOS_install/</span></code>). The directory is mapped as a shared folder into the virtual machine Vagrant creates.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone https://github.com/hioa-cs/IncludeOS.git
+$ cd IncludeOS
+$ vagrant up
+$ vagrant ssh --command=/IncludeOS/etc/install_from_bundle.sh
+</pre></div>
+</div>
+<p>You can now log in to the Vagrant build environment and build and run a test service like so:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ vagrant ssh
+$ ./test.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-unit-tests">
+<h2>Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permalink to this headline">¶</a></h2>
+<p>To run unit tests, you have to enable the corresponding CMake option. The easiest way to do this is to use CCMake. You also have to install multilibs:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo apt install cmake-curses-gui
+$ sudo apt install gcc-multilib
+$ sudo apt install g++-multilib
+</pre></div>
+</div>
+<p>From the ~/IncludeOS/build folder, run <code class="code docutils literal"><span class="pre">ccmake</span> <span class="pre">..</span></code>, use the CCMake interface to enable tests, and configure/generate as usual. After the required generation, run <code class="code docutils literal"><span class="pre">make</span> <span class="pre">install</span></code> to build the unit tests and have the Lest unit testing framework installed.</p>
+</div>
 <div class="section" id="testing-the-installation">
 <h2>Testing the installation<a class="headerlink" href="#testing-the-installation" title="Permalink to this headline">¶</a></h2>
 <p>A successful setup enables you to build and run a virtual machine. Running:</p>
@@ -160,6 +204,9 @@ $ ../run.sh my_service
 <li><a class="reference internal" href="#">Getting started</a><ul>
 <li><a class="reference internal" href="#set-custom-location-and-compiler">Set custom location and compiler</a></li>
 <li><a class="reference internal" href="#install-libraries">Install libraries</a></li>
+<li><a class="reference internal" href="#building-on-mac-os-x">Building on Mac OS X</a></li>
+<li><a class="reference internal" href="#building-with-vagrant">Building with Vagrant</a></li>
+<li><a class="reference internal" href="#running-unit-tests">Running unit tests</a></li>
 <li><a class="reference internal" href="#testing-the-installation">Testing the installation</a></li>
 <li><a class="reference internal" href="#writing-your-first-service">Writing your first service</a></li>
 <li><a class="reference internal" href="#testing-the-example-service">Testing the example service</a></li>

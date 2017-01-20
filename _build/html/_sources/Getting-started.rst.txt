@@ -44,6 +44,61 @@ Install libraries
 
 Configuration of your IncludeOS installation can be done inside :code:`build/` with :code:`ccmake ..`.
 
+Building on Mac OS X
+~~~~~~~~~~~~~~~~~~~~
+
+You can build IncludeOS (from bundle only) directly on a Mac by either running `./etc/install\_osx.sh <https://github.com/hioa-cs/IncludeOS/blob/master/etc/install_osx.sh>`__ or simply `./install.sh <https://github.com/hioa-cs/IncludeOS/blob/master/install.sh>`__. The following dependencies are utilized by the script:
+
+- homebrew (Mac OS package manager - https://brew.sh)
+- /usr/local directory with write access
+- /usr/local/bin added to your $PATH
+- Xcode CTL (Command Line Tools) - :code:`xcode-select --install`
+
+The dependency installation will use homebrew to install the needed dependencies for IncludeOS, except for `GNU binutils <https://www.gnu.org/software/binutils/>`__ where the `./etc/install_binutils.sh <https://github.com/hioa-cs/IncludeOS/blob/master/etc/install_binutils.sh>`__ will be used.
+
+CMake is then used to finish the installation:
+
+::
+
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ make install
+
+Building with Vagrant
+~~~~~~~~~~~~~~~~~~~~~
+
+`Vagrant <https://www.vagrantup.com/>`__ is an awesome tool for creating and configuring virtual development environments.
+
+You can use Vagrant to set up a virtual machine with the correct environment for building IncludeOS. The following commands will build and install IncludeOS into your home directory (``~/IncludeOS_install/``). The directory is mapped as a shared folder into the virtual machine Vagrant creates.
+
+::
+
+        $ git clone https://github.com/hioa-cs/IncludeOS.git
+        $ cd IncludeOS
+        $ vagrant up
+        $ vagrant ssh --command=/IncludeOS/etc/install_from_bundle.sh
+
+You can now log in to the Vagrant build environment and build and run a test service like so:
+
+::
+
+        $ vagrant ssh
+        $ ./test.sh
+
+Running unit tests
+~~~~~~~~~~~~~~~~~~
+
+To run unit tests, you have to enable the corresponding CMake option. The easiest way to do this is to use CCMake. You also have to install multilibs:
+
+::
+
+    $ sudo apt install cmake-curses-gui
+    $ sudo apt install gcc-multilib
+    $ sudo apt install g++-multilib
+
+From the ~/IncludeOS/build folder, run :code:`ccmake ..`, use the CCMake interface to enable tests, and configure/generate as usual. After the required generation, run :code:`make install` to build the unit tests and have the Lest unit testing framework installed.
+
 Testing the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
