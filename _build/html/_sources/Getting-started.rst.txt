@@ -132,8 +132,6 @@ Writing your first service
     $ cmake ..
     $ make
     $ boot my_service
-    or
-    $ ../run.sh my_service
 
 Take a look at the `examples <https://github.com/hioa-cs/IncludeOS/tree/master/examples>`__ and the `tests <https://github.com/hioa-cs/IncludeOS/tree/master/test>`__ on GitHub. These all started out as copies of the same seed.
 
