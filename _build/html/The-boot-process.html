@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>The boot process &#8212; IncludeOS 0.9.3 documentation</title>
+    <title>The x86 boot process &#8212; IncludeOS 0.9.3 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
@@ -51,15 +51,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-boot-process">
-<span id="id1"></span><h1>The boot process<a class="headerlink" href="#the-boot-process" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="the-x86-boot-process">
+<span id="id1"></span><h1>The x86 boot process<a class="headerlink" href="#the-x86-boot-process" title="Permalink to this headline">¶</a></h1>
 <ol class="arabic simple">
-<li>BIOS loads <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm">bootloader.asm</a>, starting at <code class="docutils literal"><span class="pre">_start</span></code>.</li>
-<li>The bootloader sets up segments, switches to 32-bit protected mode, loads the service (an elf-binary <code class="docutils literal"><span class="pre">your_service</span></code> consisting of the OS classes, libraries and your service) from disk.</li>
-<li>The bootloader hands over control to the OS, by jumping to the <code class="docutils literal"><span class="pre">_start</span></code> symbol inside <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/kernel_start.cpp">kernel_start.cpp</a>.</li>
-<li>The OS initializes <code class="docutils literal"><span class="pre">.bss</span></code>, calls global constructors (<code class="docutils literal"><span class="pre">_init</span></code>), and then calls <code class="docutils literal"><span class="pre">OS::start</span></code> in <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/os.cpp">the OS class</a>.</li>
-<li>The OS class sets up interrupts, initializes devices, etc. etc.</li>
-<li>Finally the OS class (still <code class="docutils literal"><span class="pre">OS::start</span></code>) calls <code class="docutils literal"><span class="pre">Service::start()</span></code>, inside your service, handing over control to you.</li>
+<li>When booting from a “hard drive”, BIOS loads the first stage bootloader, either grub or <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/platform/x86_pc/boot/bootloader.asm">bootloader.asm</a>, starting at <code class="docutils literal"><span class="pre">_start</span></code>.</li>
+<li>The bootloader - or Qemu with <code class="docutils literal"><span class="pre">-kernel</span></code> - sets up segments, switches to 32-bit protected mode, loads the service (an elf-binary <code class="docutils literal"><span class="pre">your_service</span></code> consisting of the OS classes, libraries and your service) from disk. For a multiboot compliant boot system (grub or qemu -kernel) the machine is now in the state <a class="reference external" href="https://www.gnu.org/software/grub/manual/multiboot/multiboot.html#Machine-state">specified by multiboot</a>.</li>
+<li>The bootloader hands over control to the OS, by jumping to the <code class="docutils literal"><span class="pre">_start</span></code> symbol inside <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/platform/x86_pc/start.asm#L61">start.asm</a>. From there it will call architecture specific initialization and eventually <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/platform/x86_pc/kernel_start.cpp">kernel_start.cpp</a>. Note that this can be overridden to make custom kernels, such as the minimal <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/platform/x86_nano">x86_nano</a> platform used for the chainloader.</li>
+<li>The OS initializes <code class="docutils literal"><span class="pre">.bss</span></code>, calls global constructors, and then calls <code class="docutils literal"><span class="pre">OS::start</span></code> in the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/os.hpp">OS class</a>.</li>
+<li>The OS class sets up interrupts, initializes devices, plugins, drivers etc. etc.</li>
+<li>Finally the OS class (still <code class="docutils literal"><span class="pre">OS::start</span></code>) calls <code class="docutils literal"><span class="pre">Service::start()</span></code> (as for instance <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/examples/demo_service/service.cpp">here</a>) or <code class="docutils literal"><span class="pre">main()</span></code> if you prefer that (such as <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/examples/syslog/service.cpp">here</a>), either of which must be provided by your service.</li>
+<li>Once your service is done initializing, e.g. having indirectly subscribed to certain events like incoming network packets by setting up a HTTP server, the OS resumes the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/src/kernel/os.cpp">OS::event_loop()</a> which again drives your service.</li>
 </ol>
 </div>
 
