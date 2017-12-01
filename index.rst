@@ -12,7 +12,7 @@ For more information: Visit our `website <http://www.includeos.org>`__, check ou
    Getting-started
    Contributing-to-IncludeOS
    Features
-   Examples-and-submodules
+   Examples-and-libraries
    Using-memdisks
    Security
    More-information
