@@ -37,6 +37,115 @@ If you're making drastic changes to a file, but mostly adding comments, reformat
 
 If you have suggestions for this, just post an `issue <https://github.com/hioa-cs/IncludeOS/issues>`__ explaining the benefits of your suggested structure.
 
+Code formatting
+~~~~~~~~~~~~~~~
+
+- Indent using 2 spaces. Don't use tabs.
+- Return early, don't use `else` after `return`.
+
+::
+
+    // Do:
+    if (condition)
+      return 42;
+    return -1;
+
+    // Don't:
+    if (condition)
+      return 42;
+    else
+      return -1;
+
+- Add :code:`// -*-C++-*-` as the first line of extensionless header files.
+- Use the following style for multiline comments:
+
+::
+
+	/**
+	 * My very important comment
+	 */
+
+- Each class needs a short comment above it to show up in Doxygen generated documentation.
+
+::
+
+	/** Description of class */
+	class Logger {
+	...
+	};
+
+(For single-line comments on classes/interfaces, **don't** use :code:`//` as this does not get picked up by Doxygen.)
+
+- Avoid unnecessary whitespace or decorations
+
+::
+
+	// Do:
+	namespace fs {
+	  struct File_system;
+
+	  /** Generic structure for directory entries */
+	  struct Dirent {
+
+	    /** Constructor */
+	    explicit Dirent(File_system* fs, const Enttype t = INVALID_ENTITY, const std::string& n = "",
+	                    const uint64_t blk   = 0, const uint64_t pr    = 0,
+	                    const uint64_t sz    = 0, const uint32_t attr  = 0,
+	                    const uint32_t modt = 0)
+	    : fs_ {fs}, ftype {t}, fname_ {n},
+	      block_ {blk}, parent_ {pr},
+	      size_{sz}, attrib_ {attr},
+	      modif {modt}
+	    {}
+
+	    Enttype type() const noexcept
+	    { return ftype; }
+
+	    const std::string& name() const noexcept
+	    { return fname_; }
+
+	    uint64_t block() const noexcept
+	    { return block_; }
+	  };
+	}
+
+	// Don't:
+	namespace fs {
+	  ///////////////////////////////////////////////////////////////////////////////
+	  struct File_system;
+
+	  ///////////////////////////////////////////////////////////////////////////////
+	  struct Dirent {
+	
+	    ///////////////////////////////////////////////////////////////////////////////
+	    explicit Dirent(File_system* fs, const Enttype t = INVALID_ENTITY, const std::string& n = "",
+	                  const uint64_t blk   = 0, const uint64_t pr    = 0,
+	                  const uint64_t sz    = 0, const uint32_t attr  = 0,
+	                  const uint32_t modt = 0)
+	    : fs_ {fs}, ftype {t}, fname_ {n},
+	      block_ {blk}, parent_ {pr},
+	      size_{sz}, attrib_ {attr},
+	      modif {modt}
+	    {}
+
+	    ///////////////////////////////////////////////////////////////////////////////
+	    Enttype type() const noexcept
+	    { return ftype; }
+
+	    ///////////////////////////////////////////////////////////////////////////////
+	    const std::string& name() const noexcept
+	    { return fname_; }
+
+	    ///////////////////////////////////////////////////////////////////////////////
+	    uint64_t block() const noexcept
+	    { return block_; }
+	  };
+	}
+
+- Use UTF-8 encoding, LF line endings.
+
+- If your editor supports :code:`.editorconfig`, use it.
+
 Issue tracker
 -------------
 

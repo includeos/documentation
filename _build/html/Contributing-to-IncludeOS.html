@@ -76,6 +76,114 @@
 <p><strong>5. Please don’t redo the folder-structure</strong></p>
 <p>If you have suggestions for this, just post an <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/issues">issue</a> explaining the benefits of your suggested structure.</p>
 </div>
+<div class="section" id="code-formatting">
+<h3>Code formatting<a class="headerlink" href="#code-formatting" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Indent using 2 spaces. Don’t use tabs.</li>
+<li>Return early, don’t use <cite>else</cite> after <cite>return</cite>.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Do</span><span class="p">:</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+  <span class="k">return</span> <span class="mi">42</span><span class="p">;</span>
+<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">Don</span><span class="s1">&#39;t:</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+  <span class="k">return</span> <span class="mi">42</span><span class="p">;</span>
+<span class="k">else</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add <code class="code docutils literal"><span class="pre">//</span> <span class="pre">-*-C++-*-</span></code> as the first line of extensionless header files.</li>
+<li>Use the following style for multiline comments:</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/**</span>
+ <span class="o">*</span> <span class="n">My</span> <span class="n">very</span> <span class="n">important</span> <span class="n">comment</span>
+ <span class="o">*/</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Each class needs a short comment above it to show up in Doxygen generated documentation.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>/** Description of class */
+class Logger {
+...
+};
+</pre></div>
+</div>
+<p>(For single-line comments on classes/interfaces, <strong>don’t</strong> use <code class="code docutils literal"><span class="pre">//</span></code> as this does not get picked up by Doxygen.)</p>
+<ul class="simple">
+<li>Avoid unnecessary whitespace or decorations</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Do</span><span class="p">:</span>
+<span class="n">namespace</span> <span class="n">fs</span> <span class="p">{</span>
+  <span class="n">struct</span> <span class="n">File_system</span><span class="p">;</span>
+
+  <span class="o">/**</span> <span class="n">Generic</span> <span class="n">structure</span> <span class="k">for</span> <span class="n">directory</span> <span class="n">entries</span> <span class="o">*/</span>
+  <span class="n">struct</span> <span class="n">Dirent</span> <span class="p">{</span>
+
+    <span class="o">/**</span> <span class="n">Constructor</span> <span class="o">*/</span>
+    <span class="n">explicit</span> <span class="n">Dirent</span><span class="p">(</span><span class="n">File_system</span><span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="n">const</span> <span class="n">Enttype</span> <span class="n">t</span> <span class="o">=</span> <span class="n">INVALID_ENTITY</span><span class="p">,</span> <span class="n">const</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">n</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="n">const</span> <span class="n">uint64_t</span> <span class="n">blk</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">const</span> <span class="n">uint64_t</span> <span class="n">pr</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">const</span> <span class="n">uint64_t</span> <span class="n">sz</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">const</span> <span class="n">uint32_t</span> <span class="n">attr</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">const</span> <span class="n">uint32_t</span> <span class="n">modt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">:</span> <span class="n">fs_</span> <span class="p">{</span><span class="n">fs</span><span class="p">},</span> <span class="n">ftype</span> <span class="p">{</span><span class="n">t</span><span class="p">},</span> <span class="n">fname_</span> <span class="p">{</span><span class="n">n</span><span class="p">},</span>
+      <span class="n">block_</span> <span class="p">{</span><span class="n">blk</span><span class="p">},</span> <span class="n">parent_</span> <span class="p">{</span><span class="n">pr</span><span class="p">},</span>
+      <span class="n">size_</span><span class="p">{</span><span class="n">sz</span><span class="p">},</span> <span class="n">attrib_</span> <span class="p">{</span><span class="n">attr</span><span class="p">},</span>
+      <span class="n">modif</span> <span class="p">{</span><span class="n">modt</span><span class="p">}</span>
+    <span class="p">{}</span>
+
+    <span class="n">Enttype</span> <span class="nb">type</span><span class="p">()</span> <span class="n">const</span> <span class="n">noexcept</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">ftype</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">const</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">()</span> <span class="n">const</span> <span class="n">noexcept</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">fname_</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">uint64_t</span> <span class="n">block</span><span class="p">()</span> <span class="n">const</span> <span class="n">noexcept</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">block_</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">Don</span><span class="s1">&#39;t:</span>
+<span class="n">namespace</span> <span class="n">fs</span> <span class="p">{</span>
+  <span class="o">///////////////////////////////////////////////////////////////////////////////</span>
+  <span class="n">struct</span> <span class="n">File_system</span><span class="p">;</span>
+
+  <span class="o">///////////////////////////////////////////////////////////////////////////////</span>
+  <span class="n">struct</span> <span class="n">Dirent</span> <span class="p">{</span>
+
+    <span class="o">///////////////////////////////////////////////////////////////////////////////</span>
+    <span class="n">explicit</span> <span class="n">Dirent</span><span class="p">(</span><span class="n">File_system</span><span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="n">const</span> <span class="n">Enttype</span> <span class="n">t</span> <span class="o">=</span> <span class="n">INVALID_ENTITY</span><span class="p">,</span> <span class="n">const</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">n</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                  <span class="n">const</span> <span class="n">uint64_t</span> <span class="n">blk</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">const</span> <span class="n">uint64_t</span> <span class="n">pr</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">const</span> <span class="n">uint64_t</span> <span class="n">sz</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">const</span> <span class="n">uint32_t</span> <span class="n">attr</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">const</span> <span class="n">uint32_t</span> <span class="n">modt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">:</span> <span class="n">fs_</span> <span class="p">{</span><span class="n">fs</span><span class="p">},</span> <span class="n">ftype</span> <span class="p">{</span><span class="n">t</span><span class="p">},</span> <span class="n">fname_</span> <span class="p">{</span><span class="n">n</span><span class="p">},</span>
+      <span class="n">block_</span> <span class="p">{</span><span class="n">blk</span><span class="p">},</span> <span class="n">parent_</span> <span class="p">{</span><span class="n">pr</span><span class="p">},</span>
+      <span class="n">size_</span><span class="p">{</span><span class="n">sz</span><span class="p">},</span> <span class="n">attrib_</span> <span class="p">{</span><span class="n">attr</span><span class="p">},</span>
+      <span class="n">modif</span> <span class="p">{</span><span class="n">modt</span><span class="p">}</span>
+    <span class="p">{}</span>
+
+    <span class="o">///////////////////////////////////////////////////////////////////////////////</span>
+    <span class="n">Enttype</span> <span class="nb">type</span><span class="p">()</span> <span class="n">const</span> <span class="n">noexcept</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">ftype</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="o">///////////////////////////////////////////////////////////////////////////////</span>
+    <span class="n">const</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">()</span> <span class="n">const</span> <span class="n">noexcept</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">fname_</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="o">///////////////////////////////////////////////////////////////////////////////</span>
+    <span class="n">uint64_t</span> <span class="n">block</span><span class="p">()</span> <span class="n">const</span> <span class="n">noexcept</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">block_</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Use UTF-8 encoding, LF line endings.</li>
+<li>If your editor supports <code class="code docutils literal"><span class="pre">.editorconfig</span></code>, use it.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="issue-tracker">
 <h2>Issue tracker<a class="headerlink" href="#issue-tracker" title="Permalink to this headline">¶</a></h2>
@@ -98,6 +206,7 @@
 <li><a class="reference internal" href="#">Contributing to IncludeOS</a><ul>
 <li><a class="reference internal" href="#clone-edit-and-send-us-a-pull-request-on-github">Clone, edit and send us a pull request on GitHub</a><ul>
 <li><a class="reference internal" href="#guidelines">Guidelines</a></li>
+<li><a class="reference internal" href="#code-formatting">Code formatting</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#issue-tracker">Issue tracker</a></li>
