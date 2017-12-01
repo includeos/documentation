@@ -1,18 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Fun with Guns and Knives &#8212; IncludeOS 0.9.3 documentation</title>
-    
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -31,7 +28,7 @@
     <link rel="next" title="Jenkins CI" href="Jenkins-CI.html" />
     <link rel="prev" title="The boot process" href="The-boot-process.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -57,15 +54,15 @@
   <div class="section" id="fun-with-guns-and-knives">
 <span id="id1"></span><h1>Fun with Guns and Knives<a class="headerlink" href="#fun-with-guns-and-knives" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-s-in-an-address">
-<h2>What&#8217;s in an address<a class="headerlink" href="#what-s-in-an-address" title="Permalink to this headline">¶</a></h2>
+<h2>What’s in an address<a class="headerlink" href="#what-s-in-an-address" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Try writing to that damn well protected address 0! Just remember that you&#8217;re overwriting a 16-bit heirloom. You have enough powers to dig it up and see that it still works - if you start early enough in the bootloader. (It&#8217;s only 512 <em>bytes</em> - you can read it!)</li>
+<li>Try writing to that damn well protected address 0! Just remember that you’re overwriting a 16-bit heirloom. You have enough powers to dig it up and see that it still works - if you start early enough in the bootloader. (It’s only 512 <em>bytes</em> - you can read it!)</li>
 </ul>
 </div>
 <div class="section" id="make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">
-<h2>Make sure nobody can call you, then go to sleep until somebody calls...<a class="headerlink" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls" title="Permalink to this headline">¶</a></h2>
+<h2>Make sure nobody can call you, then go to sleep until somebody calls…<a class="headerlink" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Try to <code class="docutils literal"><span class="pre">asm(&quot;cli;hlt&quot;)</span></code> in a userspace program - then try it in IncludeOS, directly on KVM/VirtualBox. Explain to the duck exactly what&#8217;s going on - and he&#8217;ll tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget in reward of your mischief.</li>
+<li>Try to <code class="docutils literal"><span class="pre">asm(&quot;cli;hlt&quot;)</span></code> in a userspace program - then try it in IncludeOS, directly on KVM/VirtualBox. Explain to the duck exactly what’s going on - and he’ll tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That’s a virtualization gold nugget in reward of your mischief.</li>
 <li>Now try it in IncludeOS inside a virtualBox VM. Explain <em>that</em> to the duck!</li>
 </ul>
 </div>
@@ -93,8 +90,8 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Fun with Guns and Knives</a><ul>
-<li><a class="reference internal" href="#what-s-in-an-address">What&#8217;s in an address</a></li>
-<li><a class="reference internal" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls...</a></li>
+<li><a class="reference internal" href="#what-s-in-an-address">What’s in an address</a></li>
+<li><a class="reference internal" href="#make-sure-nobody-can-call-you-then-go-to-sleep-until-somebody-calls">Make sure nobody can call you, then go to sleep until somebody calls…</a></li>
 <li><a class="reference internal" href="#throw-frying-pans">Throw frying pans</a></li>
 <li><a class="reference internal" href="#a-new-segment">A new segment</a></li>
 <li><a class="reference internal" href="#interrupt-please">Interrupt please!</a></li>
@@ -147,7 +144,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, IncludeOS.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>

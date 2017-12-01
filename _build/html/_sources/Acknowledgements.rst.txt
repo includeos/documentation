@@ -28,7 +28,7 @@ Contributors
 
 The `GitHub contributors list <https://github.com/hioa-cs/IncludeOS/graphs/contributors>`__ speaks for itself. Alf André Walla (fwsGonzo) probably deserves a medal.
 
-Some contributions are not directly visible in code. The `NETSYS research group <http://www.hioa.no/eng/Forskning-og-utvikling/Hva-forsker-HiOA-paa/Forskning-og-utvikling-ved-Fakultet-for-teknologi-kunst-og-design/node_73129/Nettverks-og-systemadministrasjon-NETSYS>`__ has been supporting IncludeOS form the beginning, with everything from equipment, to system administration, to statistical advice and paper reviews. A very special thanks to these guys:
+Some contributions are not directly visible in code. The `ASN research group <http://www.hioa.no/eng/Forskning-og-utvikling/Hva-forsker-HiOA-paa/Forskning-og-utvikling-ved-Fakultet-for-teknologi-kunst-og-design/node_73129/Nettverks-og-systemadministrasjon-NETSYS>`__ has been supporting IncludeOS form the beginning, with everything from equipment, to system administration, to statistical advice and paper reviews. A very special thanks to these guys:
 
 - Hårek Haugerud
 - Kyrre Begnum

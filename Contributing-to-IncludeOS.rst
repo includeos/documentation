@@ -3,8 +3,6 @@
 Contributing to IncludeOS
 =========================
 
-.. Evaluate: CMake packages instead of standalone packages (not sure when a package manager will be up and running)
-
 Clone, edit and send us a pull request on GitHub
 ------------------------------------------------
 
@@ -38,10 +36,6 @@ If you're making drastic changes to a file, but mostly adding comments, reformat
 **5. Please don't redo the folder-structure**
 
 If you have suggestions for this, just post an `issue <https://github.com/hioa-cs/IncludeOS/issues>`__ explaining the benefits of your suggested structure.
-
-**6. Consider making a standalone package**
-
-It would be great if you could make your project into a package - just make it a separate GitHub repo and let us know about it. We'll link to it in the `IncludeOS README <https://github.com/hioa-cs/IncludeOS/blob/master/README.md>`__.
 
 Issue tracker
 -------------

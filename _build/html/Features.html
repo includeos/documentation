@@ -1,18 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Features &#8212; IncludeOS 0.9.3 documentation</title>
-    
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -31,7 +28,7 @@
     <link rel="next" title="Examples and submodules" href="Examples-and-submodules.html" />
     <link rel="prev" title="Contributing to IncludeOS" href="Contributing-to-IncludeOS.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -58,7 +55,7 @@
 <p>A non-exhaustive, possibly outdated feature list</p>
 <ul class="simple">
 <li><strong>Extreme memory footprint</strong>: A minimal bootable image, including bootloader, operating system components and a complete C++ standard library is currently 707K when optimized for size.</li>
-<li><strong>KVM and VirtualBox support</strong> with full virtualization, using <a class="reference external" href="https://en.wikipedia.org/wiki/X86_virtualization">x86 hardware virtualization</a> whenever available (it is on most modern x86 CPU&#8217;s). In principle IncludeOS should run on any x86 hardware platform, even on a physical x86 computer, given appropriate drivers. Officially, we develop for- and test on <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">Linux KVM</a>, which power the <a class="reference external" href="https://www.openstack.org/">OpenStack IaaS cloud</a>, and <a class="reference external" href="https://www.virtualbox.org">VirtualBox</a>, which means that you can run your IncludeOS service on both Linux, Microsoft Windows and Apple OS X.</li>
+<li><strong>KVM and VirtualBox support</strong> with full virtualization, using <a class="reference external" href="https://en.wikipedia.org/wiki/X86_virtualization">x86 hardware virtualization</a> whenever available (it is on most modern x86 CPU’s). In principle IncludeOS should run on any x86 hardware platform, even on a physical x86 computer, given appropriate drivers. Officially, we develop for- and test on <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">Linux KVM</a>, which power the <a class="reference external" href="https://www.openstack.org/">OpenStack IaaS cloud</a>, and <a class="reference external" href="https://www.virtualbox.org">VirtualBox</a>, which means that you can run your IncludeOS service on both Linux, Microsoft Windows and Apple OS X.</li>
 <li><strong>C++11/14 support</strong><ul>
 <li>Full C++11/14 language support with <a class="reference external" href="http://clang.llvm.org">clang</a> v3.6 and later.</li>
 <li>Standard C++ library** (STL) <a class="reference external" href="http://libcxx.llvm.org">libc++</a> from <a class="reference external" href="http://llvm.org/">LLVM</a></li>
@@ -67,33 +64,33 @@
 </ul>
 </li>
 <li><strong>Standard C library</strong> using <a class="reference external" href="https://sourceware.org/newlib/">newlib</a> from <a class="reference external" href="http://www.redhat.com/">Red Hat</a></li>
-<li><strong>Virtio Network driver</strong> with DMA. <a class="reference external" href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=virtio">Virtio</a> provides a highly efficient and widely supported I/O virtualization. Like most implementations IncludeOS currently uses &#8220;legacy mode&#8221;, but we&#8217;re working towards the new <a class="reference external" href="http://docs.oasis-open.org/virtio/virtio/v1.0/virtio-v1.0.html">Virtio 1.0 OASIS standard</a></li>
+<li><strong>Virtio Network driver</strong> with DMA. <a class="reference external" href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=virtio">Virtio</a> provides a highly efficient and widely supported I/O virtualization. Like most implementations IncludeOS currently uses “legacy mode”, but we’re working towards the new <a class="reference external" href="http://docs.oasis-open.org/virtio/virtio/v1.0/virtio-v1.0.html">Virtio 1.0 OASIS standard</a></li>
 <li><strong>A highly modular TCP/IP-stack</strong> written from scratch, still under heavy development.<ul>
-<li>TCP: Just enough to serve HTTP</li>
-<li>UDP: Enough to support a high performance DNS service</li>
-<li>DHCP: Basic support, tested on VirtualBox and KVM</li>
-<li>ICMP: Enough to answer ping</li>
-<li>ARP</li>
-<li>Ethernet</li>
-<li>IPv6 support under active development</li>
+<li>TCP with a few extensions (SAck, TSVal)</li>
+<li>UDP module (but it’s not ultra-mature yet)</li>
+<li>DHCP and DNS clients that (as far as we know) work on the most common cloud platforms</li>
+<li>ICMP: Send/receive ping and some error handling code</li>
+<li>ARP cache</li>
+<li>An IP &lt;-&gt; Link layer/driver separation layer that will allow future link layers, such as WiFi</li>
+<li>Minimal beginnings on IPv6 support</li>
 </ul>
 </li>
 <li><strong>Completely silent while idling</strong>. As we documented in our <a class="reference external" href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6753801">IEEE CloudCom 2013 paper</a>, running a regular interval timer for concurrency inside a virtual machine will impose a significant CPU-load on hypervisors running many virtual machines. IncludeOS disables the timer interrupts completely when idle, making it use no CPU at all. This makes IncludeOS services well suited for resource saving through overbooking schemes.</li>
 <li><strong>Node.js-style callback-based programming</strong> - everything happens in one efficient thread with no I/O blocking or unnecessary guest-side context switching.</li>
-<li><strong>No race conditions</strong>. Delegated IRQ handling makes race conditions in &#8220;userspace&#8221; &#8220;impossible&#8221;. ...unless you implement threads yourself (you have the access) or we do.</li>
-<li><strong>No virtual memory overhead</strong> One service pr. VM means no need for virtual address spaces, and no overead due to address translation. Everything happens in a single, ring 0 address space. This has high positive impact on memory performance on some systems, but less so on newer CPU&#8217;s with good hardware support for <a class="reference external" href="https://en.wikipedia.org/wiki/Second_Level_Address_Translation">nested paging</a>.</li>
+<li><strong>No race conditions</strong>. Delegated IRQ handling makes race conditions in “userspace” “impossible”. …unless you implement threads yourself (you have the access) or we do.</li>
+<li><strong>No virtual memory overhead</strong> One service pr. VM means no need for virtual address spaces, and no overead due to address translation. Everything happens in a single, ring 0 address space. This has high positive impact on memory performance on some systems, but less so on newer CPU’s with good hardware support for <a class="reference external" href="https://en.wikipedia.org/wiki/Second_Level_Address_Translation">nested paging</a>.</li>
 <li><strong>All the guns and all the knives:</strong><ul>
-<li>IncludeOS services run in ring 0, in a single address space without protection. That&#8217;s a lot of power to play with. For example: Try <code class="docutils literal"><span class="pre">asm(&quot;hlt&quot;)</span></code> in a normal userspace program - then try it in IncludeOS. Explain to the duck exactly what&#8217;s going on ... and it will tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That&#8217;s a virtualization gold nugget, in reward of your mischief. If you believe in these kinds of lessons, there&#8217;s always more <a class="reference internal" href="Fun-with-Guns-and-Knives.html#fun-with-guns-and-knives"><span class="std std-ref">Fun with Guns and Knives</span></a>.</li>
+<li>IncludeOS services run in ring 0, in a single address space without protection. That’s a lot of power to play with. For example: Try <code class="docutils literal"><span class="pre">asm(&quot;hlt&quot;)</span></code> in a normal userspace program - then try it in IncludeOS. Explain to the duck exactly what’s going on … and it will tell you why Intel made VT-x (Yes IBM was way behind Alan Turing). That’s a virtualization gold nugget, in reward of your mischief. If you believe in these kinds of lessons, there’s always more <a class="reference internal" href="Fun-with-Guns-and-Knives.html#fun-with-guns-and-knives"><span class="std std-ref">Fun with Guns and Knives</span></a>.</li>
 <li><em>Hold your forces! I and James Gosling strongly object to guns and knives!</em><ul>
 <li>For good advice on how not to use these powers, look to the <a class="reference external" href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Wisdom of the Jedi Council</a>.</li>
-<li>If you found the gold nugget above, you&#8217;ll know that the physical CPU protects you from others - and others from you. And that&#8217;s a pretty solid protection compared to, say, <a class="reference external" href="https://xkcd.com/1354/">openssl</a>. If you need protection from yourself, that too can be gained by aquiring the 10 000 lines of <a class="reference external" href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Wisdom from the Jedi Council</a>, or also from our friends at <a class="reference external" href="http://mirage.io">Mirage</a> ;-)</li>
+<li>If you found the gold nugget above, you’ll know that the physical CPU protects you from others - and others from you. And that’s a pretty solid protection compared to, say, <a class="reference external" href="https://xkcd.com/1354/">openssl</a>. If you need protection from yourself, that too can be gained by aquiring the 10 000 lines of <a class="reference external" href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Wisdom from the Jedi Council</a>, or also from our friends at <a class="reference external" href="http://mirage.io">Mirage</a> ;-)</li>
 <li><em>Are the extra guns and knives really features?</em> For explorers, yes. For a Joint Strike Fighter autopilot? Noooo. You need <a class="reference external" href="http://www.stroustrup.com/JSF-AV-rules.pdf">even more wisdom</a> for that.</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>If it&#8217;s not listed under features, chances are that we don&#8217;t have it yet. See the <a class="reference internal" href="Roadmap.html#roadmap"><span class="std std-ref">Roadmap</span></a> for our current plan.</p>
+<p>If it’s not listed under features, chances are that we don’t have it yet. See the <a class="reference internal" href="Roadmap.html#roadmap"><span class="std std-ref">Roadmap</span></a> for our current plan.</p>
 </div>
 
 
@@ -146,7 +143,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, IncludeOS.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>

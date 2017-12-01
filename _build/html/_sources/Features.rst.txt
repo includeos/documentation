@@ -24,13 +24,13 @@ A non-exhaustive, possibly outdated feature list
 
 -  **A highly modular TCP/IP-stack** written from scratch, still under heavy development.
 
-   +  TCP: Just enough to serve HTTP
-   +  UDP: Enough to support a high performance DNS service
-   +  DHCP: Basic support, tested on VirtualBox and KVM
-   +  ICMP: Enough to answer ping
-   +  ARP
-   +  Ethernet
-   +  IPv6 support under active development
+   +  TCP with a few extensions (SAck, TSVal)
+   +  UDP module (but it's not ultra-mature yet)
+   +  DHCP and DNS clients that (as far as we know) work on the most common cloud platforms
+   +  ICMP: Send/receive ping and some error handling code
+   +  ARP cache
+   +  An IP <-> Link layer/driver separation layer that will allow future link layers, such as WiFi
+   +  Minimal beginnings on IPv6 support
 
 -  **Completely silent while idling**. As we documented in our `IEEE CloudCom 2013 paper <http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6753801>`__, running a regular interval timer for concurrency inside a virtual machine will impose a significant CPU-load on hypervisors running many virtual machines. IncludeOS disables the timer interrupts completely when idle, making it use no CPU at all. This makes IncludeOS services well suited for resource saving through overbooking schemes.
 

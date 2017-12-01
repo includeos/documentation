@@ -1,18 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Getting started &#8212; IncludeOS 0.9.3 documentation</title>
-    
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -31,7 +28,7 @@
     <link rel="next" title="Contributing to IncludeOS" href="Contributing-to-IncludeOS.html" />
     <link rel="prev" title="IncludeOS" href="index.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -174,7 +171,7 @@ $ boot my_service
 </li>
 <li><p class="first">There is no shell! IncludeOS is a unikernel, and so it will only run one process. Think of an IncludeOS VM as a local process.</p>
 </li>
-<li><p class="first">There is no default VGA! So, nothing will show up on the &#8220;screen&#8221; if you&#8217;re using a GUI (i.e. if you run IncludeOS directly in virtualbox). To enable VGA you will need to connect <code class="docutils literal"><span class="pre">OS::set_rsprint_secondary</span></code> to a lambda that calls <code class="docutils literal"><span class="pre">ConsoleVGA::write</span></code> (see: <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/vga.hpp">api/kernel/vga.hpp</a> and the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/test/hw/integration/vga/vga.cpp">test service</a> for an example), as well as enable graphical output in the emulator, such as qemu. We&#8217;ll add VGA support in the future, as a package.</p>
+<li><p class="first">There is no default VGA! So, nothing will show up on the “screen” if you’re using a GUI (i.e. if you run IncludeOS directly in virtualbox). To enable VGA you will need to connect <code class="docutils literal"><span class="pre">OS::set_rsprint_secondary</span></code> to a lambda that calls <code class="docutils literal"><span class="pre">ConsoleVGA::write</span></code> (see: <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/vga.hpp">api/kernel/vga.hpp</a> and the <a class="reference external" href="https://github.com/hioa-cs/IncludeOS/blob/master/test/hw/integration/vga/vga.cpp">test service</a> for an example), as well as enable graphical output in the emulator, such as qemu. We’ll add VGA support in the future, as a package.</p>
 </li>
 <li><p class="first">You should be able to ping the VM. Its IP-address will be stated in the boot-time output from IncludeOS.</p>
 </li>
@@ -183,7 +180,7 @@ $ boot my_service
 <li><p class="first">How to get out? The test script starts <a class="reference external" href="http://wiki.qemu.org/Main_Page">qemu</a> with the <code class="docutils literal"><span class="pre">--nographics</span></code>-option. This will by default reroute stdin and stdout to the terminal. To exit the virtual machine, you can go via the <a class="reference external" href="https://en.wikibooks.org/wiki/QEMU/Monitor#Virtual_machine">Qemu monitor</a>. The command for entering the monitor is <code class="docutils literal"><span class="pre">Ctrl+a</span> <span class="pre">c</span></code>, or to exit directly, <code class="docutils literal"><span class="pre">Ctrl+a</span> <span class="pre">x</span></code>.</p>
 <blockquote>
 <div><ul class="simple">
-<li><em>NOTE</em>: This keyboard shortcut may not work if you&#8217;re interacting with your development environment via a VirtualBox GUI, over putty, inside a <code class="docutils literal"><span class="pre">screen</span></code> etc. If you find a good solution for a certain platform (i.e. putty to VirtualBox on Windows), please let us know so we can update the documentation.</li>
+<li><em>NOTE</em>: This keyboard shortcut may not work if you’re interacting with your development environment via a VirtualBox GUI, over putty, inside a <code class="docutils literal"><span class="pre">screen</span></code> etc. If you find a good solution for a certain platform (i.e. putty to VirtualBox on Windows), please let us know so we can update the documentation.</li>
 </ul>
 </div></blockquote>
 </li>
@@ -256,7 +253,7 @@ $ boot my_service
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, IncludeOS.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>
