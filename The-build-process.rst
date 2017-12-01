@@ -3,32 +3,18 @@
 The build process
 =================
 
-.. More user perspective: how the users actually use IncludeOS
-.. Too detailed as it is now
-.. Include CMake info
-.. How can the user get started
+1. Installing IncludeOS means building all the OS components, such as `IRQ manager <https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/irq_manager.hpp>`__, `PCI manager <https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/pci_manager.hpp>`__, the OS class etc., combining them into a static library ``os.a`` using GNU ``ar``, and putting it in an architecture specific directory under ``$INCLUDEOS_PREFIX`` along with all the public os-headers (the "IncludeOS API"). This is what you'll be including parts of, into the service. Device drivers are built as their own libraries, and must be `explicitly added <https://github.com/hioa-cs/IncludeOS/blob/master/examples/acorn/CMakeLists.txt#L36>`__ in the CMakeLists.txt of your service. This makes it possible to only include the drivers you want, while still not having to explicitly mention a particular driver in your code.
 
-The build system will:
+2. When the service gets built it will turn into object files, which eventually gets statically linked with the os-library, drivers, plugins etc. It will also get linked with the pre-built standard libraries (:code:`libc.a`, :code:`libc++.a` etc.) which we provide as a downloadable bundle, pre-built using `this script <https://github.com/hioa-cs/IncludeOS/blob/master/etc/create_binary_bundle.sh>`__. Only the objects actually needed by the service will be linked, turning it all into one minimal elf-binary, :code:`your_service`, with OS included.
 
-- link your service and only the necessary OS objects into a single binary
+3. This binary contains a multiboot header, which has all the information the bootloader needs to boot it. This gives you a few options for booting, all available through the simple :code:`boot` tool that comes with IncludeOS:
 
-- attach a boot loader
+	- **Qemu kernel option**: For 32-bit ELF binaries qemu can load it directly without a bootloader, provided a correct multiboot header. This is what ``boot <service path>`` will do by default. The boot tool will generate something like ``$ qemu_system_x86_64 -kernel your_service ...``, which will boot your service directly. Adding ``-nographic`` will make the serial port output appear in your terminal. For 64-bit ELF binaries Qemu has a paranoid check that prevents this, so we're using a 32-bit IncludeOS as `chainloader <https://github.com/hioa-cs/IncludeOS/tree/master/src/chainload>`__ for that. If ``boot <service path>`` detects a 64-bit ELF it will use the 32-bit chainloader as ``-kernel``, and add the 64 bit binary as a "kernel module", e.g. ``-initrd <my_64_bit_kernel>``. The chainloader will copy the 64-bit binary to the appropriate location in memory, modify the multiboot info provided by the bootloader to the kernel, and jump to the new kernel, which boots as if loaded directly by e.g. GRUB.
 
-- combine everything into a self-contained bootable disk image, ready to run on a modern hypervisor.
+	- **Legacy**: Attach our own minimal bootloader, using the utility `vmbuild <https://github.com/hioa-cs/IncludeOS/tree/master/vmbuild>`__. It combines our minimal bootloader and ``your_service`` binary into a disk image called ``your_service.img``. At this point the bootloader gets the size and location of the service hardcoded into it. The major drawback of using this bootloader is that it doesn't fetch information about system memory from the BIOS so you can't know exactly how much memory you have, above 65Mb. (Which CMOS can provide)
 
-In other words, it's a `Unikernel <https://en.wikipedia.org/wiki/Unikernel>`__ written from scratch, employing x86 hardware virtualization, with no dependencies except for the virtual hardware.
+	- **Grub**: Embed the binary into a GRUB filesystem, and have the Grub chainloader boot it for you. This is what we're doing when `booting on Google Compute Engine <http://www.includeos.org/blog/2017/includeos-on-google-compute-engine.html>`__. You can do this on Linux using ``boot -g <service path>``, which will produce a bootable ``your_service.grub.img``. Note that GRUB is larger than IncludeOS itself, so expect a few megabytes added to the image size.
 
-.. figure:: _static/IncludeOS_build_system_overview.png
-    :alt: Build system overview
+4. To run with vmware or virtualbox, the image has to be converted into a supported format, such as ``vdi`` or ``vmdk``. This is easily done in one command with the ``qemu-img``-tool, that comes with Qemu. We have a `script for that too <https://github.com/hioa-cs/IncludeOS/blob/master/etc/convert_image.sh>`__. Detailed information about booting in vmware, which is as easy as ``boot``, is `provided here <http://www.includeos.org/blog/2017/running-includeos-unikernels-with-vmware.html>`__.
 
-1. Installing IncludeOS means building all the OS components, such as `IRQ manager <https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/irq_manager.hpp>`__, `PCI manager <https://github.com/hioa-cs/IncludeOS/blob/master/api/kernel/pci_manager.hpp>`__, `PIT-Timers <https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/pit.hpp>`__ and `Device Driver(s) <https://github.com/hioa-cs/IncludeOS/blob/master/api/hw/nic.hpp>`__, combining them into a static library ``os.a`` using GNU ``ar``, and putting it in ``$INCLUDEOS_HOME`` along with all the public os-headers (the "IncludeOS API"). This is what you'll be including parts of, into the service.
-
-2. When the service gets built it will turn into object files, which eventually gets statically linked with the os-library and other libraries. Only the objects actually needed by the service will be linked, turning it all into one minimal elf-binary, ``your_service``, with OS included.
-
-3. The utility `vmbuild <https://github.com/hioa-cs/IncludeOS/tree/master/vmbuild>`__ combines the `bootloader <https://github.com/hioa-cs/IncludeOS/blob/master/src/boot/bootloader.asm>`__ and ``your_service`` binary into a disk image called ``your_service.img``. At this point the bootloader gets the size and location of the service hardcoded into it.
-
-4. Now Qemu can start directly, with that image as hard disk, either directly from the command-line, using our convenience-script, or via libvirt/virsh.
-
-5. To run with virtualbox, the image has to be converted into a supported format, such as ``vdi``. This is easily done in one command with the ``qemu-img``-tool, that comes with Qemu. We have a `script for that too <https://github.com/hioa-cs/IncludeOS/blob/master/etc/convert_image.sh>`__.
-
-Inspect the `Makefile <https://github.com/hioa-cs/IncludeOS/blob/master/src/Makefile>`__ and `linker script, linker.ld <https://github.com/hioa-cs/IncludeOS/blob/master/src/linker.ld>`__ for more information about how the build happens, and `vmbuild/vmbuild.cpp <https://github.com/hioa-cs/IncludeOS/blob/master/vmbuild/vmbuild.cpp>`__ for how the image gets constructed.
+Inspect the main `CMakeLists.txt <https://github.com/hioa-cs/IncludeOS/blob/master/CMakeLists.txt>`__ and then follow the trail of cmake scripts in the added subfolders for information about how the OS build happens. For more information about building individual services, check out the `CMakeLists.txt <https://github.com/hioa-cs/IncludeOS/blob/master/examples/acorn/CMakeLists.txt>`__ of one of the example services, plus the linker script, `linker.ld <https://github.com/hioa-cs/IncludeOS/blob/master/src/arch/x86_64/linker.ld>`__ for the layout of the final binary. Note that most of the CMake magic for link- and include paths, adding drivers, plugins etc. is tucked away in the `post.service.cmake <https://github.com/hioa-cs/IncludeOS/blob/master/cmake/post.service.cmake>`__.
