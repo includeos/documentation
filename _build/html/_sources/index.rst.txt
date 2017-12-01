@@ -13,6 +13,7 @@ For more information: Visit our `website <http://www.includeos.org>`__, check ou
    Contributing-to-IncludeOS
    Features
    Examples-and-submodules
+   Using-memdisks
    Security
    More-information
    FAQ
