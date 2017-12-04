@@ -3,7 +3,9 @@
 NaCl - Not Another Configuration Language
 =========================================
 
-NaCl is a configuration language for IncludeOS that you can use to add for example interfaces and firewall rules to your service. Add a nacl.txt file to your service with your configuration, and this will be transpiled to C++ for you when the service is built.
+NaCl is a configuration language for IncludeOS that you can use to add for example interfaces and firewall rules to your service. Add a nacl.txt file to your service with your configuration, and this will be transpiled into C++ for you when the service is built.
+
+You can find the NaCl repository `here <https://github.com/includeos/NaCl>`__.
 
 Datatypes
 ~~~~~~~~~
