@@ -1,0 +1,708 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>NaCl - Not Another Configuration Language &#8212; IncludeOS 0.9.3 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/custom_style.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using memdisks" href="Using-memdisks.html" />
+    <link rel="prev" title="Examples and libraries" href="Examples-and-libraries.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Using-memdisks.html" title="Using memdisks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Examples-and-libraries.html" title="Examples and libraries"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nacl-not-another-configuration-language">
+<span id="nacl"></span><h1>NaCl - Not Another Configuration Language<a class="headerlink" href="#nacl-not-another-configuration-language" title="Permalink to this headline">¶</a></h1>
+<p>NaCl is a configuration language for IncludeOS that you can use to add for example interfaces and firewall rules to your service. Add a nacl.txt file to your service with your configuration, and this will be transpiled to C++ for you when the service is built.</p>
+<div class="section" id="datatypes">
+<h2>Datatypes<a class="headerlink" href="#datatypes" title="Permalink to this headline">¶</a></h2>
+<p>Datatypes that exist in NaCl behind the scenes are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>integer (a number, f.ex. 10 or (-10))</li>
+<li>IPv4 address (f.ex. 10.0.0.45)</li>
+<li>IPv4 cidr (f.ex. 10.0.0.0/24)</li>
+<li>bool (f.ex. false)</li>
+<li>string (f.ex. “Hi”)</li>
+<li>range (f.ex. 10-20 or 10.0.0.40-10.0.0.50)</li>
+<li>list (f.ex. [ 10, 20, 30 ])</li>
+<li>object (f.ex. { key1: 10, key2: 20 })</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="typed-objects">
+<h2>Typed objects<a class="headerlink" href="#typed-objects" title="Permalink to this headline">¶</a></h2>
+<p>A typed object initialization has the following structure: &lt;type&gt; &lt;name&gt; &lt;value&gt;, where the type can be Iface, Gateway, Conntrack or Vlan.</p>
+<div class="section" id="iface">
+<h3>Iface<a class="headerlink" href="#iface" title="Permalink to this headline">¶</a></h3>
+<p>An Iface is a type that has certain requirements. The following property must be specified for each Iface created:</p>
+<blockquote>
+<div><ul class="simple">
+<li>index (integer)</li>
+</ul>
+</div></blockquote>
+<p>The following properties must be given if you don’t set the config property to dhcp, or don’t set the config property at all:</p>
+<blockquote>
+<div><ul class="simple">
+<li>address (IPv4 address)</li>
+<li>netmask (IPv4 address)</li>
+</ul>
+</div></blockquote>
+<p>Other properties that can be specified are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>gateway (IPv4 address)</li>
+<li>dns (IPv4 address)</li>
+<li>config (dhcp, dhcp-with-fallback or static)</li>
+<li>masquerade (can be set to true or false, where false is default)</li>
+<li>prerouting (names of functions)</li>
+<li>input (names of functions)</li>
+<li>output (names of functions)</li>
+<li>postrouting (names of functions)</li>
+<li>vlan (names of Vlans or anonymous Vlan objects)</li>
+</ul>
+</div></blockquote>
+<p>The value of an Iface can be an object. The object consists of key value pairs, separated by comma, and the pairs are enclosed by curly brackets:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="p">{</span>
+        <span class="n">address</span><span class="p">:</span>        <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span>        <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+        <span class="n">gateway</span><span class="p">:</span>        <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">dns</span><span class="p">:</span>            <span class="mf">8.8</span><span class="o">.</span><span class="mf">8.8</span><span class="p">,</span>
+        <span class="n">index</span><span class="p">:</span>          <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The value can also simply be the <strong>configuration type</strong> (config) you want the Iface to have: dhcp, dhcp-with-fallback or static. Different requirements are connected to each of these.</p>
+<p>For example, if you only want to set an Iface configuration to <strong>dhcp</strong>, you can use this syntax:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="n">dhcp</span>
+</pre></div>
+</div>
+<p>But since the index property always has to be set, you also need to set this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="n">dhcp</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">index</span><span class="p">:</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>The <strong>dhcp-with-fallback</strong> configuration requires you to specify a fallback address and netmask:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="p">{</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">dhcp</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">fallback</span><span class="p">,</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <strong>static</strong> configuration also requires an address and a netmask to be specified. This is default, and doesn’t need to be specified:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="p">{</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>An Iface’s <strong>properties can be set outside an object specification</strong> as well. F.ex.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="n">dhcp</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">fallback</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">index</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">address</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">gateway</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span>
+</pre></div>
+</div>
+<p>These properties can be set anywhere in the NaCl file.</p>
+<p>An Iface has 4 <strong>chain</strong> properties that functions can be pushed onto (we’ll come back to functions later, but the name of a function can be set as an Iface’s chain’s value). These chains are prerouting, input, output and postrouting.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="n">dhcp</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">index</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">prerouting</span><span class="p">:</span> <span class="n">my_function</span>
+</pre></div>
+</div>
+<p>More than one function can be added to a chain, but only one function of the type Filter should be added to each chain. This is because an accept inside a Filter only counts for that Filter, and the chain only stops its execution when it gets a drop verdict. There’s a chance this could be changed later.</p>
+<p>There is also not allowed to add other Filters than IP Filters to a chain, but you can create an IP Filter and call or create Filters of other subtypes inside that Filter (see Functions).</p>
+<p>If you want to add more than one function to a chain, you have to specify a list:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="p">{</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">dhcp</span><span class="p">,</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">prerouting</span><span class="p">:</span> <span class="p">[</span> <span class="n">my_filter</span><span class="p">,</span> <span class="n">my_first_nat</span><span class="p">,</span> <span class="n">my_second_nat</span> <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gateway">
+<h3>Gateway<a class="headerlink" href="#gateway" title="Permalink to this headline">¶</a></h3>
+<p>A Gateway object mainly consists of routes. The value of a Gateway object can either be a list of route objects, or an object consisting of key value pairs, where each pair’s value is a route object:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Gateway</span> <span class="n">myGateway</span> <span class="p">[</span>
+        <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth0</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth1</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">nexthop</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth0</span>
+        <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Gateway</span> <span class="n">myGateway</span> <span class="p">{</span>
+        <span class="n">route1</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+        <span class="p">},</span>
+        <span class="n">route2</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth1</span>
+        <span class="p">},</span>
+        <span class="n">defaultRoute</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">nexthop</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth0</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you create a Gateway with named routes, you can refer to these routes elsewhere in the NaCl file to set values that you haven’t already set inside the route:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">myGateway</span><span class="o">.</span><span class="n">route1</span><span class="o">.</span><span class="n">iface</span><span class="p">:</span> <span class="n">eth0</span>
+</pre></div>
+</div>
+<p>The possible properties of a Gateway route are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>net (IPv4 address)</li>
+<li>netmask (IPv4 address)</li>
+<li>gateway (IPv4 address)</li>
+<li>iface (name of an Iface)</li>
+<li>nexthop (IPv4 address)</li>
+<li>cost (integer)</li>
+</ul>
+</div></blockquote>
+<p>A Gateway can also contain other key value pairs than routes, but then the Gateway must be an object containing key value pairs.</p>
+<p>Possible Gateway properties that can be set besides routes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>send_time_exceeded (enable or disable your service’s gateway to send ICMP time exceeded messages) (true or false)</li>
+<li>forward (a chain; in the same way that an Iface has 4 chains, the Gateway has one) (names of Filters)</li>
+</ul>
+</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Gateway</span> <span class="n">myGateway</span> <span class="p">{</span>
+        <span class="n">send_time_exceeded</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="n">forward</span><span class="p">:</span> <span class="n">myForwardFilter</span><span class="p">,</span>
+        <span class="n">route1</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+        <span class="p">},</span>
+        <span class="n">route2</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth1</span>
+        <span class="p">},</span>
+        <span class="n">defaultRoute</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">net</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">netmask</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">nexthop</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">iface</span><span class="p">:</span> <span class="n">eth0</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can only create one Gateway object per NaCl.</p>
+</div>
+<div class="section" id="conntrack">
+<h3>Conntrack<a class="headerlink" href="#conntrack" title="Permalink to this headline">¶</a></h3>
+<p>You can only create one Conntrack object per NaCl. This represents the connection tracking object in your service. You don’t need to specify a Conntrack object for it to exist in your service, you only need to specify it if you need to set any of its properties.</p>
+<p>The following properties can be specified for the Conntrack object:</p>
+<blockquote>
+<div><ul class="simple">
+<li>limit (maximum number of connections) (integer)</li>
+<li>reserve (number of entries in the connection tracking map, where there are two entries per connection) (integer)</li>
+<li>timeout</li>
+</ul>
+</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Conntrack</span> <span class="n">myConntrack</span> <span class="p">{</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="mi">20000</span><span class="p">,</span>
+        <span class="n">reserve</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">established</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="n">tcp</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+                        <span class="n">udp</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+                        <span class="n">icmp</span><span class="p">:</span> <span class="mi">300</span>
+                <span class="p">},</span>
+                <span class="n">unconfirmed</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="n">tcp</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+                        <span class="n">udp</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+                        <span class="n">icmp</span><span class="p">:</span> <span class="mi">300</span>
+                <span class="p">},</span>
+                <span class="n">confirmed</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="n">tcp</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+                        <span class="n">udp</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+                        <span class="n">icmp</span><span class="p">:</span> <span class="mi">300</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vlan">
+<h3>Vlan<a class="headerlink" href="#vlan" title="Permalink to this headline">¶</a></h3>
+<p>The Vlan type is similar to the Iface object, but is meant to be added to an Iface’s vlan property.</p>
+<p>The following properties can be specified for a Vlan object:</p>
+<blockquote>
+<div><ul class="simple">
+<li>address (IPv4 address)</li>
+<li>netmask (IPv4 address)</li>
+<li>gateway (IPv4 address)</li>
+<li>index (integer)</li>
+</ul>
+</div></blockquote>
+<p>Index, address and netmask are mandatory to specify.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Vlan</span> <span class="n">myFirstVlan</span> <span class="p">{</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="mf">10.50</span><span class="o">.</span><span class="mf">0.10</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The Vlan can then be added to an Iface’s vlan:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="n">dhcp</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">vlan</span><span class="p">:</span> <span class="n">myFirstVlan</span>
+</pre></div>
+</div>
+<p>More than one Vlan can be added to an Iface’s vlan:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="n">dhcp</span>
+<span class="n">eth0</span><span class="o">.</span><span class="n">vlan</span><span class="p">:</span> <span class="p">[</span> <span class="n">myFirstVlan</span><span class="p">,</span> <span class="n">mySecondVlan</span> <span class="p">]</span>
+
+<span class="n">Vlan</span> <span class="n">mySecondVlan</span> <span class="p">{</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="mf">10.60</span><span class="o">.</span><span class="mf">0.10</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>A Vlan object doesn’t need to be created</strong>, however, to set an Iface’s vlan property:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="p">{</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+        <span class="n">gateway</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">vlan</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                        <span class="n">index</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+                        <span class="n">address</span><span class="p">:</span> <span class="mf">10.50</span><span class="o">.</span><span class="mf">0.10</span><span class="p">,</span>
+                        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                        <span class="n">index</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+                        <span class="n">address</span><span class="p">:</span> <span class="mf">10.60</span><span class="o">.</span><span class="mf">0.20</span><span class="p">,</span>
+                        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+                <span class="p">}</span>
+        <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="untyped-objects">
+<h2>Untyped objects<a class="headerlink" href="#untyped-objects" title="Permalink to this headline">¶</a></h2>
+<p>You can create objects with values of any of the datatypes listed in section 1. The initialization of an untyped object has the following structure: &lt;name&gt;: &lt;value&gt;</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">myPort</span><span class="p">:</span> <span class="mi">4040</span>
+
+<span class="n">myPorts</span><span class="p">:</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span> <span class="p">]</span>
+
+<span class="n">myAddress</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span>
+
+<span class="n">myAddresses</span><span class="p">:</span> <span class="p">[</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.40</span><span class="p">,</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.50</span><span class="p">,</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.80</span><span class="o">-</span><span class="mf">10.0</span><span class="o">.</span><span class="mf">0.90</span><span class="p">,</span> <span class="mf">30.20</span><span class="o">.</span><span class="mf">10.0</span><span class="o">/</span><span class="mi">24</span> <span class="p">]</span>
+
+<span class="n">myCidr</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">24</span>
+
+<span class="n">myCidrs</span><span class="p">:</span> <span class="p">[</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">24</span><span class="p">,</span> <span class="mf">30.20</span><span class="o">.</span><span class="mf">10.0</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span> <span class="mf">100.20</span><span class="o">.</span><span class="mf">32.50</span><span class="o">/</span><span class="mi">32</span> <span class="p">]</span>
+
+<span class="n">myObject</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">key1</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">key2</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">key2</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+                <span class="n">key2</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span> <span class="mi">60</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These objects can be used in your functions or as values to your Iface or Vlan properties, or to your Gateway routes’ properties.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>The initialization of a function has the structure: &lt;type&gt;::&lt;subtype&gt; &lt;name&gt; { &lt;body&gt; }</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Filter</span><span class="p">::</span><span class="n">IP</span> <span class="n">myIPFilter</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">daddr</span> <span class="o">==</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.45</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">accept</span>
+        <span class="p">}</span>
+
+        <span class="n">drop</span>
+<span class="p">}</span>
+
+<span class="n">Filter</span><span class="p">::</span><span class="n">TCP</span> <span class="n">myFilter</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tcp</span><span class="o">.</span><span class="n">dport</span> <span class="o">==</span> <span class="mi">1500</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">accept</span>
+        <span class="p">}</span>
+
+        <span class="n">drop</span>
+<span class="p">}</span>
+
+<span class="n">Nat</span><span class="p">::</span><span class="n">TCP</span> <span class="n">myNat</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tcp</span><span class="o">.</span><span class="n">dport</span> <span class="o">==</span> <span class="mi">1500</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">dnat</span><span class="p">(</span><span class="mf">10.0</span><span class="o">.</span><span class="mf">0.50</span><span class="p">,</span> <span class="mi">1500</span><span class="p">)</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <strong>type</strong> is either Filter (if you want to create a firewall) or Nat (if you want to NAT any of the packets going through your network).</p>
+<p>The <strong>subtype</strong> is either IP, ICMP, UDP or TCP. If you create an IP filter (Filter::IP), you only have access to check the properties of the IP part of the packet. However, since all packets are IP packets, you know that all packets will go through the filter.</p>
+<p>If you create a TCP filter (Filter::TCP), you can check both IP and TCP properties, but only TCP packets will go through the filter. In the same way, if you create an UDP filter (Filter::UDP), you can check IP and UDP properties, and only UDP packets will pass through the filter. Same with ICMP (Filter::ICMP). Connection tracking (ct) properties can be checked in all filters.</p>
+<p>The <strong>body</strong> of a function consists of if statements that results in a verdict or action.</p>
+<p>Possible <strong>actions</strong> in <strong>Filters</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>drop (immediately drops the packet)</li>
+<li>accept (immediately accepts the packet)</li>
+<li>log (prints out the given string and/or the specified packet properties each time a packet reaches the action)</li>
+</ul>
+</div></blockquote>
+<p>Possible <strong>actions</strong> in <strong>Nats</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dnat (destination NATs the packet and returns)</li>
+<li>snat (source NATs the packet and returns)</li>
+<li>log (prints out the given string and/or the specified packet properties each time a packet reaches the action)</li>
+</ul>
+</div></blockquote>
+<p>Drop, accept, dnat and snat are verdicts, and when a packet reaches a verdict, the function returns the verdict and the rest of the function is not executed for that packet. The log action is not a verdict in that way, it just prints the message that the user has specified if a packet gets to it. After that the function execution continues until a verdict is reached.</p>
+<p>Examples of <strong>drop actions</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>drop</li>
+<li>drop()</li>
+</ul>
+</div></blockquote>
+<p>Examples of <strong>accept actions</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>accept</li>
+<li>accept()</li>
+</ul>
+</div></blockquote>
+<p>Examples of <strong>log actions</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>log(“My log messagen”)</li>
+<li>log(“The source address of the IP packet is “, ip.saddr, ”n”)</li>
+</ul>
+</div></blockquote>
+<p>Examples of <strong>dnat actions</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dnat(10.0.0.45)</li>
+<li>dnat(8080)</li>
+<li>dnat(10.0.0.45, 8080)</li>
+</ul>
+</div></blockquote>
+<p>Examples of <strong>snat actions</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>snat(10.0.0.45)</li>
+<li>snat(8080)</li>
+<li>snat(10.0.0.45, 8080)</li>
+</ul>
+</div></blockquote>
+<div class="section" id="packet-properties">
+<h3>Packet properties<a class="headerlink" href="#packet-properties" title="Permalink to this headline">¶</a></h3>
+<p>The conditions in an if statement can test on packet properties and you can use ‘and’ and ‘or’ between the conditions:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Filter::TCP myTCPFilter {
+        if ((ip.daddr == 10.0.0.45 or ip.daddr == 10.0.0.50) and tcp.dport == 8080) {
+                log(“Accepting packet with destination address”, ip.daddr, ”\n”)
+                accept
+        }
+
+        drop
+}
+</pre></div>
+</div>
+<div class="section" id="ip-properties">
+<h4>IP properties<a class="headerlink" href="#ip-properties" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>version (IP version) (integer)</li>
+<li>hdrlength (header length) (integer)</li>
+<li>dscp (differentiated services code point) (integer)</li>
+<li>ecn (explicit congestion notification) (integer)</li>
+<li>length (the total length of the packet in bytes) (integer)</li>
+<li>id (identification number) (integer)</li>
+<li>frag-off (fragment offset) (integer)</li>
+<li>ttl (time to live) (integer)</li>
+<li>protocol (protocol used in the data portion of the IP datagram) (ip, icmp, udp, tcp)</li>
+<li>checksum (header checksum, used for error-checking) (integer)</li>
+<li>saddr (source address) (IPv4 address)</li>
+<li>daddr (destination address) (IPv4 address)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="icmp-properties">
+<h4>ICMP properties<a class="headerlink" href="#icmp-properties" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>type (type of ICMP message) (echo-reply, destination-unreachable, redirect, echo-request, time-exceeded, parameter-problem, timestamp-request, timestamp-reply)</li>
+</ul>
+</div></blockquote>
+<p>Example condition in an ICMP Filter:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">icmp</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">destination</span><span class="o">-</span><span class="n">unreachable</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">drop</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="udp-properties">
+<h4>UDP properties<a class="headerlink" href="#udp-properties" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>sport (source port) (integer)</li>
+<li>dport (destination port) (integer)</li>
+<li>length (length of the UDP header and data in bytes) (integer)</li>
+<li>checksum (header checksum, used for error-checking) (integer)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="tcp-properties">
+<h4>TCP properties<a class="headerlink" href="#tcp-properties" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>sport (source port) (integer)</li>
+<li>dport (destination port) (integer)</li>
+<li>sequence (sequence number) (integer)</li>
+<li>ackseq (acknowledgement number) (integer)</li>
+<li>doff (data offset) (integer)</li>
+<li>reserved (reserved for future use, should be zero) (integer)</li>
+<li><dl class="first docutils">
+<dt>flags (contains 9 1-bit flags) (integer)</dt>
+<dd><ul class="first last">
+<li>ns (ECN-nonce, nonce sum)</li>
+<li>cwr (congestion window reduced)</li>
+<li>ece (ECN-Echo)</li>
+<li>urg (urgent pointer field is significant or not)</li>
+<li>ack (acknowledgment field is significant or not)</li>
+<li>psh (push)</li>
+<li>rst (reset the connection)</li>
+<li>syn (synchronize sequence numbers)</li>
+<li>fin (last packet from sender)</li>
+<li>Future functionality: if (tcp.flags != syn) { drop }</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>window (size of the receive window (number of window size units)) (integer)</li>
+<li>checksum (header checksum, used for error-checking) (integer)</li>
+<li>urgptr (urgent pointer) (integer)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="ct-properties">
+<h4>CT properties<a class="headerlink" href="#ct-properties" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>state (connection tracking state) (established, new, invalid)</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="functions-inside-functions">
+<h3>Functions inside functions<a class="headerlink" href="#functions-inside-functions" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Filter</span><span class="p">::</span><span class="n">IP</span> <span class="n">myFilter</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">established</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">accept</span>
+        <span class="p">}</span>
+
+        <span class="n">Filter</span><span class="p">::</span><span class="n">ICMP</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">icmp</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span>  <span class="n">echo</span><span class="o">-</span><span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">accept</span>
+                <span class="p">}</span>
+
+                <span class="n">drop</span>
+        <span class="p">}</span>
+
+        <span class="n">Filter</span><span class="p">::</span><span class="n">UDP</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">udp</span><span class="o">.</span><span class="n">dport</span> <span class="o">==</span> <span class="mi">60</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">accept</span>
+                <span class="p">}</span>
+
+                <span class="n">drop</span>
+        <span class="p">}</span>
+
+        <span class="n">Filter</span><span class="p">::</span><span class="n">TCP</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">tcp</span><span class="o">.</span><span class="n">dport</span> <span class="o">==</span> <span class="mi">80</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">accept</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">drop</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="referring-to-nacl-objects-inside-a-function">
+<h3>Referring to NaCl objects inside a function<a class="headerlink" href="#referring-to-nacl-objects-inside-a-function" title="Permalink to this headline">¶</a></h3>
+<p>As previously mentioned, you can create untyped and typed objects in your NaCl file and refer to them inside a function.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Iface</span> <span class="n">eth0</span> <span class="p">{</span>
+        <span class="n">index</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.11</span><span class="p">,</span>
+        <span class="n">netmask</span><span class="p">:</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">,</span>
+        <span class="n">gateway</span><span class="p">:</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="nb">input</span><span class="p">:</span> <span class="n">myFilter</span>
+<span class="p">}</span>
+
+<span class="n">myAddrs</span><span class="p">:</span> <span class="p">[</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.40</span><span class="o">-</span><span class="mf">10.0</span><span class="o">.</span><span class="mf">0.50</span><span class="p">,</span> <span class="mf">120.0</span><span class="o">.</span><span class="mf">10.0</span><span class="o">/</span><span class="mi">24</span><span class="p">,</span> <span class="mf">110.20</span><span class="o">.</span><span class="mf">30.17</span> <span class="p">]</span>
+<span class="n">myPorts</span><span class="p">:</span> <span class="p">[</span> <span class="mi">8080</span><span class="p">,</span> <span class="mi">9090</span><span class="p">,</span> <span class="mi">1000</span><span class="o">-</span><span class="mi">1200</span> <span class="p">]</span>
+
+<span class="n">Filter</span><span class="p">::</span><span class="n">IP</span> <span class="n">myFilter</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">daddr</span> <span class="ow">in</span> <span class="n">myAddrs</span> <span class="ow">or</span> <span class="n">ip</span><span class="o">.</span><span class="n">daddr</span> <span class="o">==</span> <span class="n">eth0</span><span class="o">.</span><span class="n">address</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">accept</span>
+        <span class="p">}</span>
+
+        <span class="n">Filter</span><span class="p">::</span><span class="n">TCP</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">tcp</span><span class="o">.</span><span class="n">dport</span> <span class="ow">in</span> <span class="n">myPorts</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">accept</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">drop</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NaCl - Not Another Configuration Language</a><ul>
+<li><a class="reference internal" href="#datatypes">Datatypes</a></li>
+<li><a class="reference internal" href="#typed-objects">Typed objects</a><ul>
+<li><a class="reference internal" href="#iface">Iface</a></li>
+<li><a class="reference internal" href="#gateway">Gateway</a></li>
+<li><a class="reference internal" href="#conntrack">Conntrack</a></li>
+<li><a class="reference internal" href="#vlan">Vlan</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#untyped-objects">Untyped objects</a></li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#packet-properties">Packet properties</a><ul>
+<li><a class="reference internal" href="#ip-properties">IP properties</a></li>
+<li><a class="reference internal" href="#icmp-properties">ICMP properties</a></li>
+<li><a class="reference internal" href="#udp-properties">UDP properties</a></li>
+<li><a class="reference internal" href="#tcp-properties">TCP properties</a></li>
+<li><a class="reference internal" href="#ct-properties">CT properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions-inside-functions">Functions inside functions</a></li>
+<li><a class="reference internal" href="#referring-to-nacl-objects-inside-a-function">Referring to NaCl objects inside a function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Examples-and-libraries.html"
+                        title="previous chapter">Examples and libraries</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Using-memdisks.html"
+                        title="next chapter">Using memdisks</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/NaCl.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Using-memdisks.html" title="Using memdisks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Examples-and-libraries.html" title="Examples and libraries"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IncludeOS 0.9.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, IncludeOS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>
