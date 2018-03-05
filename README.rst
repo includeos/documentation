@@ -11,6 +11,6 @@ Hosted by `Read the Docs <https://docs.readthedocs.io/en/latest/>`__
 	$ <make your changes>
 	$ make html
 	$ open _build/html/<Your-updated-file>.html // to test your changes
-	$ <commit your changes, including the changes made to _build/doctrees and _build/html>
+	$ <commit your changes>
 
 After you have created a pull request and your changes have been merged, `includeos.readthedocs.io <http://includeos.readthedocs.io>`__ will get updated automatically.
