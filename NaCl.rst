@@ -5,7 +5,7 @@ NaCl - Not Another Configuration Language
 
 NaCl is a configuration language for IncludeOS that you can use to add for example interfaces and firewall rules to your service. Add a nacl.txt file to your service with your configuration, and this will be transpiled into C++ for you when the service is built.
 
-You can find the NaCl repository `here <https://github.com/includeos/NaCl>`__.
+You can find the NaCl repository `here <https://github.com/includeos/NaCl>`__. This contains `NaCl examples <https://github.com/includeos/NaCl/tree/master/examples>`__.
 
 Datatypes
 ~~~~~~~~~
@@ -16,7 +16,7 @@ Datatypes that exist in NaCl behind the scenes are:
 	- IPv4 address (f.ex. 10.0.0.45)
 	- IPv4 cidr (f.ex. 10.0.0.0/24)
 	- bool (f.ex. false)
-	- string (f.ex. “Hi”)
+	- string (f.ex. "Hi")
 	- range (f.ex. 10-20 or 10.0.0.40-10.0.0.50)
 	- list (f.ex. [ 10, 20, 30 ])
 	- object (f.ex. { key1: 10, key2: 20 })
@@ -334,11 +334,13 @@ You can add a TCP Load_balancer to your service as well.
 The following properties can be specified for a Load_balancer object:
 
 	- layer (only tcp is possible for now)
+
 	- clients, an object containing the following key value pairs:
 		- iface (name of an Iface)
 		- port (integer)
 		- wait_queue_limit (integer)
 		- session_limit (integer)
+
 	- servers, an object containing the following key value pairs:
 		- iface (name of an Iface)
 		- algorithm (only round_robin is possible for now)
@@ -407,6 +409,25 @@ This is also possible:
 	    my_second_node
 	]
 
+.. _Syslog:
+
+Syslog
+------
+
+You add a Syslog object to your NaCl if you want the syslog actions in your :ref:`Functions` to be sent over UDP instead of being printed.
+
+The following properties can be specified for a Syslog object:
+
+	- address (IPv4 address)
+	- port (integer)
+
+::
+
+	Syslog settings {
+		address: 10.0.0.1,
+		port: 514
+	}
+
 Untyped objects
 ~~~~~~~~~~~~~~~
 
@@ -435,6 +456,8 @@ You can create objects with values of any of the datatypes listed in section 1. 
 	}
 
 These objects can be used in your functions or as values to your Iface or Vlan properties, or to your Gateway routes’ properties.
+
+.. _Functions:
 
 Functions
 ~~~~~~~~~
@@ -478,14 +501,16 @@ Possible **actions** in **Filters**:
 	- drop (immediately drops the packet)
 	- accept (immediately accepts the packet)
 	- log (prints out the given string and/or the specified packet properties each time a packet reaches the action)
+	- syslog (the default behaviour of this action is to print out the given string and/or the specified packet properties each time a packet reaches the action. A timestamp is always included. If a :ref:`Syslog` object is defined in the NaCl, the messages will be sent over UDP instead)
 
 Possible **actions** in **Nats**:
 
 	- dnat (destination NATs the packet and returns)
 	- snat (source NATs the packet and returns)
 	- log (prints out the given string and/or the specified packet properties each time a packet reaches the action)
+	- syslog (the default behaviour of this action is to print out the given string and/or the specified packet properties each time a packet reaches the action. A timestamp is always included. If a :ref:`Syslog` object is defined in the NaCl, the messages will be sent over UDP instead)
 
-Drop, accept, dnat and snat are verdicts, and when a packet reaches a verdict, the function returns the verdict and the rest of the function is not executed for that packet. The log action is not a verdict in that way, it just prints the message that the user has specified if a packet gets to it. After that the function execution continues until a verdict is reached.
+Drop, accept, dnat and snat are verdicts, and when a packet reaches a verdict, the function returns the verdict and the rest of the function is not executed for that packet. The log and syslog actions are not verdicts in that way, they just print the message that the user has specified (or send them over UDP) if a packet gets to them. After that the function execution continues until a verdict is reached.
 
 Examples of **drop actions**:
 
@@ -499,8 +524,13 @@ Examples of **accept actions**:
 
 Examples of **log actions**:
 
-	- log(“My log message\n”)
-	- log(“The source address of the IP packet is “, ip.saddr, ”\n”)
+	- log("My log message\n")
+	- log("The source address of the IP packet is ", ip.saddr, "\n")
+
+Examples of **syslog actions**:
+
+	- syslog(INFO, "My syslog message always contains a timestamp")
+	- syslog(DEBUG, "The source address of the IP packet is ", ip.saddr)
 
 Examples of **dnat actions**:
 
@@ -523,7 +553,7 @@ The conditions in an if statement can test on packet properties and you can use 
 
 	Filter::TCP myTCPFilter {
 		if ((ip.daddr == 10.0.0.45 or ip.daddr == 10.0.0.50) and tcp.dport == 8080) {
-			log(“Accepting packet with destination address”, ip.daddr, ”\n”)
+			log("Accepting packet with destination address ", ip.daddr, "\n")
 			accept
 		}
 
