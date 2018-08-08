@@ -428,6 +428,35 @@ The following properties can be specified for a Syslog object:
 		port: 514
 	}
 
+Timer
+-----
+
+You can add one or more Timer objects to any NaCl. Each Timer is triggered at an interval of your choosing, f.ex. every 30 seconds.
+
+The following properties can be specified for a Timer object:
+
+	- interval (integer, number of seconds)
+	- data, a list containing one or more of the following values:
+		- timestamp (print the current time)
+		- stack-sampling (print the top three methods called in your service)
+		- cpu (print information about the CPU usage)
+		- memory (print information about the memory usage)
+		- timers (print information about how many active, existing and free timers there are in your service)
+		- lb (print load balancer information, if you have defined a Load_balancer in your NaCl)
+		- stats (report statistics to the Mothership via uplink, f.ex. the number of TCP packets received per interface)
+
+::
+
+	Timer t {
+		interval: 30,
+		data: [
+			timestamp,
+			stack-sampling,
+			cpu,
+			memory
+		]
+	}
+
 Untyped objects
 ~~~~~~~~~~~~~~~
 
