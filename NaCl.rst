@@ -110,6 +110,7 @@ A case where it is useful to skip the network configuration is when you are only
 set the buffer_limit and/or send_queue_limit properties for the interface (index) that the vlans are on:
 
 ::
+
 	// interface
 	Iface eth0 {
 		index: 0,
