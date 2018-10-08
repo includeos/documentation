@@ -24,7 +24,7 @@ Datatypes that exist in NaCl behind the scenes are:
 Typed objects
 ~~~~~~~~~~~~~
 
-A typed object initialization has the following structure: <type> <name> <value>, where the type can be Iface, Gateway, Conntrack, Vlan or Load_balancer.
+A typed object initialization has the following structure: <type> <name> <value>, where the type can be Iface, Gateway, Conntrack, Load_balancer, Syslog or Timer.
 
 Iface
 -----
@@ -33,13 +33,10 @@ An Iface is a type that has certain requirements. The following property must be
 
 	- index (integer)
 
-The following properties must be given if you don't set the config property to dhcp, or don't set the config property at all:
+Other properties that can be specified are:
 
 	- address (IPv4 address)
 	- netmask (IPv4 address)
-
-Other properties that can be specified are:
-
 	- gateway (IPv4 address)
 	- dns (IPv4 address)
 	- config (dhcp, dhcp-with-fallback or static)
@@ -48,7 +45,16 @@ Other properties that can be specified are:
 	- input (names of functions)
 	- output (names of functions)
 	- postrouting (names of functions)
-	- vlan (names of Vlans or anonymous Vlan objects)
+	- vlan (integer, vlan ID/tag)
+	- buffer_limit (integer)
+	- send_queue_limit (integer)
+
+The **vlan** property is special and makes your Iface into a vlan. If you set this property, the following properties must be set if you don't set the config property to dhcp, or don't set the config property at all:
+
+	- address (IPv4 address)
+	- netmask (IPv4 address)
+
+You can not set the buffer_limit or send_queue_limit properties on a vlan. If you want to set these, you must create an Iface with a corresponding index and set the buffer_limit and send_queue_limit properties on that (more on this below).
 
 The value of an Iface can be an object. The object consists of key value pairs, separated by comma, and the pairs are enclosed by curly brackets:
 
@@ -88,13 +94,43 @@ The **dhcp-with-fallback** configuration requires you to specify a fallback addr
 		netmask: 255.255.255.0
 	}
 
-The **static** configuration also requires an address and a netmask to be specified. This is default, and doesn’t need to be specified:
+The **static** configuration is default and doesn't need to be specified. This configuration type is implicit if you set the address and netmask properties:
 
 ::
 
 	Iface eth0 {
 		index: 0,
 		address: 10.0.0.45,
+		netmask: 255.255.255.0
+	}
+
+If you create a vlan (by setting the vlan property), the properties address and netmask are required for this configuration type.
+When it comes to regular Ifaces though, it is not mandatory to set a network configuration (though it is rarely a desire to skip this).
+A case where it is useful to skip the network configuration is when you are only interested in creating vlans, but you also want to
+set the buffer_limit and/or send_queue_limit properties for the interface (index) that the vlans are on:
+
+::
+
+	// interface
+	Iface eth0 {
+		index: 0,
+		buffer_limit: 100,
+		send_queue_limit: 100
+	}
+
+	// vlan 1
+	Iface vlan1 {
+		index: 0,
+		vlan: 1,
+		address: 10.0.0.45,
+		netmask: 255.255.255.0
+	}
+
+	// vlan 2
+	Iface vlan1 {
+		index: 0,
+		vlan: 2,
+		address: 10.0.0.46,
 		netmask: 255.255.255.0
 	}
 
@@ -261,71 +297,6 @@ The following properties can be specified for the Conntrack object:
 		}
 	}
 
-Vlan
-----
-
-The Vlan type is similar to the Iface object, but is meant to be added to an Iface’s vlan property.
-
-The following properties can be specified for a Vlan object:
-
-	- address (IPv4 address)
-	- netmask (IPv4 address)
-	- gateway (IPv4 address)
-	- index (integer)
-
-Index, address and netmask are mandatory to specify.
-
-::
-
-	Vlan myFirstVlan {
-		index: 13,
-		address: 10.50.0.10,
-		netmask: 255.255.255.0
-	}
-
-The Vlan can then be added to an Iface’s vlan:
-
-::
-
-	Iface eth0 dhcp
-	eth0.vlan: myFirstVlan
-
-More than one Vlan can be added to an Iface’s vlan:
-
-::
-
-	Iface eth0 dhcp
-	eth0.vlan: [ myFirstVlan, mySecondVlan ]
-
-	Vlan mySecondVlan {
-		index: 22,
-		address: 10.60.0.10,
-		netmask: 255.255.255.0
-	}
-
-**A Vlan object doesn’t need to be created**, however, to set an Iface’s vlan property:
-
-::
-
-	Iface eth0 {
-		index: 0,
-		address: 10.0.0.45,
-		netmask: 255.255.255.0,
-		gateway: 10.0.0.1,
-		vlan: [
-			{
-				index: 13,
-				address: 10.50.0.10,
-				netmask: 255.255.255.0
-			},
-			{
-				index: 22,
-				address: 10.60.0.20,
-				netmask: 255.255.255.0
-			}
-		]
-	}
-
 Load_balancer
 -------------
 
@@ -484,7 +455,7 @@ You can create objects with values of any of the datatypes listed in section 1. 
 		}
 	}
 
-These objects can be used in your functions or as values to your Iface or Vlan properties, or to your Gateway routes’ properties.
+These objects can be used in your functions or as values to your Iface properties, to your Gateway routes’ properties, etc.
 
 .. _Functions:
 
