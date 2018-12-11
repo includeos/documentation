@@ -44,24 +44,6 @@ Installing includeos on macos
         <iframe width="560" height="315" src="https://www.youtube.com/embed/-F3sFJ4EE5Y" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
     </div>
 
-Unikernel security - why are unikernels secure?
------------------------------------------------
-
-.. raw:: html
-
-	<div style="padding-bottom: 2em">
-		<iframe width="560" height="315" src="https://www.youtube.com/embed/aoomQn7gLm4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-	</div>
-
-What is a unikernel?
---------------------
-
-.. raw:: html
-
-	<div style="padding-bottom: 2em">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/TNjPkOvHO2c" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-    </div>
-
 C++ Weekly October 3, 2016
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
