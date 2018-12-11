@@ -52,15 +52,15 @@ A successful setup enables you to build and run a virtual machine. Running:
 
 will build and run `this example service <https://github.com/hioa-cs/IncludeOS/blob/master/examples/demo_service/service.cpp>`__.
 
-More information about testing the example service is available here: :ref:`Testing the example service`.
-
 .. Testing the example service is further down on the page
 
 Writing your first service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Copy the `./seed <https://github.com/hioa-cs/IncludeOS/tree/master/seed>`__ directory to a convenient location like :code:`~/your_service`. Then, just start implementing the :code:`Service::start` function in the :code:`Service` class, located in `your_service/service.cpp <https://github.com/hioa-cs/IncludeOS/blob/master/seed/service.cpp>`__ (very simple example provided). This function will be called once the OS is up and running.
-2. Update the `CMakeLists.txt <https://github.com/hioa-cs/IncludeOS/blob/master/seed/CMakeLists.txt>`__ to specify the name of your project, enable any needed drivers or plugins, etc.
+1. Create a blank directory.
+2. Create a minimal ```service.cpp```
+3. Running "boot ." will add a CMakeList.txt based on the `./seed <https://github.com/hioa-cs/IncludeOS/tree/master/seed>`__.
+4. Update the `CMakeLists.txt <https://github.com/hioa-cs/IncludeOS/blob/master/seed/CMakeLists.txt>`__ to specify the name of your project, enable any needed drivers or plugins, etc.
 
 **Example:**
 
@@ -74,10 +74,8 @@ Writing your first service
 
 Take a look at the `examples <https://github.com/hioa-cs/IncludeOS/tree/master/examples>`__ and the `tests <https://github.com/hioa-cs/IncludeOS/tree/master/test>`__ on GitHub. These all started out as copies of the same seed.
 
-.. _Testing the demo service:
-
 Testing the demo service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 A suitable service to test your installation is the Demo Service, found in ```examples/demo_service```. It contains a simplistic web server that will serve out a single, static page. 
 
