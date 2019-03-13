@@ -7,25 +7,20 @@ Features
 
 A non-exhaustive, possibly outdated feature list
 
--  **Extreme memory footprint**: A minimal bootable image, including bootloader, operating system components and a complete C++ standard library is currently 707K when optimized for size.
-
--  **KVM and VirtualBox support** with full virtualization, using `x86 hardware virtualization <https://en.wikipedia.org/wiki/X86_virtualization>`__ whenever available (it is on most modern x86 CPU's). In principle IncludeOS should run on any x86 hardware platform, even on a physical x86 computer, given appropriate drivers. Officially, we develop for- and test on `Linux KVM <http://www.linux-kvm.org/page/Main_Page>`__, which power the `OpenStack IaaS cloud <https://www.openstack.org/>`__, and `VirtualBox <https://www.virtualbox.org>`__, which means that you can run your IncludeOS service on both Linux, Microsoft Windows and Apple OS X.
-
+- Low memory footprint
+- Support for the following hypervisors:
+   + Qemu / KVM
+   + Solo5/hvt
+   + VMWare ESXi
 -  **C++11/14 support**
-
-   +  Full C++11/14 language support with `clang <http://clang.llvm.org>`__ v3.6 and later.
+   +  Full C++11/14/17 language support with `clang <http://clang.llvm.org>`__ v5 and later.
    +  Standard C++ library\*\* (STL) `libc++ <http://libcxx.llvm.org>`__ from `LLVM <http://llvm.org/>`__
    +  Exceptions and stack unwinding (currently using `libgcc <https://gcc.gnu.org/onlinedocs/gccint/Libgcc.html>`__)
-   +  *Note:* Certain language features, such as threads and filestreams are currently missing backend support.
-
--  **Standard C library** using `newlib <https://sourceware.org/newlib/>`__ from `Red Hat <http://www.redhat.com/>`__
-
+-  **Standard C library** using `musl <https://www.musl-libc.org//>`__
 -  **Virtio Network driver** with DMA. `Virtio <https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=virtio>`__ provides a highly efficient and widely supported I/O virtualization. Like most implementations IncludeOS currently uses "legacy mode", but we're working towards the new `Virtio 1.0 OASIS standard <http://docs.oasis-open.org/virtio/virtio/v1.0/virtio-v1.0.html>`__
-
--  **A highly modular TCP/IP-stack** written from scratch, still under heavy development.
-
+-  **A highly modular TCP/IP-stack** written from scratch
    +  TCP with a few extensions (SAck, TSVal)
-   +  UDP module (but it's not ultra-mature yet)
+   +  UDP module
    +  DHCP and DNS clients that (as far as we know) work on the most common cloud platforms
    +  ICMP: Send/receive ping and some error handling code
    +  ARP cache
@@ -37,8 +32,6 @@ A non-exhaustive, possibly outdated feature list
 -  **Node.js-style callback-based programming** - everything happens in one efficient thread with no I/O blocking or unnecessary guest-side context switching.
 
 -  **No race conditions**. Delegated IRQ handling makes race conditions in "userspace" "impossible". ...unless you implement threads yourself (you have the access) or we do.
-
--  **No virtual memory overhead** One service pr. VM means no need for virtual address spaces, and no overead due to address translation. Everything happens in a single, ring 0 address space. This has high positive impact on memory performance on some systems, but less so on newer CPU's with good hardware support for `nested paging <https://en.wikipedia.org/wiki/Second_Level_Address_Translation>`__.
 
 -  **All the guns and all the knives:**
 
@@ -52,4 +45,4 @@ A non-exhaustive, possibly outdated feature list
 
 .. Limitations:
 
-If it's not listed under features, chances are that we don't have it yet. See the :ref:`Roadmap` for our current plan.
+If it's not listed under features, chances are that we don't have it yet. 

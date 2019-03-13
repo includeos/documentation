@@ -19,7 +19,7 @@ This makes it possible to quickly see and understand what you've done.
 
 **2. License**
 
-Everything you commit will be under the same license as this repository and the copyright holders of said repository will retain the right to publish your commits under a different license.
+IncludeOS is licensed under the APL 2.0.
 
 **3. State what you have done in the commit message**
 
